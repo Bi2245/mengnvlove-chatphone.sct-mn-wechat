@@ -5187,55 +5187,105 @@
             `;
         }
 
+// 电池图标设置功能实现
 function renderBatteryIconSettingsPage(container) {
-            const b = appData.settings.beautify.batteryIcon;
-            container.innerHTML = `
-                <div class="wechat-header">
-                    <div class="header-left header-back-btn" onclick="goBack()"><i class="fas fa-chevron-left"></i><span>返回</span></div>
-                    <span class="header-title">更换电池图标</span>
-                </div>
-                <div class="content-area form-page">
-                    <div class="form-group">
-                        <label>调整图标</label>
-                        <select id="battery-number-position">
-                            <option value="inside" ${b.numberPosition === 'inside' ? 'selected' : ''}>电池图标内</option>
-                            <option value="outside" ${b.numberPosition === 'outside' ? 'selected' : ''}>电池图标外</option>
-                            <option value="none" ${b.numberPosition === 'none' ? 'selected' : ''}>不显示数字</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label>电池图标数字颜色</label>
-                        <input type="color" id="battery-number-color-input" value="${b.numberColor}">
-                    </div>
-                    <div class="form-group">
-                        <label>更换电池图标 (URL)</label>
-                        <input type="text" id="battery-icon-url-input" placeholder="输入图片链接..." value="${b.customIconUrl || ''}">
-                    </div>
-                    <div class="form-group">
-                        <label>更换电池图标 (文件)</label>
-                        <button class="form-btn" style="background-color: #aaa;" onclick="document.getElementById('battery-icon-file-input').click()">选择文件</button>
-                        <input type="file" id="battery-icon-file-input" class="file-input" accept="image/*">
-                    </div>
-                    <button class="form-btn" id="save-battery-icon-btn">应用</button>
-                </div>
-            `;
-            document.getElementById('save-battery-icon-btn').onclick = () => {
-                b.numberPosition = document.getElementById('battery-number-position').value;
-                b.numberColor = document.getElementById('battery-number-color-input').value;
-                const url = document.getElementById('battery-icon-url-input').value.trim();
-                const file = document.getElementById('battery-icon-file-input').files[0];
-
-                if (file) {
-                    handleImageUpload(file, dataUrl => {
-                        b.customIconUrl = dataUrl;
-                        saveData(true, applyBeautifySettings);
-                    });
-                } else {
-                    b.customIconUrl = url;
-                    saveData(true, applyBeautifySettings);
-                }
-            };
+    const b = appData.settings.beautify.batteryIcon;
+    container.innerHTML = `
+        <div class="wechat-header">
+            <div class="header-left header-back-btn" onclick="goBack()"><i class="fas fa-chevron-left"></i><span>返回</span></div>
+            <span class="header-title">更换电池图标</span>
+        </div>
+        <div class="content-area form-page">
+            <div class="form-group">
+                <label>调整图标</label>
+                <select id="battery-number-position">
+                    <option value="inside" ${b.numberPosition === 'inside' ? 'selected' : ''}>电池图标内</option>
+                    <option value="outside" ${b.numberPosition === 'outside' ? 'selected' : ''}>电池图标外</option>
+                    <option value="none" ${b.numberPosition === 'none' ? 'selected' : ''}>不显示数字</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>电池图标数字颜色</label>
+                <input type="color" id="battery-number-color-input" value="${b.numberColor || '#000000'}">
+            </div>
+            <div class="form-group">
+                <label>更换电池图标 (URL)</label>
+                <input type="text" id="battery-icon-url-input" placeholder="输入图片链接..." value="${b.customIconUrl || ''}">
+            </div>
+            <div class="form-group">
+                <label>更换电池图标 (文件)</label>
+                <button class="form-btn" style="background-color: #aaa;" onclick="document.getElementById('battery-icon-file-input').click()">选择文件</button>
+                <input type="file" id="battery-icon-file-input" class="file-input" accept="image/*">
+            </div>
+            <button class="form-btn" id="save-battery-icon-btn">应用</button>
+        </div>
+    `;
+    
+    document.getElementById('save-battery-icon-btn').onclick = saveBatteryIconSettings;
+    
+    // 文件选择变化时自动保存
+    document.getElementById('battery-icon-file-input').addEventListener('change', function(e) {
+        if (e.target.files.length > 0) {
+            saveBatteryIconSettings();
         }
+    });
+}
+
+function saveBatteryIconSettings() {
+    const b = appData.settings.beautify.batteryIcon;
+    b.numberPosition = document.getElementById('battery-number-position').value;
+    b.numberColor = document.getElementById('battery-number-color-input').value;
+    const url = document.getElementById('battery-icon-url-input').value.trim();
+    const file = document.getElementById('battery-icon-file-input').files[0];
+
+    if (file) {
+        handleImageUpload(file, dataUrl => {
+            b.customIconUrl = dataUrl;
+            updateBatteryIconDisplay();
+            saveData(true);
+        });
+    } else if (url) {
+        b.customIconUrl = url;
+        updateBatteryIconDisplay();
+        saveData(true);
+    } else {
+        updateBatteryIconDisplay();
+        saveData(true);
+    }
+}
+
+function updateBatteryIconDisplay() {
+    const b = appData.settings.beautify.batteryIcon;
+    const batteryIcon = document.querySelector('.battery-icon');
+    const batteryPercent = document.querySelector('.battery-percent');
+    
+    // 清除之前的样式
+    batteryIcon.classList.remove('number-inside', 'number-outside', 'number-none');
+    
+    // 应用新的样式
+    batteryIcon.classList.add(`number-${b.numberPosition}`);
+    
+    // 设置数字颜色
+    if (batteryPercent) {
+        batteryPercent.style.color = b.numberColor;
+    }
+    
+    // 更新自定义图标
+    if (b.customIconUrl) {
+        batteryIcon.style.backgroundImage = `url(${b.customIconUrl})`;
+    } else {
+        batteryIcon.style.backgroundImage = '';
+    }
+}
+
+// 在应用启动时初始化电池图标
+function initBatteryIcon() {
+    const b = appData.settings.beautify.batteryIcon;
+    if (!b.numberPosition) b.numberPosition = 'outside';
+    if (!b.numberColor) b.numberColor = '#000000';
+    updateBatteryIconDisplay();
+}
+
 
         // 对方正在输入中
         function setTypingIndicator(chatId, isTyping, memberName = null) {
