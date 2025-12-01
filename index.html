@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0">
-    <title>LPhone测试中</title>
+    <title>LPhone</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style id="global-theme-style"></style> <!-- 全局自定义主题注入点 -->
     <style>
@@ -53,7 +53,7 @@
             --app-icon-gap: 20px;
             --app-icon-radius: 15px;
 
-            /* NEW: 电池图标变量 */
+            /* 电池图标变量 */
             --battery-icon-image: none;
             --battery-percent-display-outside: block;
             --battery-percent-display-inside: none;
@@ -69,7 +69,7 @@
             --wechat-text-secondary: #8E8E93;
             --global-font-color: #EAEAEA;
         }
-        body.dark-mode .list-item, body.dark-mode .me-profile-card, body.dark-mode .me-menu-item, body.dark-mode .chat-input-bar, body.dark-mode .modal-content, body.dark-mode .form-group input, body.dark-mode .form-group textarea, body.dark-mode .form-group select, body.dark-mode .moment-post, body.dark-mode .bank-card { background-color: var(--wechat-nav-bg); color: var(--global-font-color); }
+        body.dark-mode .list-item, body.dark-mode .me-profile-card, body.dark-mode .me-menu-item, body.dark-mode .chat-input-bar, body.dark-mode .modal-content, body.dark-mode .form-group input, body.dark-mode .form-group textarea, body.dark-mode .form-group select, body.dark-mode .moment-post, body.dark-mode .bank-card, body.dark-mode .forum-post { background-color: var(--wechat-nav-bg); color: var(--global-font-color); }
         body.dark-mode .message-row.received .message-bubble.text-bubble { background-color: var(--wechat-nav-bg); }
         body.dark-mode .message-row.received .message-bubble.text-bubble::after { background: var(--wechat-nav-bg); }
         body.dark-mode .message-recalled, body.dark-mode .message-system { background: #333; color: var(--wechat-text-secondary); }
@@ -85,7 +85,7 @@
         
         /* 可爱樱花粉主题 */
         body.sakura-pink-mode { --wechat-bg: #FFF0F5; --wechat-nav-bg: #FFC0CB; --wechat-border-color: #FFB6C1; --wechat-text-primary: #333333; --wechat-text-secondary: #8B4513; --wechat-green: #FF69B4; --wechat-blue: #DB7093; --global-font-color: #333333; }
-        body.sakura-pink-mode .list-item, body.sakura-pink-mode .me-profile-card, body.sakura-pink-mode .me-menu-item, body.sakura-pink-mode .chat-input-bar, body.sakura-pink-mode .modal-content, body.sakura-pink-mode .form-group input, body.sakura-pink-mode .form-group textarea, body.sakura-pink-mode .form-group select, body.sakura-pink-mode .moment-post, body.sakura-pink-mode .bank-card { background-color: #FFFFFF; color: var(--global-font-color); }
+        body.sakura-pink-mode .list-item, body.sakura-pink-mode .me-profile-card, body.sakura-pink-mode .me-menu-item, body.sakura-pink-mode .chat-input-bar, body.sakura-pink-mode .modal-content, body.sakura-pink-mode .form-group input, body.sakura-pink-mode .form-group textarea, body.sakura-pink-mode .form-group select, body.sakura-pink-mode .moment-post, body.sakura-pink-mode .bank-card, body.sakura-pink-mode .forum-post { background-color: #FFFFFF; color: var(--global-font-color); }
         body.sakura-pink-mode .message-row.sent .message-bubble.text-bubble { background-color: #FFDFE5; }
         body.sakura-pink-mode .message-row.sent .message-bubble.text-bubble::after { background: #FFDFE5; }
         body.sakura-pink-mode .message-row.received .message-bubble.text-bubble { background-color: #FFFFFF; }
@@ -97,12 +97,12 @@
 
         /* 拟态主题 */
         body.neumorphic-mode { --wechat-bg: #e0e5ec; --wechat-nav-bg: #e0e5ec; --wechat-border-color: transparent; --wechat-text-primary: #555; --wechat-text-secondary: #999; --global-font-color: #555; }
-        body.neumorphic-mode .list-item, body.neumorphic-mode .me-profile-card, body.neumorphic-mode .me-menu-item, body.neumorphic-mode .chat-input-bar, body.neumorphic-mode .modal-content, body.neumorphic-mode .form-group input, body.neumorphic-mode .form-group textarea, body.neumorphic-mode .form-group select, body.neumorphic-mode .moment-post, body.neumorphic-mode .message-bubble, body.neumorphic-mode .wechat-header, body.neumorphic-mode .wechat-tabbar, body.neumorphic-mode .bank-card { background: #e0e5ec; box-shadow: 7px 7px 15px #a3b1c6, -7px -7px 15px #ffffff; border: none; }
+        body.neumorphic-mode .list-item, body.neumorphic-mode .me-profile-card, body.neumorphic-mode .me-menu-item, body.neumorphic-mode .chat-input-bar, body.neumorphic-mode .modal-content, body.neumorphic-mode .form-group input, body.neumorphic-mode .form-group textarea, body.neumorphic-mode .form-group select, body.neumorphic-mode .moment-post, body.neumorphic-mode .message-bubble, body.neumorphic-mode .wechat-header, body.neumorphic-mode .wechat-tabbar, body.neumorphic-mode .bank-card, body.neumorphic-mode .forum-post { background: #e0e5ec; box-shadow: 7px 7px 15px #a3b1c6, -7px -7px 15px #ffffff; border: none; }
         body.neumorphic-mode .message-row.sent .message-bubble { box-shadow: inset 5px 5px 10px #a3b1c6, inset -5px -5px 10px #ffffff; }
 
         /* ^•͈༝•^ฅ 主题 */
         body.clear-sky-blue-mode { --wechat-bg: #E1F5FE; --wechat-nav-bg: #B3E5FC; --wechat-border-color: #81D4FA; --wechat-text-primary: #01579B; --wechat-text-secondary: #4FC3F7; --wechat-green: #0288D1; --wechat-blue: #03A9F4; --global-font-color: #01579B; }
-        body.clear-sky-blue-mode .list-item, body.clear-sky-blue-mode .me-profile-card, body.clear-sky-blue-mode .me-menu-item, body.clear-sky-blue-mode .chat-input-bar, body.clear-sky-blue-mode .modal-content, body.clear-sky-blue-mode .form-group input, body.clear-sky-blue-mode .form-group textarea, body.clear-sky-blue-mode .form-group select, body.clear-sky-blue-mode .moment-post, body.clear-sky-blue-mode .bank-card { background-color: #FFFFFF; }
+        body.clear-sky-blue-mode .list-item, body.clear-sky-blue-mode .me-profile-card, body.clear-sky-blue-mode .me-menu-item, body.clear-sky-blue-mode .chat-input-bar, body.clear-sky-blue-mode .modal-content, body.clear-sky-blue-mode .form-group input, body.clear-sky-blue-mode .form-group textarea, body.clear-sky-blue-mode .form-group select, body.clear-sky-blue-mode .moment-post, body.clear-sky-blue-mode .bank-card, body.clear-sky-blue-mode .forum-post { background-color: #FFFFFF; }
         body.clear-sky-blue-mode .message-row.sent .message-bubble.text-bubble { background-color: #81D4FA; }
         body.clear-sky-blue-mode .message-row.sent .message-bubble.text-bubble::after { background: #81D4FA; }
         body.clear-sky-blue-mode .message-row.received .message-bubble.text-bubble { background-color: #FFFFFF; }
@@ -113,7 +113,7 @@
         body.dark-abyss-mode .screen { background-image: var(--page-bg-general); background-size: cover; background-position: center; }
         body.dark-abyss-mode .page { background-color: transparent; }
         body.dark-abyss-mode #settings-page, body.dark-abyss-mode #wallet-page, body.dark-abyss-mode #moments-page { background-image: var(--page-bg-special); background-size: cover; background-position: center; }
-        body.dark-abyss-mode .list-item, body.dark-abyss-mode .me-profile-card, body.dark-abyss-mode .me-menu-item, body.dark-abyss-mode .chat-input-bar, body.dark-abyss-mode .modal-content, body.dark-abyss-mode .wechat-header, body.dark-abyss-mode .wechat-tabbar, body.dark-abyss-mode .chat-plus-menu, body.dark-abyss-mode .bank-card { background-color: var(--wechat-nav-bg); backdrop-filter: blur(10px); }
+        body.dark-abyss-mode .list-item, body.dark-abyss-mode .me-profile-card, body.dark-abyss-mode .me-menu-item, body.dark-abyss-mode .chat-input-bar, body.dark-abyss-mode .modal-content, body.dark-abyss-mode .wechat-header, body.dark-abyss-mode .wechat-tabbar, body.dark-abyss-mode .chat-plus-menu, body.dark-abyss-mode .bank-card, body.dark-abyss-mode .forum-post { background-color: var(--wechat-nav-bg); backdrop-filter: blur(10px); }
         body.dark-abyss-mode .message-row.received .message-bubble.text-bubble { background-color: rgba(40, 40, 40, 0.85); }
         body.dark-abyss-mode .message-row.received .message-bubble.text-bubble::after { background: rgba(40, 40, 40, 0.85); }
         body.dark-abyss-mode .message-row.sent .message-bubble.text-bubble { background-color: rgba(0, 150, 136, 0.8); }
@@ -281,7 +281,7 @@
         .me-menu-item:active { background-color: var(--wechat-bg); }
         .me-menu-item i { font-size: 24px; color: var(--wechat-blue); width: 24px; text-align: center; }
         .me-menu-item span { flex: 1; font-size: var(--font-size-base); color: var(--global-font-color); }
-        #conversation-page .content-area { background-color: var(--wechat-bg); padding: 10px; display: flex; flex-direction: column; background-image: var(--chat-background-image); background-size: cover; background-position: center; position: relative; }
+        #conversation-page .content-area, #forum-dm-chat-page .content-area { background-color: var(--wechat-bg); padding: 10px; display: flex; flex-direction: column; background-image: var(--chat-background-image); background-size: cover; background-position: center; position: relative; }
         .chat-scroll-buttons { position: absolute; bottom: 10px; right: 10px; display: flex; flex-direction: column; gap: 10px; z-index: 20; }
         .chat-scroll-buttons .scroll-btn { width: 36px; height: 36px; background: rgba(0,0,0,0.3); color: white; border-radius: 50%; border: none; cursor: pointer; display: flex; justify-content: center; align-items: center; font-size: 16px; }
         #scroll-to-bottom-btn { display: none; }
@@ -486,6 +486,41 @@
         #announcement-page h3 { color: var(--wechat-green); border-bottom: 1px solid var(--wechat-border-color); padding-bottom: 5px; }
         #announcement-page ul { padding-left: 20px; }
 
+        /* --- NEW: Forum App Styles --- */
+        #forum-app-page .wechat-header .header-right { font-size: 26px; }
+        .forum-post { background: var(--wechat-nav-bg); padding: 15px; border-bottom: 1px solid var(--wechat-border-color); cursor: pointer; }
+        .forum-post-header { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+        .forum-post-header .avatar { width: 40px; height: 40px; }
+        .forum-post-header .author-info .name { font-weight: 600; color: var(--global-font-color); }
+        .forum-post-header .author-info .timestamp { font-size: 12px; color: var(--wechat-text-secondary); }
+        .forum-post-content { margin-bottom: 10px; white-space: pre-wrap; word-break: break-word; }
+        .forum-post-footer { display: flex; justify-content: space-around; color: var(--wechat-text-secondary); }
+        .forum-post-footer .action-item { display: flex; align-items: center; gap: 5px; }
+        .forum-post-footer .action-item.liked { color: var(--wechat-red); }
+        .forum-post-footer .action-item.collected { color: var(--wechat-blue); }
+        #forum-post-detail-page .content-area { padding: 0; }
+        #forum-post-detail-page .forum-post { border-bottom: 8px solid var(--wechat-bg); }
+        #forum-char-profile-page .content-area { padding: 0; }
+        .forum-profile-header { padding: 20px; background: var(--wechat-nav-bg); text-align: center; position: relative; }
+        .forum-profile-header .avatar { width: 80px; height: 80px; border-radius: 50%; margin: 0 auto 10px; }
+        .forum-profile-header .name { font-size: 20px; font-weight: bold; }
+        .forum-profile-header .username { color: var(--wechat-text-secondary); }
+        .forum-profile-header .signature { margin: 10px 0; }
+        .forum-profile-stats { display: flex; justify-content: center; gap: 20px; margin: 15px 0; }
+        .forum-profile-stats .stat { text-align: center; }
+        .forum-profile-stats .stat .count { font-weight: bold; }
+        .forum-profile-actions button { padding: 8px 20px; border-radius: 15px; }
+        .couple-badge { position: absolute; top: 15px; right: 15px; font-size: 24px; color: #FF69B4; }
+
+        /* --- NEW: Notification Bar Styles --- */
+        #notification-bar { position: absolute; top: -100px; left: 0; right: 0; background: rgba(30, 30, 30, 0.85); backdrop-filter: blur(10px); z-index: 2000; transition: top 0.5s ease-in-out; }
+        #notification-bar.show { top: 0; }
+        .notification-item { padding: 10px 15px; border-bottom: 1px solid rgba(255,255,255,0.1); display: flex; align-items: center; gap: 10px; color: white; }
+        .notification-item:last-child { border-bottom: none; }
+        .notification-item .icon { font-size: 18px; width: 20px; text-align: center; }
+        .notification-item .content .title { font-weight: bold; }
+        .notification-item .content .body { font-size: 14px; opacity: 0.8; }
+
         /* NEW: 加载动画 */
         .loader-container { display: flex; justify-content: center; align-items: center; padding: 50px; }
         .loader { border: 4px solid #f3f3f3; border-top: 4px solid var(--wechat-green); border-radius: 50%; width: 30px; height: 30px; animation: spin 1s linear infinite; }
@@ -506,7 +541,7 @@
     <div class="phone-container" id="phone-body" style="display: none;">
         <div class="screen">
             <!-- 状态栏 -->
-            <div class="status-bar">
+            <div class="status-bar" id="status-bar">
                 <div class="status-bar-left">
                     <span class="time" id="status-bar-time">09:41</span>
                 </div>
@@ -523,6 +558,9 @@
                     </div>
                 </div>
             </div>
+            
+            <!-- NEW: 通知栏 -->
+            <div id="notification-bar"></div>
 
             <!-- NEW: 锁屏页面 -->
             <div id="lock-screen-page" class="page no-transition">
@@ -585,6 +623,29 @@
                 </div>
             </div>
 
+            <!-- NEW: Forum App 容器 -->
+            <div id="forum-app-page" class="page sub-page">
+                <div class="content-area" id="forum-content-area"></div>
+                <div class="wechat-tabbar" id="forum-tabbar">
+                    <div class="tab-item active" data-page="home">
+                        <i class="fas fa-home"></i>
+                        <span>首页</span>
+                    </div>
+                    <div class="tab-item" data-page="following">
+                        <i class="fas fa-star"></i>
+                        <span>关注</span>
+                    </div>
+                    <div class="tab-item" data-page="dms">
+                        <i class="fas fa-envelope"></i>
+                        <span>私信</span>
+                    </div>
+                    <div class="tab-item" data-page="me">
+                        <i class="fas fa-user-circle"></i>
+                        <span>我</span>
+                    </div>
+                </div>
+            </div>
+
             <!-- 其他页面容器 -->
             <div id="conversation-page" class="page sub-page"></div>
             <div id="editor-page" class="page sub-page form-page"></div>
@@ -635,7 +696,15 @@
             <div id="app-layout-settings-page" class="page sub-page form-page"></div>
             <div id="lock-screen-settings-page" class="page sub-page form-page"></div>
             <div id="font-color-settings-page" class="page sub-page form-page"></div>
-            <div id="battery-settings-page" class="page sub-page form-page"></div> <!-- NEW -->
+            <div id="battery-settings-page" class="page sub-page form-page"></div>
+            <!-- NEW: Forum Sub-Pages -->
+            <div id="forum-dm-chat-page" class="page sub-page"></div>
+            <div id="forum-post-detail-page" class="page sub-page"></div>
+            <div id="forum-create-post-page" class="page sub-page form-page"></div>
+            <div id="forum-char-profile-page" class="page sub-page"></div>
+            <div id="forum-char-editor-page" class="page sub-page form-page"></div>
+            <div id="forum-me-editor-page" class="page sub-page form-page"></div>
+            <div id="forum-dm-settings-page" class="page sub-page"></div>
 
             <!-- 模态框容器 -->
             <div id="modal-container"></div>
@@ -765,10 +834,21 @@
                 wallet: { balance: 100000, transactions: [], currency: 'CNY' },
                 personas: [],
                 bankCards: [],
+                forumProfile: { // NEW
+                    username: 'MyForumUser',
+                    signature: '我的论坛签名',
+                    followersCount: 0,
+                    following: []
+                }
             },
             contacts: [], groups: [], moments: [],
             stickers: { packs: [] },
             worldbooks: { presets: [], styles: [], library: [] },
+            forum: { // NEW
+                users: [],
+                posts: [],
+                dms: {}
+            },
             settings: {
                 api: { 
                     provider: 'openai', endpoint: '', key: '', model: '', 
@@ -792,14 +872,15 @@
                     appIcons: {
                         wechat: 'https://img.js.design/assets/img/65a881fa383e6a42242a3f33.jpg',
                         settings: 'https://img.js.design/assets/img/66547a8286955562f5597929.png',
-                        worldbook: 'https://img.js.design/assets/img/66547a8292e9484a89d107a6.png'
+                        worldbook: 'https://img.js.design/assets/img/66547a8292e9484a89d107a6.png',
+                        forum: 'https://img.js.design/assets/img/665f12117564a51485293233.png' // NEW
                     },
                     lockScreen: {
                         enabled: false,
                         password: '',
                         wallpaper: 'https://source.unsplash.com/random/380x820?night,sky'
                     },
-                    batteryIcon: { // NEW
+                    batteryIcon: {
                         displayMode: 'outside', // 'outside', 'inside', 'none'
                         iconUrl: ''
                     }
@@ -839,6 +920,9 @@
                 appData = savedData ? savedData : JSON.parse(JSON.stringify(defaultAppData));
                 
                 // --- Data migration and validation (FIREWALL) ---
+                if (!appData.forum) appData.forum = JSON.parse(JSON.stringify(defaultAppData.forum));
+                if (!appData.user.forumProfile) appData.user.forumProfile = JSON.parse(JSON.stringify(defaultAppData.user.forumProfile));
+                if (!appData.settings.beautify.appIcons.forum) appData.settings.beautify.appIcons.forum = defaultAppData.settings.beautify.appIcons.forum;
                 if (!appData.settings.beautify.batteryIcon) appData.settings.beautify.batteryIcon = JSON.parse(JSON.stringify(defaultAppData.settings.beautify.batteryIcon));
                 if (!appData.settings.beautify.lockScreen) appData.settings.beautify.lockScreen = JSON.parse(JSON.stringify(defaultAppData.settings.beautify.lockScreen));
                 if (!appData.settings.beautify.homeScreenFontColor) appData.settings.beautify.homeScreenFontColor = defaultAppData.settings.beautify.homeScreenFontColor;
@@ -850,7 +934,7 @@
                 if (appData.settings.beautify.appIconRadius === undefined) appData.settings.beautify.appIconRadius = defaultAppData.settings.beautify.appIconRadius;
                 if (appData.settings.dnd === undefined) appData.settings.dnd = false;
                 if (!appData.user.bankCards) appData.user.bankCards = [];
-                if (!appData.settings.beautify.globalThemeArchives) appData.settings.beautify.globalThemeArchives = [{}, {}, {}, {}, {}];
+                if (!appData.settings.beautify.globalThemeArchives || appData.settings.beautify.globalThemeArchives.length < 3) appData.settings.beautify.globalThemeArchives = [{}, {}, {}];
                 if (appData.settings.beautify.activeGlobalThemeSlot === undefined) appData.settings.beautify.activeGlobalThemeSlot = -1;
                 if (!appData.user.nickname) { appData.user.nickname = appData.user.name || ' '; delete appData.user.name; }
                 if (appData.user.persona) delete appData.user.persona;
@@ -877,7 +961,7 @@
                     if (c.lastMomentPostTime === undefined) c.lastMomentPostTime = 0;
                     if (c.boundPersonaId === undefined) c.boundPersonaId = null;
                     if (c.isCouple === undefined) c.isCouple = false;
-                    if (!c.pokeSettings) c.pokeSettings = { userToChar: { action: '拍了拍', suffix: '' }, charToUser: { action: '拍了拍', suffix: '' } }; // NEW Poke migration
+                    if (!c.pokeSettings) c.pokeSettings = { userToChar: { action: '拍了拍', suffix: '' }, charToUser: { action: '拍了拍', suffix: '' } };
                 });
 
             } catch (error) {
@@ -957,6 +1041,11 @@
                 if (activeTab) {
                     renderMainContent(activeTab.dataset.page);
                 }
+            } else if (previousPageId === 'forum-app-page') {
+                const activeTab = document.querySelector('#forum-app-page .tab-item.active');
+                if (activeTab) {
+                    renderForumContent(activeTab.dataset.page);
+                }
             }
         }
 
@@ -967,6 +1056,10 @@
                 <div class="app-icon" onclick="showPage('wechat-app-page', renderWechatApp)">
                     <div class="icon-bg" style="background-image: url('${icons.wechat}')"></div>
                     <span class="app-name">WeChat</span>
+                </div>
+                <div class="app-icon" onclick="showPage('forum-app-page', renderForumApp)">
+                    <div class="icon-bg" style="background-image: url('${icons.forum}')"></div>
+                    <span class="app-name">论坛</span>
                 </div>
                 <div class="app-icon" onclick="showPage('settings-app-page', renderSettingsAppPage)">
                     <div class="icon-bg" style="background-image: url('${icons.settings}')"></div>
@@ -1452,7 +1545,7 @@
             // 多选功能
             const multiSelectToolbar = document.getElementById('multi-select-toolbar');
             const forwardBtn = document.getElementById('multi-select-forward-btn');
-            const deleteBtn = document.getElementById'multi-select-delete-btn');
+            const deleteBtn = document.getElementById('multi-select-delete-btn');
             const cancelBtn = document.getElementById('multi-select-cancel-btn');
             let multiSelectState = { active: false, selectedIds: new Set() };
 
@@ -1625,6 +1718,7 @@
                             const quotedSender = chat.members.find(m => m.id == msg.quotedMessage.sender);
                             quotedSenderName = quotedSender ? (quotedSender.remark || quotedSender.name) : '未知成员';
                         } else {
+                            quoted's next reply in a fictional chat between html 非悸 and 함️🐾.
                             quotedSenderName = msg.quotedMessage.sender === appData.user.id ? appData.user.nickname : (chat.remark || chat.name);
                         }
                         quotedHtml = `<div class="quoted-message"><p><strong>${quotedSenderName}:</strong> ${msg.quotedMessage.content.substring(0, 30)}...</p></div>`;
@@ -1882,7 +1976,7 @@
                             <i class="fas fa-credit-card" style="color: #576B95;"></i>
                             <p>银行卡</p>
                         </div>
-                        <div class="wallet-service-item" onclickonclick="showLianQianTongModal()">
+                        <div class="wallet-service-item" onclick="showLianQianTongModal()">
                             <i class="fas fa-chart-line" style="color: #FCAE3D;"></i>
                             <p>零钱通</p>
                         </div>
@@ -4182,7 +4276,7 @@
                 a.download = `LPhone_部分备份_${new Date().toISOString().slice(0,10)}.json`;
                 document.body.appendChild(a);
                 a.click();
-                document.removeChild(a);
+                document.body.removeChild(a);
                 URL.revokeObjectURL(url);
             } catch (e) {
                 showToast(`导出部分数据失败: ${e.message}`, 'error');
@@ -4199,17 +4293,8 @@
                 try {
                     const importedData = JSON.parse(e.target.result);
                     if (importedData.appData && (importedData.appData.user || importedData.appData.contacts)) { // Check for full or partial backup
-                        // For partial backup, merge data instead of full overwrite
-                        if (!importedData.appData.version) { 
-                            Object.keys(importedData.appData).forEach(key => {
-                                appData[key] = importedData.appData[key];
-                            });
-                            await saveData();
-                            showToast('部分数据恢复成功！应用将重新加载。');
-                        } else { // Full backup
-                            await dataManager.importFromBackup(importedData);
-                            showToast('数据恢复成功！应用将重新加载。');
-                        }
+                        await dataManager.importFromBackup(importedData);
+                        showToast('数据恢复成功！应用将重新加载。');
                         setTimeout(() => location.reload(), 1500);
                     } else {
                         showToast('文件格式不正确或数据结构不完整，恢复失败。', 'error');
@@ -4265,6 +4350,10 @@
                 showModal(modalId, html);
 
                 document.getElementById('transfer-claim-btn').onclick = () => {
+                    const amount = parseFloat(message.content.amount);
+                    appData.user.wallet.balance += amount;
+                    const senderName = chatType === 'group' ? (chat.members.find(m => m.id === message.sender)?.name || '群成员') : (chat.remark || chat.name);
+                    appData.user.wallet.transactions.push({ type: 'transfer-claim-btn').onclick = () => {
                     const amount = parseFloat(message.content.amount);
                     appData.user.wallet.balance += amount;
                     const senderName = chatType === 'group' ? (chat.members.find(m => m.id === message.sender)?.name || '群成员') : (chat.remark || chat.name);
@@ -5382,7 +5471,7 @@
                     <p>为保障良好的创作与交流氛围，请各位用户遵守如下约定：</p>
                     <ol>
                         <li>❌ 禁止任何形式的二次传播（包括但不限于转载、上传至公共平台、分享给非授权用户等），否则会被直接永久拉黑并挂人。</li>
-                        <li>❌ 禁止二次修改、篡改原始内容或程序文件，然后再进行售卖等行为，本小手机暂时纯免费，从2025年11月27日-截止2025年12年31日该小手机免费，从2026年1月1日过后截止开放群聊，会直接锁群。</li>
+                        <li>❌ 禁止二次修改、篡改原始内容或程序文件，然后再进行售卖等行为，本小手机暂时纯免费，从2025年11月27日-截止2026年3年25日该小手机免费，从2026年3月25日过后截止会直接锁群，后续再开放就会有点小偿3r。</li>
                         <li>❌ 禁止使用本小手机进行任何不良、违规、违法活动，禁止用该小手机导入酒馆角色卡，导入别人的角色卡时务必需要经过授权。</li>
                         <li>❌ 严禁发布或讨论任何涉及政治敏感、违反法律法规及相关政策的内容。</li>
                         <li>✅ 鼓励积极、友善、富有创意的交流与共创，共建温暖社区。</li>
@@ -5400,6 +5489,7 @@
                 </div>
             `;
         }
+
 
         // 对方正在输入中
         function setTypingIndicator(chatId, isTyping, memberName = null) {
@@ -6144,6 +6234,21 @@
                     renderMainContent(tab.dataset.page);
                 });
             });
+
+            document.querySelectorAll('#forum-app-page .tab-item').forEach(tab => {
+                tab.addEventListener('click', () => {
+                    document.querySelector('#forum-app-page .tab-item.active').classList.remove('active');
+                    tab.classList.add('active');
+                    renderForumContent(tab.dataset.page);
+                });
+            });
+
+            document.getElementById('status-bar').addEventListener('mousedown', (e) => {
+                if (e.offsetY < 10) { // Simple check for top edge swipe
+                    const notificationBar = document.getElementById('notification-bar');
+                    notificationBar.classList.toggle('show');
+                }
+            });
             
             checkAndPostCharMoments();
             if (appData.settings.backgroundInteraction.enabled) startBackgroundInteraction();
@@ -6372,4 +6477,3 @@
     </script>
 </body>
 </html>
-```
