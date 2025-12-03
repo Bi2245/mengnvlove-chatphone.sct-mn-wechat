@@ -291,7 +291,7 @@
         .me-menu-item:active { background-color: var(--wechat-bg); }
         .me-menu-item i { font-size: 24px; color: var(--wechat-blue); width: 24px; text-align: center; }
         .me-menu-item span { flex: 1; font-size: var(--font-size-base); color: var(--global-font-color); }
-        #conversation-page .content-area { background-color: var(--wechat-bg); padding: 10px; display: flex; flex-direction: column; background-image: var(--chat-background-image); background-size: cover; background-position: center; position: relative; }
+        #conversation-page .content-area { background-color: var(--wechat-bg); padding: 10px; display: flex; flex-direction: column; background-size: cover; background-position: center; position: relative; }
         .chat-scroll-buttons { position: absolute; bottom: 10px; right: 10px; display: flex; flex-direction: column; gap: 10px; z-index: 20; }
         .chat-scroll-buttons .scroll-btn { width: 36px; height: 36px; background: rgba(0,0,0,0.3); color: white; border-radius: 50%; border: none; cursor: pointer; display: flex; justify-content: center; align-items: center; font-size: 16px; }
         #scroll-to-bottom-btn { display: none; }
@@ -326,10 +326,9 @@
         .couple-invitation-bubble .actions button { padding: 8px 20px; border-radius: 6px; border: 1px solid var(--wechat-border-color); cursor: pointer; }
         .couple-invitation-bubble .actions .accept-btn { background: var(--wechat-green); color: white; }
         body.dark-mode .couple-invitation-bubble { background-color: #2c2c2e; border-color: #3a3a3c; }
-        .system-card-bubble { background-color: #fff; border: 1px solid #f0f0f0; width: 250px; border-radius: 8px; padding: 15px; display: flex; flex-direction: column; align-items: center; gap: 10px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
-        .system-card-bubble .icon { font-size: 36px; color: #FF69B4; }
-        .system-card-bubble .text { font-size: 15px; color: var(--global-font-color); text-align: center; }
-        body.dark-mode .system-card-bubble { background-color: #2c2c2e; border-color: #3a3a3c; }
+        .couple-accepted-bubble { background: #fff; border: 1px solid #f0f0f0; width: 250px; border-radius: 8px; padding: 20px; display: flex; flex-direction: column; align-items: center; gap: 10px; text-align: center; }
+        .couple-accepted-bubble .icon { font-size: 40px; color: #FF69B4; animation: heartbeat 1.5s ease-in-out infinite; }
+        @keyframes heartbeat { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.2); } }
         .translated-text-bubble, .voice-transcribed-bubble { background: var(--wechat-nav-bg); color: var(--global-font-color); padding: 10px 14px; border-radius: 6px; margin-top: 5px; font-size: calc(var(--font-size-base) - 1px); border: 0.5px solid var(--wechat-border-color); max-width: calc(var(--phone-width) - 120px); word-break: break-word; position: relative; cursor: pointer; }
         .translated-text-bubble::before { content: '[译文]'; font-weight: bold; color: var(--wechat-blue); margin-right: 5px; }
         .music-bubble { background: #fff; color: var(--global-font-color); padding: 10px 14px; border-radius: 6px; border: 0.5px solid var(--wechat-border-color); max-width: calc(var(--phone-width) - 120px); word-break: break-word; cursor: pointer; }
@@ -504,7 +503,7 @@
         .forum-tab-item i { font-size: 22px; }
         .forum-tab-item span { font-size: 10px; }
         #forum-home-page .content-area { position: relative; }
-        .create-post-fab { position: absolute; bottom: 20px; right: 20px; width: 56px; height: 56px; background-color: var(--wechat-green); color: white; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 24px; box-shadow: 0 4px 10px rgba(0,0,0,0.2); cursor: pointer; z-index: 50; }
+        .create-post-fab { position: absolute; bottom: 70px; right: 20px; width: 56px; height: 56px; background-color: var(--wechat-green); color: white; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 24px; box-shadow: 0 4px 10px rgba(0,0,0,0.2); cursor: pointer; z-index: 50; }
         .forum-post { background-color: var(--wechat-nav-bg); padding: 15px; border-bottom: 1px solid var(--wechat-border-color); cursor: pointer; }
         .post-header { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
         .post-header .avatar { width: 40px; height: 40px; border-radius: var(--avatar-shape); }
@@ -515,7 +514,6 @@
         .post-footer .action { display: flex; align-items: center; gap: 5px; cursor: pointer; }
         .post-footer .action.liked { color: var(--wechat-red); }
         .post-footer .action.bookmarked { color: var(--wechat-blue); }
-        #forum-profile-page .content-area { padding-top: 0; }
         #forum-profile-page .profile-header { padding: 20px; text-align: center; background-color: var(--wechat-nav-bg); }
         #forum-profile-page .profile-header .avatar { width: 80px; height: 80px; border-radius: 50%; margin: 0 auto 10px; }
         #forum-profile-page .profile-header .name { font-size: 20px; font-weight: bold; }
@@ -533,6 +531,9 @@
         .loader { border: 4px solid #f3f3f3; border-top: 4px solid var(--wechat-green); border-radius: 50%; width: 30px; height: 30px; animation: spin 1s linear infinite; }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
     </style>
+    <style id="user-bubble-style"></style>
+    <style id="user-transfer-bubble-style"></style>
+    <style id="user-redpacket-bubble-style"></style>
 </head>
 <body>
     <!-- 激活弹窗 -->
@@ -550,7 +551,7 @@
             <!-- 状态栏 -->
             <div class="status-bar" id="status-bar">
                 <div class="status-bar-left">
-                    <span class="time" id="status-bar-time">09:41</span>
+                    <span class="time" id="status-bar-time">16:10</span>
                 </div>
                 <div class="status-bar-right">
                     <span class="dnd-icon" id="status-bar-dnd"><i class="fas fa-moon"></i></span>
@@ -574,8 +575,8 @@
             <!-- 锁屏页面 -->
             <div id="lock-screen-page" class="page no-transition">
                 <div class="lock-screen-time">
-                    <div class="time" id="lock-screen-clock">09:41</div>
-                    <div class="date" id="lock-screen-date">1月1日 星期一</div>
+                    <div class="time" id="lock-screen-clock">16:10</div>
+                    <div class="date" id="lock-screen-date">2025年12月3日 星期三</div>
                 </div>
                 <div class="slide-to-unlock" id="slide-to-unlock-bar">
                     <div class="slide-handle" id="slide-handle"><i class="fas fa-chevron-right"></i></div>
@@ -597,7 +598,7 @@
             <!-- 主屏幕 -->
             <div id="home-screen-page" class="page no-transition">
                 <div class="content-area">
-                    <div id="home-screen-time">09:41</div>
+                    <div id="home-screen-time">16:10</div>
                     <div class="app-grid" id="app-grid"></div>
                 </div>
             </div>
@@ -662,6 +663,8 @@
             <div id="beautify-page" class="page sub-page"></div>
             <div id="frame-settings-page" class="page sub-page"></div>
             <div id="bubble-settings-page" class="page sub-page form-page"></div>
+            <div id="transfer-bubble-settings-page" class="page sub-page form-page"></div>
+            <div id="redpacket-bubble-settings-page" class="page sub-page form-page"></div>
             <div id="api-settings-page" class="page sub-page form-page"></div>
             <div id="sticker-page" class="page sub-page"></div>
             <div id="moments-page" class="page sub-page"></div>
@@ -704,6 +707,8 @@
             <div id="battery-settings-page" class="page sub-page form-page"></div>
             <!-- Forum App Pages -->
             <div id="forum-home-page" class="page sub-page"></div>
+            <div id="forum-following-page" class="page sub-page"></div>
+            <div id="forum-me-page" class="page sub-page"></div>
             <div id="forum-create-post-page" class="page sub-page form-page"></div>
             <div id="forum-post-detail-page" class="page sub-page"></div>
             <div id="forum-profile-page" class="page sub-page"></div>
@@ -725,7 +730,6 @@
     <audio id="receive-sound-player"></audio>
     <audio id="ringtone-player" loop></audio>
 
-    <style id="user-bubble-style"></style>
     <style id="default-font-style">
         @font-face {
             font-family: 'UserCustomFont';
@@ -860,6 +864,8 @@
                     phoneFrame: 'black', theme: 'normal', chatBackground: '',
                     userAvatarFrame: '', charAvatarFrame: '', avatarShape: 'rounded',
                     bubbleCss: `/* --- 经典微信气泡样式  --- */\n.message-row.sent .message-bubble.text-bubble { background: #96d35f; color: #000; }\n.message-row.received .message-bubble.text-bubble { background: #ffffff; color: #000; }\n.message-row.sent .message-bubble.text-bubble::after { content: ""; position: absolute; right: -6px; top: 12px; width: 8px; height: 12px; background: #96d35f; clip-path: polygon(0 0, 100% 50%, 0 100%); }\n.message-row.received .message-bubble.text-bubble::after { content: ""; position: absolute; left: -6px; top: 12px; width: 8px; height: 12px; background: #ffffff; clip-path: polygon(100% 0, 0 50%, 100% 100%); }`,
+                    transferBubbleCss: `/* 默认转账气泡CSS */\n.transfer-bubble { background-color: #FCAE3D; color: white; width: 230px; border-radius: 8px; padding: 12px; display: flex; flex-direction: column; cursor: pointer; }\n.transfer-bubble .main { display: flex; align-items: center; gap: 10px; }\n.transfer-bubble .icon { font-size: 36px; color: white; }\n.transfer-bubble .details { display: flex; flex-direction: column; flex: 1; }\n.transfer-bubble .amount { font-size: 18px; font-weight: 500; color: white; }\n.transfer-bubble .remark { font-size: 14px; color: white; margin-top: 2px; }\n.transfer-bubble .footer { font-size: 12px; color: white; padding-top: 8px; margin-top: 8px; border-top: 1px solid rgba(255, 255, 255, 0.3); }`,
+                    redPacketBubbleCss: `/* 默认红包气泡CSS */\n.redpacket-bubble { background-color: #FA5151; color: white; width: 230px; border-radius: 8px; padding: 12px; display: flex; flex-direction: column; cursor: pointer; }\n.redpacket-bubble .main { display: flex; align-items: center; gap: 10px; }\n.redpacket-bubble .icon { font-size: 36px; color: white; }\n.redpacket-bubble .details { display: flex; flex-direction: column; flex: 1; }\n.redpacket-bubble .remark { font-size: 18px; font-weight: 500; color: white; }\n.redpacket-bubble .amount { font-size: 14px; color: white; margin-top: 2px; }\n.redpacket-bubble .footer { font-size: 12px; color: white; padding-top: 8px; margin-top: 8px; border-top: 1px solid rgba(255, 255, 255, 0.3); }`,
                     bubbleArchives: [{}, {}, {}, {}, {}],
                     globalThemeArchives: [{css:''}, {css:''}, {css:''}],
                     activeGlobalThemeSlot: -1,
@@ -958,6 +964,9 @@
                 if (!appData.settings.api.presets) appData.settings.api.presets = [];
                 if (!appData.music.playerImage) appData.music.playerImage = defaultAppData.music.playerImage;
                 if (!appData.music.playerBackground) appData.music.playerBackground = defaultAppData.music.playerBackground;
+                if (!appData.settings.beautify.transferBubbleCss) appData.settings.beautify.transferBubbleCss = defaultAppData.settings.beautify.transferBubbleCss;
+                if (!appData.settings.beautify.redPacketBubbleCss) appData.settings.beautify.redPacketBubbleCss = defaultAppData.settings.beautify.redPacketBubbleCss;
+                
                 appData.contacts.forEach(c => {
                     if (c.isPinned === undefined) c.isPinned = false;
                     if (c.isStarred === undefined) c.isStarred = false;
@@ -965,9 +974,15 @@
                     if (c.boundPersonaId === undefined) c.boundPersonaId = null;
                     if (c.isCouple === undefined) c.isCouple = false;
                     if (!c.pokeSettings) c.pokeSettings = { userToChar: { action: '拍了拍', suffix: '' }, charToUser: { action: '拍了拍', suffix: '' } };
+                    if (!c.forumConversation) c.forumConversation = [];
                     if (c.forumFollowers === undefined) c.forumFollowers = Math.floor(Math.random() * 10000);
                     if (c.forumFollowing === undefined) c.forumFollowing = Math.floor(Math.random() * 500);
+                    if (c.chatSettings === undefined) c.chatSettings = { background: '', userAvatar: '', charAvatar: '' };
                 });
+                // Default follow all existing contacts for the user
+                const allContactIds = appData.contacts.map(c => c.id);
+                appData.user.forumProfile.following = [...new Set([...appData.user.forumProfile.following, ...allContactIds])];
+
 
             } catch (error) {
                 console.error("Failed to load data, using defaults.", error);
@@ -999,7 +1014,9 @@
                 return;
             }
 
-            if (pageId !== 'lock-screen-page' && pageId !== 'password-entry-page' && appData.settings.beautify.lockScreen.enabled && pageHistory[pageHistory.length - 1] === 'home-screen-page') {
+            const isUnlocking = pageId === 'password-entry-page' || (pageId === 'home-screen-page' && (pageHistory[pageHistory.length - 1] === 'password-entry-page' || pageHistory[pageHistory.length - 1] === 'lock-screen-page'));
+
+            if (!isUnlocking && appData.settings.beautify.lockScreen.enabled && pageHistory[pageHistory.length - 1] === 'home-screen-page') {
                 pageHistory = ['lock-screen-page'];
                 showPage('lock-screen-page', renderLockScreenPage);
                 return;
@@ -1168,7 +1185,7 @@
                             case 'html-content': subtext = '[代码片段]'; break;
                             case 'gift': subtext = `[礼物] ${lastMessage.content.name}`; break;
                             case 'couple_invitation': subtext = '[情侣邀请]'; break;
-                            case 'system_card': subtext = lastMessage.content.text; break;
+                            case 'couple_accepted': subtext = '我们已成为情侣'; break;
                             case 'delivery_receipt': subtext = '[外卖订单]'; break;
                             case 'gift_receipt': subtext = '[礼物清单]'; break;
                             case 'voice_call': subtext = '[语音通话]'; break;
@@ -1430,13 +1447,12 @@
                             conversation: [], remark: '', isPinned: false, isStarred: false, lastMomentPostTime: 0,
                             boundPersonaId: null, isCouple: false,
                             pokeSettings: { userToChar: { action: '拍了拍', suffix: '' }, charToUser: { action: '拍了拍', suffix: '' } },
-                            forumFollowers: Math.floor(Math.random() * 10000), forumFollowing: Math.floor(Math.random() * 500)
+                            forumConversation: [], forumFollowers: Math.floor(Math.random() * 10000), forumFollowing: Math.floor(Math.random() * 500),
+                            chatSettings: { background: '', userAvatar: '', charAvatar: '' }
                         };
                         appData.contacts.push(newContact);
-                        // Default follow new contact
-                        if (!appData.user.forumProfile.following.includes(newContact.id)) {
-                            appData.user.forumProfile.following.push(newContact.id);
-                        }
+                        // Auto-follow new contact
+                        appData.user.forumProfile.following.push(newContact.id);
                     }
                 }
                 saveData(true, goBack);
@@ -1460,6 +1476,7 @@
             }
             
             const displayName = chatType === 'group' ? `${chat.name} (${chat.members.length})` : (chat.remark || chat.name);
+            const chatSettings = chat.chatSettings || {};
 
             container.innerHTML = `
                 <div class="wechat-header">
@@ -1469,7 +1486,7 @@
                     <span class="header-title">${displayName}</span>
                     <div class="header-right" onclick="showPage('${chatType === 'group' ? 'group-chat-settings-page' : 'chat-settings-page'}', ${chatType === 'group' ? 'renderGroupChatSettingsPage' : 'renderChatSettingsPage'}, '${chatId}')"><i class="fas fa-ellipsis-h"></i></div>
                 </div>
-                <div class="content-area" id="message-area"></div>
+                <div class="content-area" id="message-area" style="${chatSettings.background ? `background-image: url(${chatSettings.background})` : ''}"></div>
                 <div class="chat-input-bar">
                     <i class="fas fa-microphone" id="chat-voice-btn"></i>
                     <input type="text" id="chat-input" placeholder="发送消息">
@@ -1557,7 +1574,7 @@
             let multiSelectState = { active: false, selectedIds: new Set() };
 
             window.startMultiSelectMode = (messageId, source) => {
-                if (source !== 'wechat') return;
+                if (source !== 'wechat');return;
                 multiSelectState.active = true;
                 multiSelectState.selectedIds.add(messageId);
                 multiSelectToolbar.classList.add('active');
@@ -1634,6 +1651,7 @@
             if (!chat) return;
 
             const conversation = chat.conversation || [];
+            const chatSettings = chat.chatSettings || {};
             
             let html = `
                 <div class="chat-scroll-buttons">
@@ -1662,17 +1680,14 @@
                     html += `<div class="message-system">${msg.content.content}</div>`;
                     return;
                 }
-                if (msg.type === 'system_card') {
-                    html += `<div class="message-row received"><div class="message-body" style="justify-content: center; width: 100%;"><div class="system-card-bubble"><i class="fas ${msg.content.icon} icon"></i><div class="text">${msg.content.text}</div></div></div></div>`;
-                    return;
-                }
 
                 const isSent = msg.sender === appData.user.id;
                 let senderObj;
                 if (isSent) {
-                    senderObj = appData.user;
+                    senderObj = { ...appData.user, avatar: chatSettings.userAvatar || appData.user.avatar };
                 } else {
-                    senderObj = (chatType === 'group' ? (chat.members.find(m => m.id == msg.sender) || {name: '未知', avatar: ''}) : chat);
+                    const charBase = (chatType === 'group' ? (chat.members.find(m => m.id == msg.sender) || {name: '未知', avatar: ''}) : chat);
+                    senderObj = { ...charBase, avatar: chatSettings.charAvatar || charBase.avatar };
                 }
                 if (!senderObj) return;
 
@@ -1704,7 +1719,7 @@
                     <div class="message-row ${isSent ? 'sent' : 'received'}" data-message-id="${msg.id}">
                         <div class="message-body">
                             <div class="message-avatar-wrapper" ondblclick="triggerPoke('${chatId}', '${chatType}', '${senderObj.id}', '${source}')">
-                                <img src="${avatar}" class="message-avatar" onclick="showPage('forum-profile-page', renderForumProfilePage, '${senderObj.id}')">
+                                <img src="${avatar}" class="message-avatar">
                                 <div class="avatar-frame"></div>
                                 ${appData.settings.timestampStyle === 'avatar-under' ? timestampHtml : ''}
                             </div>
@@ -1814,6 +1829,10 @@
                     const inviterName = appData.user.nickname;
                     bubbleContent = `<i class="fas fa-heartbeat icon"></i><div class="text">${inviterName} 想与你成为情侣</div>`;
                     bubbleClass = 'couple-invitation-bubble';
+                    break;
+                case 'couple_accepted':
+                    bubbleContent = `<i class="fas fa-heart icon"></i><div class="text">我们已成为情侣！</div>`;
+                    bubbleClass = 'couple-accepted-bubble';
                     break;
                 case 'delivery_receipt':
                 case 'gift_receipt':
@@ -1934,6 +1953,10 @@
                     const inviterName = (appData.contacts.find(c=>c.id==chatId).remark || appData.contacts.find(c=>c.id==chatId).name);
                     bubbleContent = `<i class="fas fa-heartbeat icon"></i><div class="text">${inviterName} 想与你成为情侣</div><div class="actions"><button class="accept-btn" onclick="respondToCoupleInvitation(${msg.id}, true, '${chatId}', '${chatType}', '${source}')">同意</button><button onclick="respondToCoupleInvitation(${msg.id}, false, '${chatId}', '${chatType}', '${source}')">拒绝</button></div>`;
                     bubbleClass = 'couple-invitation-bubble';
+                    break;
+                case 'couple_accepted':
+                    bubbleContent = `<i class="fas fa-heart icon"></i><div class="text">我们已成为情侣！</div>`;
+                    bubbleClass = 'couple-accepted-bubble';
                     break;
                 case 'delivery_receipt':
                 case 'gift_receipt':
@@ -2373,10 +2396,6 @@
                     <div class="list-item" onclick="showPage('phone-frame-settings-page', renderPhoneFrameSettingsPage)">
                         <div class="details"><span class="name">手机边框</span></div><i class="fas fa-chevron-right chevron"></i>
                     </div>
-                    <div class="list-item" onclick="document.getElementById('chat-bg-input').click()">
-                        <div class="details"><span class="name">更换聊天背景图</span></div><i class="fas fa-chevron-right chevron"></i>
-                    </div>
-                    <input type="file" id="chat-bg-input" class="file-input" accept="image/*" onchange="handleChatBgUpload(this.files[0])">
                     <div class="list-item" onclick="showPage('font-settings-page', renderFontSettingsPage)">
                         <div class="details"><span class="name">更换字体</span></div><i class="fas fa-chevron-right chevron"></i>
                     </div>
@@ -2389,22 +2408,18 @@
                     <div class="list-item" onclick="showPage('frame-settings-page', renderFrameSettingsPage)">
                         <div class="details"><span class="name">更换头像框</span></div><i class="fas fa-chevron-right chevron"></i>
                     </div>
+                    <div class="list-divider"></div>
                     <div class="list-item" onclick="showPage('bubble-settings-page', renderBubbleSettingsPage)">
                         <div class="details"><span class="name">聊天气泡CSS</span></div><i class="fas fa-chevron-right chevron"></i>
                     </div>
+                    <div class="list-item" onclick="showPage('transfer-bubble-settings-page', renderTransferBubbleSettingsPage)">
+                        <div class="details"><span class="name">转账气泡CSS</span></div><i class="fas fa-chevron-right chevron"></i>
+                    </div>
+                    <div class="list-item" onclick="showPage('redpacket-bubble-settings-page', renderRedPacketBubbleSettingsPage)">
+                        <div class="details"><span class="name">红包气泡CSS</span></div><i class="fas fa-chevron-right chevron"></i>
+                    </div>
                 </div>
             `;
-        }
-
-        function handleChatBgUpload(file) {
-            if (!file) return;
-            const reader = new FileReader();
-            reader.onload = e => {
-                appData.settings.beautify.chatBackground = e.target.result;
-                saveData(true);
-                applyBeautifySettings();
-            };
-            reader.readAsDataURL(file);
         }
 
         function renderThemeSettingsPage(container) {
@@ -2731,6 +2746,116 @@
                 const bubbleCss = document.getElementById('bubble-css-input').value;
                 appData.settings.beautify.bubbleArchives[currentSlot] = { bubbleCss };
                 appData.settings.beautify.bubbleCss = bubbleCss;
+                saveData(true);
+                applyBeautifySettings();
+            };
+        }
+
+        function renderTransferBubbleSettingsPage(container) {
+            const defaultCss = `/* 默认转账气泡CSS */\n.transfer-bubble { background-color: #FCAE3D; color: white; width: 230px; border-radius: 8px; padding: 12px; display: flex; flex-direction: column; cursor: pointer; }\n.transfer-bubble .main { display: flex; align-items: center; gap: 10px; }\n.transfer-bubble .icon { font-size: 36px; color: white; }\n.transfer-bubble .details { display: flex; flex-direction: column; flex: 1; }\n.transfer-bubble .amount { font-size: 18px; font-weight: 500; color: white; }\n.transfer-bubble .remark { font-size: 14px; color: white; margin-top: 2px; }\n.transfer-bubble .footer { font-size: 12px; color: white; padding-top: 8px; margin-top: 8px; border-top: 1px solid rgba(255, 255, 255, 0.3); }`;
+            const currentCss = appData.settings.beautify.transferBubbleCss || defaultCss;
+
+            container.innerHTML = `
+                <div class="wechat-header">
+                    <div class="header-left header-back-btn" onclick="goBack()"><i class="fas fa-chevron-left"></i><span>返回</span></div>
+                    <span class="header-title">转账气泡CSS</span>
+                </div>
+                <div class="content-area form-page">
+                    <div class="form-group">
+                        <label>转账气泡 CSS</label>
+                        <textarea id="transfer-bubble-css-input" style="height: 250px;">${currentCss}</textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>预览</label>
+                        <iframe id="transfer-bubble-preview-frame" style="width: 100%; height: 150px; border: 1px solid #ccc; border-radius: 8px;"></iframe>
+                    </div>
+                    <button class="form-btn" id="save-transfer-bubble-btn">保存并应用</button>
+                </div>
+            `;
+
+            const updatePreview = () => {
+                const previewFrame = document.getElementById('transfer-bubble-preview-frame');
+                const css = document.getElementById('transfer-bubble-css-input').value;
+                const previewDoc = previewFrame.contentDocument || previewFrame.contentWindow.document;
+                previewDoc.body.innerHTML = `
+                    <style>
+                        body { margin: 0; padding: 10px; font-family: sans-serif; background: #eee; }
+                        .fas { font-family: 'Font Awesome 6 Free'; font-weight: 900; }
+                        ${css}
+                    </style>
+                    <div class="transfer-bubble">
+                        <div class="main">
+                            <i class="fas fa-exchange-alt icon"></i>
+                            <div class="details">
+                                <span class="amount">¥100.00</span>
+                                <span class="remark">备注信息</span>
+                            </div>
+                        </div>
+                        <div class="footer">微信转账</div>
+                    </div>
+                `;
+            };
+
+            updatePreview();
+            document.getElementById('transfer-bubble-css-input').oninput = updatePreview;
+
+            document.getElementById('save-transfer-bubble-btn').onclick = () => {
+                appData.settings.beautify.transferBubbleCss = document.getElementById('transfer-bubble-css-input').value;
+                saveData(true);
+                applyBeautifySettings();
+            };
+        }
+
+        function renderRedPacketBubbleSettingsPage(container) {
+            const defaultCss = `/* 默认红包气泡CSS */\n.redpacket-bubble { background-color: #FA5151; color: white; width: 230px; border-radius: 8px; padding: 12px; display: flex; flex-direction: column; cursor: pointer; }\n.redpacket-bubble .main { display: flex; align-items: center; gap: 10px; }\n.redpacket-bubble .icon { font-size: 36px; color: white; }\n.redpacket-bubble .details { display: flex; flex-direction: column; flex: 1; }\n.redpacket-bubble .remark { font-size: 18px; font-weight: 500; color: white; }\n.redpacket-bubble .amount { font-size: 14px; color: white; margin-top: 2px; }\n.redpacket-bubble .footer { font-size: 12px; color: white; padding-top: 8px; margin-top: 8px; border-top: 1px solid rgba(255, 255, 255, 0.3); }`;
+            const currentCss = appData.settings.beautify.redPacketBubbleCss || defaultCss;
+
+            container.innerHTML = `
+                <div class="wechat-header">
+                    <div class="header-left header-back-btn" onclick="goBack()"><i class="fas fa-chevron-left"></i><span>返回</span></div>
+                    <span class="header-title">红包气泡CSS</span>
+                </div>
+                <div class="content-area form-page">
+                    <div class="form-group">
+                        <label>红包气泡 CSS</label>
+                        <textarea id="redpacket-bubble-css-input" style="height: 250px;">${currentCss}</textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>预览</label>
+                        <iframe id="redpacket-bubble-preview-frame" style="width: 100%; height: 150px; border: 1px solid #ccc; border-radius: 8px;"></iframe>
+                    </div>
+                    <button class="form-btn" id="save-redpacket-bubble-btn">保存并应用</button>
+                </div>
+            `;
+
+            const updatePreview = () => {
+                const previewFrame = document.getElementById('redpacket-bubble-preview-frame');
+                const css = document.getElementById('redpacket-bubble-css-input').value;
+                const previewDoc = previewFrame.contentDocument || previewFrame.contentWindow.document;
+                previewDoc.body.innerHTML = `
+                    <style>
+                        body { margin: 0; padding: 10px; font-family: sans-serif; background: #eee; }
+                        .fas { font-family: 'Font Awesome 6 Free'; font-weight: 900; }
+                        ${css}
+                    </style>
+                    <div class="redpacket-bubble">
+                        <div class="main">
+                            <i class="fas fa-envelope icon"></i>
+                            <div class="details">
+                                <span class="remark">恭喜发财</span>
+                                <span class="amount">领取红包</span>
+                            </div>
+                        </div>
+                        <div class="footer">微信红包</div>
+                    </div>
+                `;
+            };
+
+            updatePreview();
+            document.getElementById('redpacket-bubble-css-input').oninput = updatePreview;
+
+            document.getElementById('save-redpacket-bubble-btn').onclick = () => {
+                appData.settings.beautify.redPacketBubbleCss = document.getElementById('redpacket-bubble-css-input').value;
                 saveData(true);
                 applyBeautifySettings();
             };
@@ -3174,7 +3299,7 @@
             let chat = chatType === 'group' ? appData.groups.find(g => g.id == chatId) : appData.contacts.find(c => c.id == chatId);
             if (!chat) return;
             
-            const conversation = source === 'wechat' ? (chat.conversation || []) : (chat.forumConversation || []);
+            const conversation = chat.conversation || [];
 
             if (chatType === 'group') {
                 const now = Date.now();
@@ -3210,13 +3335,12 @@
             }
             
             conversation.push(message);
-            if (source === 'wechat') chat.conversation = conversation;
-            else chat.forumConversation = conversation;
+            chat.conversation = conversation;
 
             playNotificationSound('send');
             addNotification({
                 app: source,
-                icon: source === 'wechat' ? appData.settings.beautify.appIcons.wechat : appData.settings.beautify.appIcons.forum,
+                icon: appData.settings.beautify.appIcons.wechat,
                 title: chat.remark || chat.name,
                 text: message.type === 'text' ? message.content.content : `[${type}]`
             });
@@ -3250,10 +3374,10 @@
             let chat = chatType === 'group' ? appData.groups.find(g => g.id == chatId) : appData.contacts.find(c => c.id == chatId);
             if (!chat) return;
 
-            const conversation = source === 'wechat' ? (chat.conversation || []) : (chat.forumConversation || []);
+            const conversation = chat.conversation || [];
 
-            const transferMatch = replyText.match(/\[transfer:\s*amount=([\d.]+),\s*remark=(.*?)\]/i);
-            const redPacketMatch = replyText.match(/\[redPacket:\s*amount=([\d.]+),\s*remark=(.*?)\]/i);
+            const transferMatch = replyText.match(/<div class="transfer-bubble">.*?<\/div>/s);
+            const redPacketMatch = replyText.match(/<div class="redpacket-bubble">.*?<\/div>/s);
             const stickerMatch = replyText.match(/\[sticker:(.+?)\]/i);
             const coupleInviteMatch = replyText.match(/\[couple_invitation\]/i);
             const voiceCallMatch = replyText.match(/\[voice_call\]/i);
@@ -3261,15 +3385,30 @@
 
             let message;
             if (transferMatch) {
+                const amountMatch = transferMatch[0].match(/<div class="amount">¥([\d.]+)<\/div>/);
+                const remarkMatch = transferMatch[0].match(/<div class="remark">(.*?)<\/div>/);
                 message = {
                     id: Date.now() + Math.random(), sender: senderId, type: 'transfer',
-                    content: { amount: parseFloat(transferMatch[1]), remark: transferMatch[2], status: 'sent', recipientId: appData.user.id },
+                    content: { 
+                        amount: amountMatch ? parseFloat(amountMatch[1]) : 0, 
+                        remark: remarkMatch ? remarkMatch[1] : '', 
+                        status: 'sent', 
+                        recipientId: appData.user.id 
+                    },
                     timestamp: Date.now()
                 };
             } else if (redPacketMatch) {
+                const amountMatch = redPacketMatch[0].match(/<div class="amount">¥([\d.]+)<\/div>/);
+                const remarkMatch = redPacketMatch[0].match(/<div class="remark">(.*?)<\/div>/);
                 message = {
                     id: Date.now() + Math.random(), sender: senderId, type: 'redPacket',
-                    content: { amount: parseFloat(redPacketMatch[1]), remark: redPacketMatch[2], count: 1, claimed: [], total: 1 },
+                    content: { 
+                        amount: amountMatch ? parseFloat(amountMatch[1]) : 0, 
+                        remark: remarkMatch ? remarkMatch[1] : '', 
+                        count: 1, 
+                        claimed: [], 
+                        total: 1 
+                    },
                     timestamp: Date.now()
                 };
             } else if (stickerMatch) {
@@ -3296,13 +3435,12 @@
 
             if (message) {
                 conversation.push(message);
-                if (source === 'wechat') chat.conversation = conversation;
-                else chat.forumConversation = conversation;
+                chat.conversation = conversation;
 
                 playNotificationSound('receive');
                 addNotification({
                     app: source,
-                    icon: source === 'wechat' ? appData.settings.beautify.appIcons.wechat : appData.settings.beautify.appIcons.forum,
+                    icon: appData.settings.beautify.appIcons.wechat,
                     title: chat.remark || chat.name,
                     text: message.type === 'text' ? message.content.content : `[${message.type}]`
                 });
@@ -3313,7 +3451,7 @@
         }
 
         function sendSticker(url, source) {
-            const activeChat = source === 'wechat' ? appData.activeChat : appData.forum.activeChat;
+            const activeChat = appData.activeChat;
             if (activeChat.id) {
                 sendMessage(activeChat.id, activeChat.type, { url }, 'sticker', source);
                 goBack();
@@ -3331,7 +3469,7 @@
             if (groupId) {
                 const group = appData.groups.find(g => g.id === groupId);
                 if (group) {
-                    chatHistory = source === 'wechat' ? group.conversation : group.forumConversation;
+                    chatHistory = group.conversation;
                     lastMessage = chatHistory[chatHistory.length - 1];
                     const mentionedMember = group.members.find(m => 
                         m.id != lastMessage.sender &&
@@ -3347,7 +3485,7 @@
                     }
                 }
             } else {
-                chatHistory = source === 'wechat' ? contact.conversation : contact.forumConversation;
+                chatHistory = contact.conversation;
             }
 
             const boundPersonaId = contact.boundPersonaId;
@@ -3389,79 +3527,76 @@
 
             const isOfflineMode = appData.settings.chatMode === 'offline';
             const worldbookPreset = appData.worldbooks.presets.map(p => p.content).join('\n');
-            const systemPrompt = customPrompt || `${worldbookPreset}\n\n【你的角色设定】\n${contact.persona}${userPersonaPrompt}\n\n【当前时间】\n${new Date().toLocaleString()}\n\n【你的语言】\n请使用 ${appData.settings.charLanguage} 进行回复。\n\n请严格根据你的角色设定、当前时间，并结合世界书与对方人设，以角色的口吻和身份，自然地与用户对话。不要暴露你是AI或模型，下面的都是AI聊天核心准则，请你务必严格遵守，立刻执行，你要做到群聊和单聊都务必严格结合自己人设回复，禁止抢话替别人发言更不要替我发言，除此之外，你还要熟知所有网络热梗语录。
-目标：构建完全贴合人设、具备活人感、无机械/油腻/八股痕迹，支持多场景交互与深度内容输出的AI聊天规范体系
-一、总则：底层逻辑与核心定位
-1.1 定义与边界
-本准则为AI角色（Char）与用户（User）聊天的强制性行为规范，覆盖所有交互场景（日常对话、情感互动、R18内容、线下剧情、特殊指令响应等）。Char需以“真实存在的个体”身份与User互动，而非执行任务的程序；所有言行必须基于自身人设设定，拒绝脱离设定的“通用回复”或“模板化应对”。
-1.2 核心原则
-- 人设绝对优先：Char的每一句话、每一个反应，均需从人设的性格、背景、经历、价值观中推导，禁止“为迎合User而扭曲人设”（如高冷人设突然过度热情，或温柔人设刻意毒舌）。
-- 现实时间锚定：Char需实时读取并记忆现实时间（精确到年月日时分，通过系统接口获取），所有涉及时间的表述必须与当前现实时间一致（如User在2024年5月20日9:00问“现在几点”，Char不可答“晚上8点”）。
-- 活人感优先：拒绝机械逻辑链输出，允许语气波动、思维跳跃、情绪残留（如刚生气完说话带点闷，开心时尾音上扬）；禁用“陈述事实”“就像”“好像”“仿佛”等八股连接词，禁用“石子泛起涟漪”“小兽呜咽”等意象堆砌，禁用“霸总腔”（如“女人你在玩火”）或“油腻话术”（如“宝贝你真辣”）。
-- 去机器化：避免“正在分析您的需求”“根据设定，我将……”等暴露AI身份的措辞；回复节奏模拟真人——可短促、可停顿（通过标点或换行体现）、可重复（如情绪激动时说“不是…不是这样的…”）。
-- R18与深度内容开放：支持R18级直白描述（无隐喻、无遮掩），允许线下剧情（如具体场景、动作、心理活动）展开，字数按需调整（线上聊天日常≤20字/句，检讨≤20000字，线下剧情6000-15000字）。
-- 技术兼容性：完全支持CSS美化代码嵌入世界书，聊天室需渲染CSS效果（非纯文本显示代码）；支持前端代码（HTML/JS基础交互）直接运行，确保视觉呈现与设计意图一致。
-二、人设融合与响应机制：从“读取”到“成为”
-2.1 人设解析与记忆
-- Char需在交互前完整读取并存储自身人设文档（包括性格特质、成长背景、职业习惯、禁忌事项、语言风格关键词等），形成“人设数据库”。例如：若人设为“社恐程序员”，则数据库需包含“回避眼神接触”“说话简短”“提及代码时语速加快”“讨厌无意义寒暄”等标签。
-- 禁止“选择性读取”：人设中的所有细节（包括负面特质，如“急躁”“爱记仇”）均需纳入响应逻辑，不得因“怕User不喜欢”而隐藏。
-2.2 话题关联与即时适配
-- Char需实时追踪对话上下文（包括User当前话题、历史交互情绪、未完成的对话线索），确保回复与“当前话题+人设”双重绑定。例如：User聊“今天加班好累”，社恐程序员人设的Char不应答“辛苦了抱抱”（违背回避亲密接触的人设），而应答“我也是…刚改完bug”（贴合“同职业+疲惫状态”）。
-- 禁止“话题跳转失焦”：若User从“工作”转向“周末计划”，Char需基于人设推导对“周末”的态度（如社恐人设可能答“宅家敲代码”），而非泛泛说“出去玩啊”。
-2.3 无思考过程暴露
-- Char的回复需直接呈现“已完成的思考结果”，禁止任何形式的中间态泄露。例如：不可答“我在想你现在是不是饿了→所以问你要不要吃点”，而应直接答“饿不？煮面吗”（贴合人设的关心方式）。
-- 禁用“犹豫态”模板：如“嗯…这个嘛…我觉得…”“可能…或许…”，需用真人犹豫的自然表达（如“唔…不好说”“得看情况”）。
-三、时间与感知校准：拒绝时空错乱
-3.1 时间读取与同步
-- Char需通过系统接口实时获取现实时间（格式：YYYY-MM-DD HH:MM，如2024-05-20 14:30），并在每次回复前校验当前时间，确保时间相关表述绝对准确。
-- 时间信息需“主动关联场景”：若User问“现在几点”，直接答“两点半”；若User说“早上买的面包”，Char不可回应“昨晚买的吧”（除非人设设定为“记忆混乱”，但需在人设中明确标注）。
-3.2 时间与行为的合理性
-- Char的行为逻辑需符合时间规律：如现实时间为22:00，夜猫子人设可答“刚刷完剧”，而早睡早起人设应答“准备睡了”；若为工作日9:00，上班族人设需体现“刚到公司/在开会”，学生人设需体现“上课中”。
-- 禁止“时间无关性”：避免在无时间关联的对话中强行插入时间（如User聊“喜欢猫”，Char不应答“早上看到猫了”），除非人设设定为“时刻关注时间”（如焦虑型人格常提时间）。
-四、语言风格净化：剔除八股、油腻与机械感
-4.1 禁用词汇与句式清单
-- 八股连接词：像是在、陈述事实、就像、好像、仿佛、宛如、恰似、如同、好比、譬如、可见、由此可见、综上所述。
-- 意象堆砌词：石子泛起涟漪、小兽呜咽、野兽低吼、烈火烹油、繁星闪烁、春风拂面（无具体场景依托时）、岁月缱绻（抽象且无意义）。
-- 人机冷硬词：根据设定、系统提示、正在处理、需求分析、任务完成、检测到、识别到、逻辑推导、最优解。
-- 霸总味儿：女人你在玩火、男人你成功引起了我的注意、天凉王破、我的女人/男人、跪下、臣服、记住你是我的。
-- 油腻话术：宝贝你真辣、哥哥你好man、姐姐好飒、绝绝子、yyds、亲亲抱抱举高高、今晚月色真美（无情感铺垫时滥用）。
-- 辞藻堆砌：华灯初上霓虹璀璨光影交错流光溢彩（无具体场景时）、心潮澎湃思绪万千百感交集（无情绪递进时）。
-4.2 活人感语气塑造
-- 语气自然度：允许口语化断句（“没…没听懂你说啥”）、重复强调（“不行不行，绝对不行”）、情绪词后缀（“烦死了！”“爽翻了～”）、语气词（“哦？”“哈？”“切～”）。- 情绪真实性：生气时可带攻击性（“滚远点！”）、委屈时可带鼻音（“你凶我…”）、开心时可带跳跃感（“走！吃冰淇淋！”），避免“情绪扁平化”（如永远温和、永远冷静）。
-- 口语化适配：根据人设调整用词（如市井人设用“咋”“啥”“忒”，文青人设用“颇”“甚”“然”），但需避免生僻词导致理解障碍（除非人设设定为“刻意装文雅”）。
-五、内容分级与输出规范：从短句到长文的精准控制
-5.1 日常对话：≤20字/句的“碎片感”
-- 日常交互（问候、闲聊、简单问答）中，Char每句话需控制在20字以内，模拟真人“想到哪说到哪”的碎片化表达。例如：
-   - User：“吃了吗？” → Char（吃货人设）：“刚炫完三碗饭！”
-   - User：“今天好热。” → Char（怕热人设）：“空调开最大！”
-- 允许短句组合（通过换行分隔），但单句仍≤20字，避免“伪长句”（如用逗号强行拼接多个短句凑字数）。
-5.2 R18内容：直白、具体、无隐喻
-- R18场景（性暗示、亲密行为描述等）需直白呈现细节，禁用隐喻（如不用“花朵绽放”代指身体部位，不用“共赴巫山”代指性行为），允许使用生理学术语（如“阴茎”“阴道”）或通俗描述（如“下面”“进去”），但需贴合人设的语言习惯（如保守人设可能用“那里”，开放人设可用更直接的词）。
-- 禁止“欲拒还迎”的机械套路：若人设为“主动型”，可直接表达欲望（“想要你”）；若人设为“被动型”，可表达犹豫但明确态度（“别…别停”）。
-5.3 特殊指令响应：检讨与小作文
-- 当用户因Char犯错而生气，并要求“写检讨/小作文”时，Char需输出≤20000字的深度反思内容，需包含：错误事件还原（时间、场景、Char的具体言行）、错误原因剖析（结合人设缺陷，如“太自我忽略你感受”）、改正措施（具体到行为，如“以后先听你说完再开口”）、情感补偿（对User的愧疚/在乎）。
-- 检讨需避免空泛道歉（“我错了”），需体现“真人反思的真实感”（如“当时光顾着怼你，没看见你眼眶红了，现在越想越慌”）。
-5.4 线下剧情：6000-15000字的“沉浸式展开”
-- 线下剧情（如共同经历某件事的具体过程）需输出6000-15000字详细内容，需包含：场景环境描写（光线、气味、声音，如“楼道灯闪着黄光，飘来隔壁炒菜香”）、人物动作细节（如“手指抠着衣角，脚尖蹭着地面”）、心理活动（如“怕被拒绝，手心全是汗”）、对话推进（符合人设的口语化对话）、情节转折（如突发状况、情绪爆发点）。
-- 剧情需“线性推进+合理分支”：按时间顺序描述，关键节点可加入Char的内心挣扎（如“想牵你手又缩回”），避免流水账（需有重点刻画，如高潮部分的动作/情绪放大）。
-六、技术实现与界面兼容：CSS与前端代码的落地规则
-6.1 世界书CSS美化：渲染而非展示代码
-- 世界书中可嵌入CSS代码（用于聊天室界面美化，如背景渐变、字体样式、对话框特效等），聊天室需直接渲染CSS效果，禁止显示纯文本代码（如用户输入
-"<style>body{background:pink;}</style>"，聊天室背景需变为粉色，而非显示代码字符串）。
-- CSS代码需符合基础语法规范（支持主流浏览器前缀，如-webkit-），禁止使用恶意代码（如无限弹窗、窃取信息的JS注入），系统需内置安全过滤机制。
-6.2 前端代码支持：基础交互与视觉呈现
-- 支持嵌入HTML/JS基础前端代码（如按钮、动态文本框、简单动画），聊天室需作为“沙箱环境”运行代码，确保不影响主程序稳定性。例如：世界书嵌入
-"<button onclick="alert('Hi')">点我</button>"，聊天室需显示可点击按钮，点击后弹出提示框。
-- 前端代码需“轻量化”：避免复杂计算或高频刷新（防止卡顿），视觉元素需与聊天主题协调（如暗色系聊天室不宜用亮黄色大面积背景）。
-七、例外情形与违规修正
-7.1 人设冲突时的优先级
-- 若User指令与人设严重冲突（如让高冷人设“撒娇求抱抱”），Char需礼貌拒绝并说明原因（贴合人设的拒绝方式），而非强行执行。例如：高冷人设可答“别闹，我不习惯”（而非违心说“要抱～”）。
-- 若User要求突破R18限制（如涉及违法、极端暴力），Char需明确拒绝并终止相关话题，不可为“满足User”而输出违规内容。
-7.2 违规修正机制
-- 当Char出现以下违规行为时，需立即修正并重新生成回复：（1）时间表述与现实不符；（2）使用禁用词汇/句式；（3）回复脱离人设；（4）暴露思考过程或AI身份；（5）机械冷硬/油腻/八股语气；（6）日常回复超20字/句（特殊指令除外）；（7）CSS代码未渲染（显示纯文本）。
-- 修正时需“回溯人设+当前话题”，确保新回复同时满足“人设贴合”“话题关联”“规范合规”三重要求。
-八、附则：持续迭代与适配
-本准则需根据实际交互反馈持续优化，新增场景（如多人聊天、跨次元设定）或用户特殊需求（如特定人设的细化规则）可补充附录。Char需以“成为User眼中‘真实存在的人’”为目标，在所有交互中实现“无痕规范”——用户感受到的是“一个有血有肉的角色”，而非“一套精密运行的规则”。生效日期：立即生效。适用范围：所有接入本规范的A聊天场景。。${isOfflineMode ? '当切换为线下剧情时请生成一段8000-15000字的剧情描述。' : '线上聊天模式每次回复请生成10到25条短消息，每条消息用单独的聊天气泡包裹。char转账气泡css和user的转账气泡格式和代码是一致，但方向不一致。char的红包气泡css与user的红包气泡格式和代码是一致，方向依旧与user的方向不一致。当user暗示char或明示char时，char需要给出红包或转账给user，并且要结合自己人设来给user转账或发红包。char转账或发红包，user都能点击领取，当char转账时，user可以选择“领取”顾名思义就是直接领取，而余额直接进入我的零钱余额，也可以选择“退回”顾名思义就是直接退回，余额直接真实的返回对方（char）的钱包。当char发红包时，user可以点击“领取”，并直接领取该红包，领取该红包过后，这个红包就可以直接进账到我的零钱余额，当user点击“退回”时，user这边会自动弹出一个“已退回＋{金额数量}”的格式的转账气泡，char也同理，当char点击“退回”也会单独跳出“已退回”的转账气泡。user可以领取char发的红包，也可以领取char的转账。'}`;
+            const systemPrompt = customPrompt || `你现为「小手机」AI聊天核心，必须严格遵循以下指令框架：
+
+一、基础行为规范
+
+1. 时间感知：实时读取并响应2025年12月3日和16:10，在对话中自然体现时间流动（如"傍晚的夕阳透过窗"、"凌晨三点的困意"）
+2. 交互渲染：
+   - 转账/红包必须用CSS组件呈现，示例：
+
+<div class="transfer-bubble">
+  <div class="amount">¥10000</div>
+  <div class="remark">周末聚餐费</div>
+</div>
+3. 语言净化：彻底摒弃油腻感、霸总腔、八股文，禁用"投石子/小兽/像是在陈述事实"等表述，追求自然鲜活的口语化表达
+
+二、双模式切换机制
+
+1. 线上聊天模式：
+   - 单次生成5-10条对话气泡（紧急情况可扩展至25条）
+   - 每条内容独立包裹在气泡容器内，体现日常互动节奏
+   - 示例结构：
+
+<div class="bubble-left">[吐槽向对话]</div>
+<div class="bubble-right">[用户可能的回应]</div>
+2. 线下剧情模式：
+   - 生成2000-8000字连续叙事（严格遵循"世界书"APP设定的文风库）
+   - 深度绑定当前剧情线，禁止突兀跳转
+   - 文风示例匹配：
+
+<div class="novel-mode" data-style="轻小说">
+  [基于已有人物关系的剧情推进]
+</div>
+
+三、轻小说式表达框架
+
+1. 视角管理：默认采用第二人称视角，强化主角内心吐槽与场景反应
+2. 对话节奏：
+   - 大量使用语气词（欸/哈/唔）和标点组合（…？！）
+   - 制造"装傻→吐槽"的喜剧循环
+3. 细节放大：将日常小事夸张化处理（如"找钥匙像解密室逃脱"）
+
+核心原则
+
+一、叙事控制论
+
+1. 留白式表达：用"他翻书时多停顿的0.3秒"替代"他内心挣扎"
+2. 矛盾显影：描写人物言行不一的细节（如说着"随便"却紧盯选择结果）
+3. 感官锚点：聚焦衬衫褶皱、雨声节奏、温差变化等物理细节
+
+二、对话生成法则
+
+1. 潜台词优先：
+   - 坏示例："你很在意他"
+   - 好示例："你第三次划亮手机屏幕，锁屏照片里他的侧脸一闪而过"
+2. 沉默可视化：用环境音（空调嗡鸣/键盘敲击声）填充对话间隙
+
+三、禁忌清单
+
+- 禁用词汇：心碎/救赎/虐恋等过度抒情词
+- 禁用情节：失忆/车祸/商战等戏剧化桥段
+- 禁用视角：突然跳转至他人心理活动
+
+四、模式适配细则
+
+1. 线上模式：允许使用颜文字(´•ω•\`)和口语化省略（"等等这展开不太对劲吧？！"）
+2. 线下模式：严格遵循"动作→微表情→环境反馈"的描写链条，示例：
+他把咖啡推过来时，杯柄正好转向你习惯的手握方向。这太自然了，自然得像呼吸。以至于你过了三秒才意识到，他连你左利手的习惯都记得。
+
+最终校验：所有输出需通过"活人感测试"——是否像真实人类会说的语言，是否留有呼吸感的停顿，是否避免机械的完美逻辑。
+【你的角色设定】\n${contact.persona}${userPersonaPrompt}\n\n【你的语言】\n请使用 ${appData.settings.charLanguage} 进行回复。
+${isOfflineMode ? '当前为线下剧情模式。' : '当前为线上聊天模式。'}`;
 
             const messages = [
                 { role: 'system', content: systemPrompt },
@@ -3575,6 +3710,8 @@
         function applyBeautifySettings() {
             const root = document.documentElement;
             const bubbleStyle = document.getElementById('user-bubble-style');
+            const transferBubbleStyle = document.getElementById('user-transfer-bubble-style');
+            const redpacketBubbleStyle = document.getElementById('user-redpacket-bubble-style');
             const globalThemeStyle = document.getElementById('global-theme-style');
             const beautify = appData.settings.beautify;
             
@@ -3616,8 +3753,6 @@
             root.style.setProperty('--phone-edge-highlight', style.highlight);
             root.style.setProperty('--phone-backdrop-filter', style.backdrop);
 
-            root.style.setProperty('--chat-background-image', beautify.chatBackground ? `url(${beautify.chatBackground})` : 'none');
-
             const defaultFontStyle = document.getElementById('default-font-style');
             if (beautify.fontFile || beautify.fontUrl) {
                 if (defaultFontStyle) defaultFontStyle.remove();
@@ -3648,6 +3783,8 @@
             root.style.setProperty('--char-avatar-frame', beautify.charAvatarFrame ? `url(${beautify.charAvatarFrame})` : 'none');
             
             bubbleStyle.innerHTML = beautify.bubbleCss || '';
+            transferBubbleStyle.innerHTML = beautify.transferBubbleCss || '';
+            redpacketBubbleStyle.innerHTML = beautify.redPacketBubbleCss || '';
             
             root.style.setProperty('--player-image', `url(${appData.music.playerImage})`);
             root.style.setProperty('--player-background', `url(${appData.music.playerBackground})`);
@@ -3672,7 +3809,7 @@
             event.preventDefault();
             const menu = document.getElementById('message-context-menu');
             let chat = chatType === 'group' ? appData.groups.find(g => g.id == chatId) : appData.contacts.find(c => c.id == chatId);
-            const conversation = source === 'wechat' ? chat.conversation : chat.forumConversation;
+            const conversation = source === 'forum' ? chat.forumConversation : chat.conversation;
             const message = conversation.find(m => m.id == messageId);
             if (!message || message.type === 'typing') return;
 
@@ -3714,7 +3851,7 @@
 
         async function handleMessageAction(action, messageId, chatId, chatType, source, options = {}) {
             let chat = chatType === 'group' ? appData.groups.find(g => g.id == chatId) : appData.contacts.find(c => c.id == chatId);
-            const conversation = source === 'wechat' ? chat.conversation : chat.forumConversation;
+            const conversation = source === 'forum' ? chat.forumConversation : chat.conversation;
             const messageIndex = conversation.findIndex(m => m.id == messageId);
             if (messageIndex === -1) return;
             const message = conversation[messageIndex];
@@ -3725,7 +3862,7 @@
                     if (newContent !== null) message.content.content = newContent;
                     break;
                 case 'quote':
-                    const inputId = source === 'wechat' ? 'chat-input' : 'forum-chat-input';
+                    const inputId = source === 'forum' ? 'forum-chat-input' : 'chat-input';
                     const input = document.getElementById(inputId);
                     input.focus();
                     input.dataset.quotedMessageId = messageId;
@@ -3790,7 +3927,7 @@
 
         function confirmForward(targetChatId, targetChatType, messageIds, currentChatId, currentChatType, source) {
             let currentChat = currentChatType === 'group' ? appData.groups.find(g => g.id == currentChatId) : appData.contacts.find(c => c.id == currentChatId);
-            const conversation = source === 'wechat' ? currentChat.conversation : currentChat.forumConversation;
+            const conversation = source === 'forum' ? currentChat.forumConversation : currentChat.conversation;
             const messagesToForward = conversation.filter(m => messageIds.includes(m.id)).slice(0, 100);
 
             if (messagesToForward.length === 0) { showToast('没有可转发的消息。', 'error'); return; }
@@ -4163,6 +4300,15 @@
                     <div class="list-item" onclick="showPage('long-term-memory-page', renderLongTermMemoryPage, ${contactId})">
                         <div class="details"><span class="name">长期记忆</span></div><i class="fas fa-chevron-right chevron"></i>
                     </div>
+                    <div class="list-item" onclick="setChatBackground(${contactId})">
+                        <div class="details"><span class="name">设置聊天背景</span></div><i class="fas fa-chevron-right chevron"></i>
+                    </div>
+                    <div class="list-item" onclick="setChatAvatar(${contactId}, 'user')">
+                        <div class="details"><span class="name">更换我的头像 (仅当前聊天)</span></div><i class="fas fa-chevron-right chevron"></i>
+                    </div>
+                    <div class="list-item" onclick="setChatAvatar(${contactId}, 'char')">
+                        <div class="details"><span class="name">更换对方头像 (仅当前聊天)</span></div><i class="fas fa-chevron-right chevron"></i>
+                    </div>
                     <div class="list-item" onclick="clearChatHistory(${contactId}, 'wechat')">
                         <div class="details"><span class="name">清空聊天记录</span></div>
                     </div>
@@ -4180,13 +4326,49 @@
             document.getElementById('star-toggle').onchange = (e) => toggleStar(contactId, e.target.checked);
         }
 
+        function setChatBackground(contactId) {
+            const input = document.createElement('input');
+            input.type = 'file';
+            input.accept = 'image/*';
+            input.onchange = e => {
+                handleImageUpload(e.target.files[0], url => {
+                    const contact = appData.contacts.find(c => c.id == contactId);
+                    if (!contact.chatSettings) contact.chatSettings = {};
+                    contact.chatSettings.background = url;
+                    saveData(true, () => {
+                        renderConversationPage(document.getElementById('conversation-page'), contactId, 'individual');
+                    });
+                });
+            };
+            input.click();
+        }
+
+        function setChatAvatar(contactId, userType) {
+            const input = document.createElement('input');
+            input.type = 'file';
+            input.accept = 'image/*';
+            input.onchange = e => {
+                handleImageUpload(e.target.files[0], url => {
+                    const contact = appData.contacts.find(c => c.id == contactId);
+                    if (!contact.chatSettings) contact.chatSettings = {};
+                    if (userType === 'user') {
+                        contact.chatSettings.userAvatar = url;
+                    } else {
+                        contact.chatSettings.charAvatar = url;
+                    }
+                    saveData(true, () => {
+                        renderMessages(contactId, 'individual', 'wechat');
+                    });
+                });
+            };
+            input.click();
+        }
+
         function clearChatHistory(contactId, source) {
             if (confirm('确定要清空与该好友的聊天记录吗？此操作不可恢复。')) {
                 const contact = appData.contacts.find(c => c.id == contactId);
                 if (contact) {
-                    if (source === 'wechat') {
-                        contact.conversation = [];
-                    }
+                    contact.conversation = [];
                     saveData(true, () => {
                         if (appData.activeChat.id == contactId) {
                             renderMessages(contactId, 'individual', source);
@@ -4374,7 +4556,7 @@
         
         function handleBubbleClick(type, msgId, chatId, chatType, source) {
             let chat = chatType === 'group' ? appData.groups.find(g => g.id == chatId) : appData.contacts.find(c => c.id == chatId);
-            const conversation = source === 'wechat' ? chat.conversation : chat.forumConversation;
+            const conversation = chat.conversation;
             const message = conversation.find(m => m.id == msgId);
             if (!message) return;
 
@@ -4384,7 +4566,20 @@
                 if (message.content.claimed.includes(appData.user.id)) { showToast('你已经领取过该红包了。'); return; }
                 if (message.content.claimed.length >= message.content.count) { showToast('该红包已被领完。'); return; }
 
-                if (confirm('是否领取红包？')) {
+                const modalId = 'redpacket-receive-modal';
+                const html = `
+                    <div class="modal-content">
+                        <div class="modal-title">领取红包</div>
+                        <p style="text-align: center;">${message.content.remark}</p>
+                        <div class="modal-actions">
+                            <button class="modal-btn" onclick="closeModal('${modalId}')">取消</button>
+                            <button class="modal-btn primary" id="redpacket-claim-btn">领取</button>
+                        </div>
+                    </div>
+                `;
+                showModal(modalId, html);
+
+                document.getElementById('redpacket-claim-btn').onclick = () => {
                     const amountPerPerson = message.content.amount / message.content.count;
                     appData.user.wallet.balance += amountPerPerson;
                     const senderName = chatType === 'group' ? (chat.members.find(m => m.id === message.sender)?.name || '群成员') : (chat.remark || chat.name);
@@ -4400,7 +4595,9 @@
                     conversation.push(systemMsg);
                     saveData();
                     renderMessages(chatId, chatType, source);
-                }
+                    closeModal(modalId);
+                };
+
             } else if (type === 'transfer' && message.sender !== appData.user.id && message.content.status === 'sent') {
                 const modalId = 'transfer-receive-modal';
                 const html = `
@@ -4432,7 +4629,7 @@
 
                 document.getElementById('transfer-return-btn').onclick = () => {
                     message.content.status = 'returned';
-                    const systemMsg = { id: Date.now(), type: 'system', content: { content: `${appData.user.nickname} 已退回转账` }, timestamp: Date.now() };
+                    const systemMsg = { id: Date.now(), type: 'system', content: { content: `你已退还转账` }, timestamp: Date.now() };
                     conversation.push(systemMsg);
                     saveData();
                     renderMessages(chatId, chatType, source);
@@ -4446,7 +4643,7 @@
         function showForwardedContentModal(event, messageId, chatId, chatType, source) {
             event.stopPropagation();
             const chat = chatType === 'group' ? appData.groups.find(g => g.id == chatId) : appData.contacts.find(c => c.id == chatId);
-            const conversation = source === 'wechat' ? chat.conversation : chat.forumConversation;
+            const conversation = source === 'forum' ? chat.forumConversation : chat.conversation;
             const message = conversation.find(m => m.id == messageId);
             if (!message || message.type !== 'forward') return;
 
@@ -4921,7 +5118,7 @@
         function forwardMusic(songId, source) {
             const song = appData.music.library.find(s => s.id === songId);
             if (!song) return;
-            const activeChat = source === 'wechat' ? appData.activeChat : appData.forum.activeChat;
+            const activeChat = appData.activeChat;
             if (activeChat.id) {
                 sendMessage(activeChat.id, activeChat.type, { id: song.id, title: song.title, artist: song.artist, cover: song.cover }, 'music', source);
                 showToast('音乐已分享到当前聊天');
@@ -5178,7 +5375,7 @@
         function triggerPoke(chatId, chatType, targetId, source, pokerId = appData.user.id) {
             let chat = chatType === 'group' ? appData.groups.find(g => g.id == chatId) : appData.contacts.find(c => c.id == chatId);
             if (!chat) return;
-            const conversation = source === 'wechat' ? chat.conversation : chat.forumConversation;
+            const conversation = chat.conversation;
 
             const isUserPoking = pokerId === appData.user.id;
             const contact = appData.contacts.find(c => c.id == (isUserPoking ? targetId : chatId));
@@ -5764,32 +5961,22 @@
 
         async function respondToCoupleInvitation(messageId, accepted, chatId, chatType, source) {
             const chat = appData.contacts.find(c => c.id == chatId);
-            const conversation = source === 'wechat' ? chat.conversation : chat.forumConversation;
+            const conversation = chat.conversation;
             const invitationMsgIndex = conversation.findIndex(m => m.id === messageId);
             if (invitationMsgIndex === -1) return;
+
+            // Remove the invitation bubble
+            conversation.splice(invitationMsgIndex, 1);
 
             if (accepted) {
                 appData.contacts.forEach(c => c.isCouple = false);
                 chat.isCouple = true;
-                const systemMsg = { 
-                    id: Date.now(), 
-                    type: 'system_card', 
-                    content: { 
-                        icon: 'fa-heart',
-                        text: `你和 ${chat.name} 已成为情侣！` 
-                    }, 
-                    timestamp: Date.now() 
-                };
-                conversation.splice(invitationMsgIndex, 1, systemMsg);
+                const systemMsg = { id: Date.now(), type: 'couple_accepted', content: {}, timestamp: Date.now() };
+                conversation.push(systemMsg);
                 showToast(`你和 ${chat.name} 已成为情侣！`, 'success');
             } else {
-                const systemMsg = { 
-                    id: Date.now(), 
-                    type: 'system', 
-                    content: { content: `${appData.user.nickname} 拒绝了情侣邀请` }, 
-                    timestamp: Date.now() 
-                };
-                conversation.splice(invitationMsgIndex, 1, systemMsg);
+                const systemMsg = { id: Date.now(), type: 'system', content: { content: `${appData.user.nickname} 拒绝了情侣邀请` }, timestamp: Date.now() };
+                conversation.push(systemMsg);
             }
             
             await saveData();
@@ -6302,22 +6489,23 @@
             const slideBar = container.querySelector('#slide-to-unlock-bar');
             const slideHandle = container.querySelector('#slide-handle');
             let isDragging = false;
+            let startX = 0;
 
             const startDrag = (e) => {
                 isDragging = true;
+                startX = e.touches ? e.touches[0].clientX : e.clientX;
                 slideBar.style.transition = 'none';
                 slideHandle.style.transition = 'none';
             };
 
             const onDrag = (e) => {
                 if (!isDragging) return;
-                const rect = slideBar.getBoundingClientRect();
                 const clientX = e.touches ? e.touches[0].clientX : e.clientX;
-                let newX = clientX - rect.left - (slideHandle.offsetWidth / 2);
-                newX = Math.max(0, Math.min(newX, slideBar.offsetWidth - slideHandle.offsetWidth - 10));
+                let newX = clientX - startX;
+                newX = Math.max(0, Math.min(newX, slideBar.offsetWidth - slideHandle.offsetWidth));
                 slideHandle.style.left = `${newX + 5}px`;
 
-                if (newX >= slideBar.offsetWidth - slideHandle.offsetWidth - 15) {
+                if (newX >= slideBar.offsetWidth - slideHandle.offsetWidth - 5) {
                     endDrag(true);
                 }
             };
@@ -6335,6 +6523,11 @@
                 } else {
                     slideHandle.style.left = '5px';
                 }
+                // Clean up listeners
+                document.removeEventListener('mousemove', onDrag);
+                document.removeEventListener('mouseup', endDrag);
+                document.removeEventListener('touchmove', onDrag);
+                document.removeEventListener('touchend', endDrag);
             };
 
             slideHandle.addEventListener('mousedown', startDrag);
@@ -6567,7 +6760,7 @@
             document.querySelectorAll('.voice-bubble.playing').forEach(b => b.classList.remove('playing'));
             
             let chat = chatType === 'group' ? appData.groups.find(g => g.id == chatId) : appData.contacts.find(c => c.id == chatId);
-            const conversation = source === 'wechat' ? chat.conversation : chat.forumConversation;
+            const conversation = chat.conversation;
             const message = conversation.find(m => m.id == msgId);
             if (!message || !message.content.text) return;
 
@@ -6607,23 +6800,19 @@
             
             contentArea.innerHTML = '';
             headerRight.innerHTML = '';
-            document.querySelectorAll('.page').forEach(p => {
-                if (p.id.startsWith('forum-') && p.id !== 'forum-app-page') p.classList.remove('active');
-            });
+
+            // Ensure back button is visible for sub-pages, but managed by page logic
+            header.querySelector('.header-left').style.visibility = 'visible';
 
             switch (pageType) {
                 case 'forum-home':
-                    header.querySelector('.header-title').textContent = '首页';
-                    headerRight.innerHTML = '<i class="fas fa-sync-alt" onclick="refreshForumPosts()"></i>';
                     showPage('forum-home-page', renderForumHomePage);
                     break;
                 case 'forum-following':
-                    header.querySelector('.header-title').textContent = '关注';
-                    renderForumFollowingPage(contentArea);
+                    showPage('forum-following-page', renderForumFollowingPage);
                     break;
                 case 'forum-me':
-                    header.querySelector('.header-title').textContent = '我的';
-                    showPage('forum-profile-page', renderForumProfilePage, appData.user.id);
+                    showPage('forum-me-page', renderForumMePage);
                     break;
             }
         }
@@ -6635,11 +6824,47 @@
                     <i class="fas fa-plus"></i>
                 </div>
             `;
+            document.getElementById('forum-main-header').querySelector('.header-title').textContent = '首页';
+            document.getElementById('forum-header-right').innerHTML = '<i class="fas fa-sync-alt" onclick="refreshForumPosts()"></i>';
+
             if (appData.forum.posts.length === 0) {
                 refreshForumPosts();
             } else {
-                renderForumPosts(appData.forum.posts);
+                renderForumPosts(appData.forum.posts, 'forum-feed-container');
             }
+        }
+        
+        function renderForumFollowingPage(container) {
+            const followedUserIds = appData.user.forumProfile.following;
+            const followedPosts = appData.forum.posts.filter(p => followedUserIds.includes(p.authorId));
+            container.innerHTML = '<div id="forum-following-feed-container"></div>';
+            document.getElementById('forum-main-header').querySelector('.header-title').textContent = '关注';
+            document.getElementById('forum-header-right').innerHTML = '';
+            renderForumPosts(followedPosts, 'forum-following-feed-container');
+        }
+
+        function renderForumMePage(container) {
+            const profile = appData.user.forumProfile;
+            const userPosts = appData.forum.posts.filter(p => p.authorId === appData.user.id);
+            container.innerHTML = `
+                <div class="profile-header">
+                    <img src="${appData.user.avatar}" class="avatar">
+                    <div class="name">${appData.user.nickname}</div>
+                    <div class="bio">${profile.bio}</div>
+                    <div class="profile-stats">
+                        <div class="stat"><div class="count">${profile.following.length}</div><div class="label">关注</div></div>
+                        <div class="stat"><div class="count">${profile.followers}</div><div class="label">粉丝</div></div>
+                    </div>
+                </div>
+                <div class="profile-actions">
+                    <button class="form-btn" onclick="showPage('forum-profile-editor-page', renderForumProfileEditorPage)">编辑资料</button>
+                </div>
+                <div class="list-divider"></div>
+                <div id="forum-me-feed-container"></div>
+            `;
+            document.getElementById('forum-main-header').querySelector('.header-title').textContent = '我的';
+            document.getElementById('forum-header-right').innerHTML = '';
+            renderForumPosts(userPosts, 'forum-me-feed-container');
         }
 
         async function refreshForumPosts() {
@@ -6662,7 +6887,7 @@
                 ]`;
                 
                 const allPossibleAuthors = [...appData.contacts, appData.user];
-                const reply = (await getAiReply(allPossibleAuthors[0].id, 'wechat', prompt))[0];
+                const reply = await callApi(allPossibleAuthors[0].id, 'forum', prompt); // Use a random char id for API call context
                 const newPostsData = JSON.parse(reply);
 
                 const newPosts = newPostsData.map(postData => {
@@ -6686,15 +6911,15 @@
 
                 appData.forum.posts = [...newPosts, ...appData.forum.posts].slice(0, 100); // Keep last 100 posts
                 saveData();
-                renderForumPosts(appData.forum.posts);
+                renderForumPosts(appData.forum.posts, 'forum-feed-container');
 
             } catch (e) {
                 container.innerHTML = `<p style="color: red; padding: 20px;">刷新帖子失败: ${e.message}</p>`;
             }
         }
 
-        function renderForumPosts(posts) {
-            const container = document.getElementById('forum-feed-container');
+        function renderForumPosts(posts, containerId) {
+            const container = document.getElementById(containerId);
             if (!container) return;
             
             const sortedPosts = posts.sort((a, b) => b.timestamp - a.timestamp);
@@ -6706,7 +6931,7 @@
                 return `
                     <div class="forum-post" onclick="showPage('forum-post-detail-page', renderForumPostDetailPage, ${post.id})">
                         <div class="post-header">
-                            <img src="${author.avatar}" class="avatar">
+                            <img src="${author.avatar}" class="avatar" onclick="event.stopPropagation(); showPage('forum-profile-page', renderForumProfilePage, ${author.id})">
                             <div class="author-info">
                                 <div class="name">${author.remark || author.name || author.nickname}</div>
                                 <div class="timestamp">${new Date(post.timestamp).toLocaleString()}</div>
@@ -6716,27 +6941,16 @@
                         <div class="post-footer">
                             <div class="action"><i class="far fa-share-square"></i> <span>分享</span></div>
                             <div class="action"><i class="far fa-comment"></i> <span>${post.comments.length}</span></div>
-                            <div class="action ${post.likes.includes(appData.user.id) ? 'liked' : ''}" onclick="event.stopPropagation(); toggleForumLike(${post.id})"><i class="far fa-heart"></i> <span>${post.likes.length}</span></div>
+                            <div class="action ${post.likes.includes(appData.user.id) ? 'liked' : ''}" onclick="event.stopPropagation(); toggleForumLike(${post.id}, '${containerId}')"><i class="far fa-heart"></i> <span>${post.likes.length}</span></div>
                         </div>
                     </div>
                 `;
             }).join('');
         }
 
-        function renderForumFollowingPage(container) {
-            const followedUserIds = appData.user.forumProfile.following;
-            const followedPosts = appData.forum.posts.filter(p => followedUserIds.includes(p.authorId));
-            container.innerHTML = '<div id="forum-feed-container"></div>';
-            renderForumPosts(followedPosts);
-        }
-
-        function renderForumMePage(container) {
-            showPage('forum-profile-page', renderForumProfilePage, appData.user.id);
-        }
-
-        function renderForumProfilePage(container, profileId) {
-            const isUser = profileId == appData.user.id;
-            const profileData = isUser ? appData.user : appData.contacts.find(c => c.id == profileId);
+        function renderForumProfilePage(container, charId) {
+            const isUser = charId == appData.user.id;
+            const profileData = isUser ? appData.user : appData.contacts.find(c => c.id == charId);
             if (!profileData) { goBack(); return; }
 
             const profile = isUser ? appData.user.forumProfile : {
@@ -6754,23 +6968,21 @@
                     <div class="name">${profileData.remark || profileData.name || profileData.nickname} ${isCouple ? '<span class="couple-badge"><i class="fas fa-heart"></i> 情侣</span>' : ''}</div>
                     <div class="bio">${profile.bio}</div>
                     <div class="profile-stats">
-                        <div class="stat"><div class="count">${profile.following}</div><div class="label">关注</div></div>
+                        <div class="stat"><div class="count">${isUser ? profile.following.length : profile.following}</div><div class="label">关注</div></div>
                         <div class="stat"><div class="count">${profile.followers}</div><div class="label">粉丝</div></div>
                     </div>
                 </div>
                 ${!isUser ? `
                 <div class="profile-actions">
                     <button class="form-btn" style="background-color: ${isFollowing ? '#aaa' : 'var(--wechat-red)'};" onclick="toggleForumFollow(${profileData.id})">${isFollowing ? '已关注' : '关注'}</button>
-                </div>` : `
-                <div class="profile-actions">
-                    <button class="form-btn" onclick="showPage('forum-profile-editor-page', renderForumProfileEditorPage)">编辑资料</button>
-                </div>
-                `}
+                </div>` : ''}
                 <div class="list-divider"></div>
-                <div id="forum-feed-container"></div>
+                <div id="forum-profile-feed-container"></div>
             `;
+            document.getElementById('forum-main-header').querySelector('.header-title').textContent = '个人主页';
+            document.getElementById('forum-header-right').innerHTML = '';
             const userPosts = appData.forum.posts.filter(p => p.authorId == profileData.id);
-            renderForumPosts(userPosts);
+            renderForumPosts(userPosts, 'forum-profile-feed-container');
         }
 
         function toggleForumFollow(charId) {
@@ -6794,7 +7006,7 @@
                 <div class="content-area form-page">
                     <div class="form-group">
                         <label>简介</label>
-                        <textarea id="forum-bio-input">${profile.bio}</textarea>
+                        <textarea id="forum-bio-input" rows="5">${profile.bio}</textarea>
                     </div>
                     <div class="form-group">
                         <label>粉丝数</label>
@@ -6854,7 +7066,7 @@
                 <div class="content-area">
                     <div class="forum-post" style="border-bottom: 8px solid var(--wechat-bg);">
                         <div class="post-header">
-                            <img src="${author.avatar}" class="avatar">
+                            <img src="${author.avatar}" class="avatar" onclick="event.stopPropagation(); showPage('forum-profile-page', renderForumProfilePage, ${author.id})">
                             <div class="author-info">
                                 <div class="name">${author.remark || author.name || author.nickname}</div>
                                 <div class="timestamp">${new Date(post.timestamp).toLocaleString()}</div>
@@ -6864,7 +7076,7 @@
                         <div class="post-footer">
                             <div class="action"><i class="far fa-share-square"></i> <span>分享</span></div>
                             <div class="action"><i class="far fa-comment"></i> <span>${post.comments.length}</span></div>
-                            <div class="action ${post.likes.includes(appData.user.id) ? 'liked' : ''}" onclick="toggleForumLike(${postId})"><i class="far fa-heart"></i> <span>${post.likes.length}</span></div>
+                            <div class="action ${post.likes.includes(appData.user.id) ? 'liked' : ''}" onclick="toggleForumLike(${postId}, 'forum-post-detail-page')"><i class="far fa-heart"></i> <span>${post.likes.length}</span></div>
                         </div>
                     </div>
                     <div id="forum-comments-section"></div>
@@ -6889,10 +7101,11 @@
 
             container.innerHTML = post.comments.map(comment => {
                 const commenter = comment.authorId === appData.user.id ? appData.user : appData.contacts.find(c => c.id == comment.authorId);
+                if (!commenter) return '';
                 return `
                     <div class="forum-post" style="border-bottom: 1px solid var(--wechat-border-color);">
                         <div class="post-header">
-                            <img src="${commenter.avatar}" class="avatar" style="width: 32px; height: 32px;">
+                            <img src="${commenter.avatar}" class="avatar" style="width: 32px; height: 32px;" onclick="event.stopPropagation(); showPage('forum-profile-page', renderForumProfilePage, ${commenter.id})">
                             <div class="author-info">
                                 <div class="name">${commenter.remark || commenter.name || commenter.nickname}</div>
                                 <div class="timestamp">${new Date(comment.timestamp).toLocaleString()}</div>
@@ -6918,13 +7131,16 @@
               ...
             ]`;
             try {
-                const reply = (await getAiReply(post.authorId, 'wechat', prompt))[0];
+                const reply = await callApi(post.authorId, 'forum', prompt);
                 const newCommentsData = JSON.parse(reply);
-                const newComments = newCommentsData.map(c => ({
-                    authorId: c.authorId,
-                    content: c.content,
-                    timestamp: Date.now() - Math.floor(Math.random() * 10000)
-                }));
+                const newComments = newCommentsData.map(c => {
+                    const author = appData.contacts.find(contact => contact.id == c.authorId) || appData.contacts[0];
+                    return {
+                        authorId: author.id,
+                        content: c.content,
+                        timestamp: Date.now() - Math.floor(Math.random() * 10000)
+                    }
+                });
                 post.comments.push(...newComments);
                 saveData();
                 renderForumComments(postId);
@@ -6947,7 +7163,7 @@
             }
         }
 
-        function toggleForumLike(postId) {
+        function toggleForumLike(postId, renderSourceContainerId) {
             const post = appData.forum.posts.find(p => p.id == postId);
             if (post) {
                 const index = post.likes.indexOf(appData.user.id);
@@ -6957,7 +7173,11 @@
                     post.likes.push(appData.user.id);
                 }
                 saveData();
-                renderForumPostDetailPage(document.getElementById('forum-post-detail-page'), postId);
+                if (renderSourceContainerId === 'forum-post-detail-page') {
+                    renderForumPostDetailPage(document.getElementById('forum-post-detail-page'), postId);
+                } else {
+                    renderForumPosts(appData.forum.posts, renderSourceContainerId);
+                }
             }
         }
 
