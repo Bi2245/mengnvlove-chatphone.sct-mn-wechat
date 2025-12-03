@@ -197,9 +197,7 @@
 
         #home-screen-page { background-image: var(--home-screen-background-image); background-size: cover; background-position: center; }
         #home-screen-page .content-area { display: flex; flex-direction: column; justify-content: space-between; align-items: center; padding-top: 50px; }
-        #home-screen-time-container { text-align: center; }
         #home-screen-time { font-size: 50px; font-weight: 300; color: var(--home-screen-font-color); text-shadow: 0 1px 5px rgba(0,0,0,0.3); }
-        #home-screen-date { font-size: 16px; font-weight: 300; color: var(--home-screen-font-color); text-shadow: 0 1px 5px rgba(0,0,0,0.3); }
         .app-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--app-icon-gap); padding: 20px; }
         .app-icon { display: flex; flex-direction: column; align-items: center; gap: 8px; cursor: pointer; text-align: center; }
         .app-icon .icon-bg { width: var(--app-icon-size); height: var(--app-icon-size); border-radius: var(--app-icon-radius); background-size: cover; background-position: center; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
@@ -300,9 +298,8 @@
         .message-row { display: flex; flex-direction: column; margin-bottom: 5px; max-width: 100%; }
         .message-timestamp { text-align: center; color: var(--wechat-text-secondary); font-size: calc(var(--font-size-base) - 3px); margin: 10px 0; }
         .message-recalled, .message-system { text-align: center; color: var(--wechat-text-secondary); font-size: calc(var(--font-size-base) - 3px); margin: 10px 0; background: rgba(0,0,0,0.1); padding: 4px 8px; border-radius: 4px; display: inline-block; align-self: center; }
-        .message-system.card-style { background: #fff; color: var(--global-font-color); padding: 15px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); display: flex; align-items: center; gap: 10px; }
-        .message-system.card-style i { color: #FF69B4; }
-        body.dark-mode .message-system.card-style { background: var(--wechat-nav-bg); }
+        .message-system.couple-accepted-card { background: white; color: #333; border: 1px solid #eee; box-shadow: 0 2px 5px rgba(0,0,0,0.1); padding: 15px; display: flex; align-items: center; gap: 10px; }
+        .message-system.couple-accepted-card i { color: #FF69B4; }
         .message-body { display: flex; align-items: flex-start; gap: 10px; }
         .message-row.sent { align-items: flex-end; }
         .message-row.sent .message-body { flex-direction: row-reverse; }
@@ -505,10 +502,10 @@
         .forum-tab-item i { font-size: 22px; }
         .forum-tab-item span { font-size: 10px; }
         #forum-home-page .content-area { position: relative; }
-        .create-post-fab { position: absolute; bottom: 70px; right: 20px; width: 56px; height: 56px; background-color: var(--wechat-green); color: white; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 24px; box-shadow: 0 4px 10px rgba(0,0,0,0.2); cursor: pointer; z-index: 50; }
+        .create-post-fab { position: absolute; bottom: 20px; right: 20px; width: 56px; height: 56px; background-color: var(--wechat-green); color: white; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 24px; box-shadow: 0 4px 10px rgba(0,0,0,0.2); cursor: pointer; z-index: 50; transform: translateY(-15px); }
         .forum-post { background-color: var(--wechat-nav-bg); padding: 15px; border-bottom: 1px solid var(--wechat-border-color); cursor: pointer; }
         .post-header { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
-        .post-header .avatar { width: 40px; height: 40px; border-radius: var(--avatar-shape); }
+        .post-header .avatar { width: 40px; height: 40px; border-radius: var(--avatar-shape); cursor: pointer; }
         .post-header .author-info .name { font-weight: 600; color: var(--global-font-color); }
         .post-header .author-info .timestamp { font-size: 12px; color: var(--wechat-text-secondary); }
         .post-content-preview { font-size: var(--font-size-base); line-height: 1.5; color: var(--global-font-color); max-height: 120px; overflow: hidden; text-overflow: ellipsis; white-space: pre-wrap; word-break: break-word; }
@@ -597,10 +594,7 @@
             <!-- 主屏幕 -->
             <div id="home-screen-page" class="page no-transition">
                 <div class="content-area">
-                    <div id="home-screen-time-container">
-                        <div id="home-screen-time">16:10</div>
-                        <div id="home-screen-date">2025年12月3日 星期三</div>
-                    </div>
+                    <div id="home-screen-time">16:10</div>
                     <div class="app-grid" id="app-grid"></div>
                 </div>
             </div>
@@ -665,7 +659,7 @@
             <div id="beautify-page" class="page sub-page"></div>
             <div id="frame-settings-page" class="page sub-page"></div>
             <div id="bubble-settings-page" class="page sub-page form-page"></div>
-            <div id="red-packet-bubble-settings-page" class="page sub-page form-page"></div>
+            <div id="redpacket-bubble-settings-page" class="page sub-page form-page"></div>
             <div id="transfer-bubble-settings-page" class="page sub-page form-page"></div>
             <div id="api-settings-page" class="page sub-page form-page"></div>
             <div id="sticker-page" class="page sub-page"></div>
@@ -708,6 +702,7 @@
             <div id="font-color-settings-page" class="page sub-page form-page"></div>
             <div id="battery-settings-page" class="page sub-page form-page"></div>
             <!-- Forum App Pages -->
+            <div id="forum-home-page" class="page sub-page"></div>
             <div id="forum-conversation-page" class="page sub-page"></div>
             <div id="forum-chat-settings-page" class="page sub-page"></div>
             <div id="forum-create-post-page" class="page sub-page form-page"></div>
@@ -732,8 +727,6 @@
     <audio id="ringtone-player" loop></audio>
 
     <style id="user-bubble-style"></style>
-    <style id="red-packet-bubble-style"></style>
-    <style id="transfer-bubble-style"></style>
     <style id="default-font-style">
         @font-face {
             font-family: 'UserCustomFont';
@@ -830,10 +823,7 @@
         const DATA_KEY = 'appData';
 
         const exchangeRates = {
-            'CNY': { rate: 1, name: '人民币' }, 'USD': { rate: 0.14, name: '美元' }, 'JPY': { rate: 21.7, name: '日元' },
-            'EUR': { rate: 0.13, name: '欧元' }, 'GBP': { rate: 0.11, name: '英镑' }, 'AUD': { rate: 0.21, name: '澳元' },
-            'CAD': { rate: 0.19, name: '加元' }, 'CHF': { rate: 0.13, name: '瑞士法郎' }, 'HKD': { rate: 1.09, name: '港元' },
-            'SGD': { rate: 0.19, name: '新加坡元' }, 'KRW': { rate: 190.5, name: '韩元' }, 'NZD': { rate: 0.23, name: '新西兰元' }
+            'CNY': { rate: 1, name: '人民币' }, 'USD': { rate: 0.14, name: '美元' }, 'JPY': { rate: 21.7, name, '新西兰元' }
         };
 
         const defaultAppData = {
@@ -933,7 +923,6 @@
                 if (!appData.forum) appData.forum = JSON.parse(JSON.stringify(defaultAppData.forum));
                 if (!appData.notifications) appData.notifications = [];
                 if (!appData.user.forumProfile) appData.user.forumProfile = JSON.parse(JSON.stringify(defaultAppData.user.forumProfile));
-                if (!Array.isArray(appData.user.forumProfile.following)) appData.user.forumProfile.following = [];
                 if (!appData.settings.beautify.appIcons.forum) appData.settings.beautify.appIcons.forum = defaultAppData.settings.beautify.appIcons.forum;
                 if (!appData.settings.beautify.batteryIcon) appData.settings.beautify.batteryIcon = JSON.parse(JSON.stringify(defaultAppData.settings.beautify.batteryIcon));
                 if (!appData.settings.beautify.lockScreen) appData.settings.beautify.lockScreen = JSON.parse(JSON.stringify(defaultAppData.settings.beautify.lockScreen));
@@ -981,12 +970,16 @@
                     if (!c.forumConversation) c.forumConversation = [];
                     if (c.forumFollowers === undefined) c.forumFollowers = Math.floor(Math.random() * 10000);
                     if (c.forumFollowing === undefined) c.forumFollowing = Math.floor(Math.random() * 500);
-                    if (c.chatSettings === undefined) c.chatSettings = { background: '', userAvatar: '', charAvatar: '' };
+                    if (c.forumChatSettings === undefined) c.forumChatSettings = { background: '', userAvatar: '', charAvatar: '' };
                 });
-                
-                // Default follow all chars in forum
+                // Default follow all chars
                 const allCharIds = appData.contacts.map(c => c.id);
-                appData.user.forumProfile.following = [...new Set([...appData.user.forumProfile.following, ...allCharIds])];
+                if (!appData.user.forumProfile.following) appData.user.forumProfile.following = [];
+                allCharIds.forEach(id => {
+                    if (!appData.user.forumProfile.following.includes(id)) {
+                        appData.user.forumProfile.following.push(id);
+                    }
+                });
 
 
             } catch (error) {
@@ -1019,10 +1012,10 @@
                 return;
             }
 
-            if (pageId !== 'lock-screen-page' && pageId !== 'password-entry-page' && appData.settings.beautify.lockScreen.enabled && pageHistory[pageHistory.length - 1] === 'home-screen-page') {
-                pageHistory = ['lock-screen-page'];
-                showPage('lock-screen-page', renderLockScreenPage);
-                return;
+            const isUnlocking = pageId === 'password-entry-page' || (pageId === 'home-screen-page' && pageHistory[pageHistory.length - 1] === 'password-entry-page');
+            if (appData.settings.beautify.lockScreen.enabled && pageHistory[0] === 'lock-screen-page' && !isUnlocking && pageId !== 'lock-screen-page') {
+                 showPage('lock-screen-page', renderLockScreenPage);
+                 return;
             }
 
             if (pageHistory[pageHistory.length - 1] !== pageId) {
@@ -1449,8 +1442,10 @@
                             conversation: [], remark: '', isPinned: false, isStarred: false, lastMomentPostTime: 0,
                             boundPersonaId: null, isCouple: false,
                             pokeSettings: { userToChar: { action: '拍了拍', suffix: '' }, charToUser: { action: '拍了拍', suffix: '' } },
-                            forumConversation: [], forumFollowers: Math.floor(Math.random() * 10000), forumFollowing: Math.floor(Math.random() * 500),
-                            chatSettings: { background: '', userAvatar: '', charAvatar: '' }
+                            forumConversation: [], 
+                            forumFollowers: Math.floor(Math.random() * 10000), 
+                            forumFollowing: Math.floor(Math.random() * 500),
+                            forumChatSettings: { background: '', userAvatar: '', charAvatar: '' }
                         };
                         appData.contacts.push(newContact);
                         // Auto-follow new contact
@@ -1480,7 +1475,6 @@
             }
             
             const displayName = chatType === 'group' ? `${chat.name} (${chat.members.length})` : (chat.remark || chat.name);
-            const chatSettings = chat.chatSettings || {};
 
             container.innerHTML = `
                 <div class="wechat-header">
@@ -1490,7 +1484,7 @@
                     <span class="header-title">${displayName}</span>
                     <div class="header-right" onclick="showPage('${chatType === 'group' ? 'group-chat-settings-page' : 'chat-settings-page'}', ${chatType === 'group' ? 'renderGroupChatSettingsPage' : 'renderChatSettingsPage'}, '${chatId}')"><i class="fas fa-ellipsis-h"></i></div>
                 </div>
-                <div class="content-area" id="message-area" style="${chatSettings.background ? `background-image: url(${chatSettings.background})` : ''}"></div>
+                <div class="content-area" id="message-area"></div>
                 <div class="chat-input-bar">
                     <i class="fas fa-microphone" id="chat-voice-btn"></i>
                     <input type="text" id="chat-input" placeholder="发送消息">
@@ -1518,9 +1512,16 @@
                 </div>
             `;
             
+            // Apply chat-specific background
+            const messageArea = document.getElementById('message-area');
+            if (chat.forumChatSettings && chat.forumChatSettings.background) {
+                messageArea.style.backgroundImage = `url(${chat.forumChatSettings.background})`;
+            } else {
+                messageArea.style.backgroundImage = `var(--chat-background-image)`;
+            }
+
             renderMessages(chatId, chatType, 'wechat');
 
-            const messageArea = document.getElementById('message-area');
             const scrollToBottomBtn = document.getElementById('scroll-to-bottom-btn-wechat');
             if (messageArea) {
                 messageArea.onscroll = () => {
@@ -1680,19 +1681,23 @@
                     return;
                 }
                 if (msg.type === 'system') {
-                    const cardStyleClass = msg.content.isCard ? 'card-style' : '';
-                    const cardIcon = msg.content.isCard ? '<i class="fas fa-heart"></i>' : '';
-                    html += `<div class="message-system ${cardStyleClass}">${cardIcon} ${msg.content.content}</div>`;
+                    if (msg.content.type === 'couple_accepted') {
+                         html += `<div class="message-system couple-accepted-card"><i class="fas fa-heart"></i><span>${msg.content.content}</span></div>`;
+                    } else {
+                         html += `<div class="message-system">${msg.content.content}</div>`;
+                    }
                     return;
                 }
 
                 const isSent = msg.sender === appData.user.id;
                 let senderObj;
                 if (isSent) {
-                    senderObj = { ...appData.user, avatar: (chat.chatSettings?.userAvatar) ? chat.chatSettings.userAvatar : appData.user.avatar };
+                    const userAvatar = (source === 'wechat' && chat.forumChatSettings?.userAvatar) ? chat.forumChatSettings.userAvatar : appData.user.avatar;
+                    senderObj = { ...appData.user, avatar: userAvatar };
                 } else {
                     const charBase = (chatType === 'group' ? (chat.members.find(m => m.id == msg.sender) || {name: '未知', avatar: ''}) : chat);
-                    senderObj = { ...charBase, avatar: (chat.chatSettings?.charAvatar) ? chat.chatSettings.charAvatar : charBase.avatar };
+                    const charAvatar = (source === 'wechat' && chat.forumChatSettings?.charAvatar) ? chat.forumChatSettings.charAvatar : charBase.avatar;
+                    senderObj = { ...charBase, avatar: charAvatar };
                 }
                 if (!senderObj) return;
 
@@ -1745,6 +1750,7 @@
             let bubbleContent = '';
             let bubbleClass = '';
             let additionalAttributes = `ondblclick="showMessageContextMenu(event, ${msg.id}, '${chatId}', '${chatType}', '${source}')"`;
+            let customStyle = '';
 
             switch(msg.type) {
                 case 'text':
@@ -1787,22 +1793,19 @@
                     break;
                 case 'transfer':
                     let transferFooter = '微信转账';
-                    if (msg.content.isReturn) {
-                        transferFooter = `退回红包`;
-                        bubbleContent = `<div class="main"><i class="fas fa-undo-alt icon"></i><div class="details"><span class="amount">¥${parseFloat(msg.content.amount).toFixed(2)}</span><span class="remark">已退回</span></div></div><div class="footer">${transferFooter}</div>`;
-                    } else {
-                        if (chatType === 'group') {
-                            const group = appData.groups.find(g => g.id == chatId);
-                            const recipientName = group.members.find(m => m.id == msg.content.recipientId)?.name || '成员';
-                            transferFooter = `转账给 ${recipientName}`;
-                        }
-                        bubbleContent = `<div class="main"><i class="fas fa-exchange-alt icon"></i><div class="details"><span class="amount">¥${parseFloat(msg.content.amount).toFixed(2)}</span><span class="remark">已转账</span></div></div><div class="footer">${transferFooter}</div>`;
+                    if (chatType === 'group') {
+                        const group = appData.groups.find(g => g.id == chatId);
+                        const recipientName = group.members.find(m => m.id == msg.content.recipientId)?.name || '成员';
+                        transferFooter = `转账给 ${recipientName}`;
                     }
+                    bubbleContent = `<div class="main"><i class="fas fa-exchange-alt icon"></i><div class="details"><span class="amount">¥${parseFloat(msg.content.amount).toFixed(2)}</span><span class="remark">已转账</span></div></div><div class="footer">${transferFooter}</div>`;
                     bubbleClass = 'transfer-bubble';
+                    if (appData.settings.beautify.transferBubbleCss) customStyle = 'background: none;';
                     break;
                 case 'redPacket':
                     bubbleContent = `<div class="main"><i class="fas fa-envelope icon"></i><div class="details"><span class="remark">${msg.content.remark}</span><span class="amount" style="font-size: 14px;">查看红包</span></div></div><div class="footer">微信红包</div>`;
                     bubbleClass = 'redpacket-bubble';
+                    if (appData.settings.beautify.redPacketBubbleCss) customStyle = 'background: none;';
                     break;
                 case 'forward':
                     const originalChat = appData.groups.find(g => g.id == msg.content.originalChatId) || appData.contacts.find(c => c.id == msg.content.originalChatId);
@@ -1862,13 +1865,14 @@
                     bubbleClass = 'text-bubble';
                     break;
             }
-            return `<div class="message-bubble ${bubbleClass}" ${additionalAttributes}>${bubbleContent}</div>`;
+            return `<div class="message-bubble ${bubbleClass}" ${additionalAttributes} style="${customStyle}">${bubbleContent}</div>`;
         }
 
         function generateCharBubbleHtml(msg, chatId, chatType, source) {
             let bubbleContent = '';
             let bubbleClass = '';
             let additionalAttributes = `ondblclick="showMessageContextMenu(event, ${msg.id}, '${chatId}', '${chatType}', '${source}')"`;
+            let customStyle = '';
 
             switch(msg.type) {
                 case 'text':
@@ -1916,6 +1920,7 @@
                     bubbleContent = `<div class="main"><i class="fas fa-exchange-alt icon"></i><div class="details"><span class="amount">¥${parseFloat(msg.content.amount).toFixed(2)}</span><span class="remark">${transferStatusText}</span></div></div><div class="footer">微信转账</div>`;
                     bubbleClass = 'transfer-bubble';
                     additionalAttributes += ` onclick="handleBubbleClick('transfer', ${msg.id}, '${chatId}', '${chatType}', '${source}')"`;
+                    if (appData.settings.beautify.transferBubbleCss) customStyle = 'background: none;';
                     break;
                 case 'redPacket':
                     let packetStatus = msg.content.claimed.includes(appData.user.id) ? '已领取' : '点击领取红包';
@@ -1923,6 +1928,7 @@
                     bubbleContent = `<div class="main"><i class="fas fa-envelope icon"></i><div class="details"><span class="remark">${msg.content.remark}</span><span class="amount" style="font-size: 14px;">${packetStatus}</span></div></div><div class="footer">微信红包</div>`;
                     bubbleClass = 'redpacket-bubble';
                     additionalAttributes += ` onclick="handleBubbleClick('redPacket', ${msg.id}, '${chatId}', '${chatType}', '${source}')"`;
+                    if (appData.settings.beautify.redPacketBubbleCss) customStyle = 'background: none;';
                     break;
                 case 'forward':
                     const originalChat = appData.groups.find(g => g.id == msg.content.originalChatId) || appData.contacts.find(c => c.id == msg.content.originalChatId);
@@ -1982,7 +1988,7 @@
                     bubbleClass = 'text-bubble';
                     break;
             }
-            return `<div class="message-bubble ${bubbleClass}" ${additionalAttributes}>${bubbleContent}</div>`;
+            return `<div class="message-bubble ${bubbleClass}" ${additionalAttributes} style="${customStyle}">${bubbleContent}</div>`;
         }
         
         function renderWalletPage(container) {
@@ -2272,7 +2278,7 @@
         }
         
         function showWorldbookEditor(type) {
-            const typeMap = { presets: '预设', styles: '文风', library: '世界书库', forum: '论坛APP专属世界书' };
+            const typeMap = { presets: '预设', styles: '文风', library: '世界书库', forum: '论坛世界书' };
             const isForumWb = type === 'forum';
             const items = isForumWb ? null : appData.worldbooks[type];
             const modalId = 'worldbook-editor-modal';
@@ -2415,13 +2421,13 @@
                         <div class="details"><span class="name">更换头像框</span></div><i class="fas fa-chevron-right chevron"></i>
                     </div>
                     <div class="list-item" onclick="showPage('bubble-settings-page', renderBubbleSettingsPage)">
-                        <div class="details"><span class="name">通用气泡CSS</span></div><i class="fas fa-chevron-right chevron"></i>
+                        <div class="details"><span class="name">聊天气泡CSS</span></div><i class="fas fa-chevron-right chevron"></i>
                     </div>
-                    <div class="list-item" onclick="showPage('red-packet-bubble-settings-page', renderRedPacketBubbleSettingsPage)">
-                        <div class="details"><span class="name">红包气泡CSS</span></div><i class="fas fa-chevron-right chevron"></i>
+                    <div class="list-item" onclick="showPage('redpacket-bubble-settings-page', renderRedPacketBubbleSettingsPage)">
+                        <div class="details"><span class="name">红包气泡CSS美化</span></div><i class="fas fa-chevron-right chevron"></i>
                     </div>
                     <div class="list-item" onclick="showPage('transfer-bubble-settings-page', renderTransferBubbleSettingsPage)">
-                        <div class="details"><span class="name">转账气泡CSS</span></div><i class="fas fa-chevron-right chevron"></i>
+                        <div class="details"><span class="name">转账气泡CSS美化</span></div><i class="fas fa-chevron-right chevron"></i>
                     </div>
                 </div>
             `;
@@ -2696,7 +2702,7 @@
             const loadSlot = (slotIndex) => {
                 currentSlot = slotIndex;
                 const archive = appData.settings.beautify.bubbleArchives[slotIndex] || {};
-                document.getElementById('bubble-css-input').value = archive.bubbleCss || '';
+                document.getElementById('bubble-css-input').value = archive.bubbleCss || defaultAppData.settings.beautify.bubbleCss;
                 updateBubblePreview();
                 document.querySelectorAll('.slot-btn').forEach((btn, i) => btn.style.fontWeight = i === slotIndex ? 'bold' : 'normal');
             };
@@ -2714,15 +2720,14 @@
                         .message-row { display: flex; gap: 10px; margin-bottom: 10px; max-width: 100%; align-items: flex-start; }
                         .message-row.sent { justify-content: flex-end; }
                         .message-bubble { position: relative; padding: 10px 14px; border-radius: 6px; }
-                        .message-row.sent .message-bubble.text-bubble { background: #96d35f; }
-                        .message-row.received .message-bubble.text-bubble { background: #ffffff; }
-                        .message-row.sent .message-bubble.text-bubble::after { content: ""; position: absolute; right: -6px; top: 12px; width: 8px; height: 12px; background: #96d35f; clip-path: polygon(0 0, 100% 50%, 0 100%); display: ${hasTail ? 'none' : 'block'}; }
-                        .message-row.received .message-bubble.text-bubble::after { content: ""; position: absolute; left: -6px; top: 12px; width: 8px; height: 12px; background: #ffffff; clip-path: polygon(100% 0, 0 50%, 100% 100%); display: ${hasTail ? 'none' : 'block'}; }
+                        .message-row.sent .message-bubble.text-bubble::after { display: ${hasTail ? 'none' : 'block'}; }
+                        .message-row.received .message-bubble.text-bubble::after { display: ${hasTail ? 'none' : 'block'}; }
                         .voice-bubble { display: flex; align-items: center; gap: 8px; min-width: 80px; }
                         .voice-bubble-content { display: flex; align-items: center; gap: 10px; }
                         .voice-bubble-content .waveform { display: flex; align-items: center; height: 20px; }
                         .voice-bubble-content .bar { width: 3px; height: 4px; margin: 0 1.5px; border-radius: 2px; animation: wave 1.2s ease-in-out infinite alternate; background: #333; }
                         @keyframes wave { 0% { transform: scaleY(0.2); } 50% { transform: scaleY(1); } 100% { transform: scaleY(0.2); } }
+                        ${defaultAppData.settings.beautify.bubbleCss}
                         ${bubbleCss}
                     </style>
                     <div class="message-row received"><div class="message-bubble text-bubble">对方消息预览</div></div>
@@ -2734,7 +2739,7 @@
             container.innerHTML = `
                 <div class="wechat-header">
                     <div class="header-left header-back-btn" onclick="goBack()"><i class="fas fa-chevron-left"></i><span>返回</span></div>
-                    <span class="header-title">通用气泡CSS</span>
+                    <span class="header-title">聊天气泡CSS</span>
                 </div>
                 <div class="content-area form-page">
                     <div class="form-group">
@@ -2768,7 +2773,7 @@
         }
 
         function renderRedPacketBubbleSettingsPage(container) {
-            const defaultCss = `.redpacket-bubble { background-color: #FCAE3D; color: white; width: 230px; border-radius: 8px; padding: 12px; display: flex; flex-direction: column; cursor: pointer; }`;
+            const defaultCss = `.redpacket-bubble { background-color: #FCAE3D; color: white; }`;
             container.innerHTML = `
                 <div class="wechat-header">
                     <div class="header-left header-back-btn" onclick="goBack()"><i class="fas fa-chevron-left"></i><span>返回</span></div>
@@ -2777,21 +2782,19 @@
                 <div class="content-area form-page">
                     <div class="form-group">
                         <label>红包气泡 CSS</label>
-                        <textarea id="redpacket-bubble-css-input" style="height: 250px;">${appData.settings.beautify.redPacketBubbleCss || defaultCss}</textarea>
+                        <textarea id="redpacket-css-input" style="height: 250px;">${appData.settings.beautify.redPacketBubbleCss || defaultCss}</textarea>
                     </div>
                     <div class="form-group">
-                        <label>预览</label>
-                        <iframe id="redpacket-preview-frame" style="width: 100%; height: 150px; border: 1px solid #ccc; border-radius: 8px;"></iframe>
+                        <label>示例代码 (可复制)</label>
+                        <textarea readonly style="height: 100px; background: #eee;">${defaultCss}</textarea>
                     </div>
                     <button class="form-btn" onclick="saveSpecialBubbleCss('redPacket')">保存并应用</button>
                 </div>
             `;
-            updateSpecialBubblePreview('redPacket');
-            document.getElementById('redpacket-bubble-css-input').oninput = () => updateSpecialBubblePreview('redPacket');
         }
 
         function renderTransferBubbleSettingsPage(container) {
-            const defaultCss = `.transfer-bubble { background-color: #FCAE3D; color: white; width: 230px; border-radius: 8px; padding: 12px; display: flex; flex-direction: column; cursor: pointer; }`;
+            const defaultCss = `.transfer-bubble { background-color: #FCAE3D; color: white; }`;
             container.innerHTML = `
                 <div class="wechat-header">
                     <div class="header-left header-back-btn" onclick="goBack()"><i class="fas fa-chevron-left"></i><span>返回</span></div>
@@ -2800,47 +2803,19 @@
                 <div class="content-area form-page">
                     <div class="form-group">
                         <label>转账气泡 CSS</label>
-                        <textarea id="transfer-bubble-css-input" style="height: 250px;">${appData.settings.beautify.transferBubbleCss || defaultCss}</textarea>
+                        <textarea id="transfer-css-input" style="height: 250px;">${appData.settings.beautify.transferBubbleCss || defaultCss}</textarea>
                     </div>
-                    <div class="form-group">
-                        <label>预览</label>
-                        <iframe id="transfer-preview-frame" style="width: 100%; height: 150px; border: 1px solid #ccc; border-radius: 8px;"></iframe>
+                     <div class="form-group">
+                        <label>示例代码 (可复制)</label>
+                        <textarea readonly style="height: 100px; background: #eee;">${defaultCss}</textarea>
                     </div>
                     <button class="form-btn" onclick="saveSpecialBubbleCss('transfer')">保存并应用</button>
                 </div>
             `;
-            updateSpecialBubblePreview('transfer');
-            document.getElementById('transfer-bubble-css-input').oninput = () => updateSpecialBubblePreview('transfer');
-        }
-
-        function updateSpecialBubblePreview(type) {
-            const previewFrame = document.getElementById(`${type}-preview-frame`);
-            const cssInput = document.getElementById(`${type}-bubble-css-input`);
-            const previewDoc = previewFrame.contentDocument || previewFrame.contentWindow.document;
-
-            const bubbleHtml = type === 'redPacket' ? 
-                `<div class="redpacket-bubble"><div class="main"><i class="fas fa-envelope icon"></i><div class="details"><span class="remark">恭喜发财</span><span class="amount" style="font-size: 14px;">查看红包</span></div></div><div class="footer">微信红包</div></div>` :
-                `<div class="transfer-bubble"><div class="main"><i class="fas fa-exchange-alt icon"></i><div class="details"><span class="amount">¥100.00</span><span class="remark">已转账</span></div></div><div class="footer">微信转账</div></div>`;
-
-            previewDoc.body.innerHTML = `
-                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-                <style>
-                    body { margin: 0; padding: 10px; font-family: sans-serif; background: #eee; display: flex; justify-content: center; align-items: center; height: 100%; }
-                    .transfer-bubble, .redpacket-bubble { background-color: #FCAE3D; color: white; width: 230px; border-radius: 8px; padding: 12px; display: flex; flex-direction: column; cursor: pointer; }
-                    .transfer-bubble .main, .redpacket-bubble .main { display: flex; align-items: center; gap: 10px; }
-                    .transfer-bubble .icon, .redpacket-bubble .icon { font-size: 36px; color: white; }
-                    .transfer-bubble .details, .redpacket-bubble .details { display: flex; flex-direction: column; flex: 1; }
-                    .transfer-bubble .amount, .redpacket-bubble .amount { font-size: 18px; font-weight: 500; color: white; }
-                    .transfer-bubble .remark, .redpacket-bubble .remark { font-size: 14px; color: white; margin-top: 2px; }
-                    .transfer-bubble .footer, .redpacket-bubble .footer { font-size: 12px; color: white; padding-top: 8px; margin-top: 8px; border-top: 1px solid rgba(255, 255, 255, 0.3); }
-                    ${cssInput.value}
-                </style>
-                ${bubbleHtml}
-            `;
         }
 
         function saveSpecialBubbleCss(type) {
-            const css = document.getElementById(`${type}-bubble-css-input`).value;
+            const css = document.getElementById(`${type}-css-input`).value;
             if (type === 'redPacket') {
                 appData.settings.beautify.redPacketBubbleCss = css;
             } else if (type === 'transfer') {
@@ -3095,7 +3070,10 @@
                     ${recipientCountInput}
                     <div class="modal-input-group">
                         <label>金额 (${currentCurrency})</label>
-                        <input type="number" id="tx-amount" class="modal-input" placeholder="${placeholder}">
+                        <input type="number" id="tx, "JPY": { rate: 21.7, name: '日元' },
+            'EUR': { rate: 0.13, name: '欧元' }, 'GBP': { rate: 0.11, name: '英镑' }, 'AUD': { rate: 0.21, name: '澳元' },
+            'CAD': { rate: 0.19, name: '加元' }, 'CHF': { rate: 0.13, name: '瑞士法郎' }, 'HKD': { rate: 1.09, name: '港元' },
+            'SGD': { rate: 0.19, name: '新加坡元' }, 'KRW': { rate: 190.5, name: '韩元' }, 'NZD': { rate: 0.23-amount" class="modal-input" placeholder="${placeholder}">
                     </div>
                     ${remarkNeeded ? `
                     <div class="modal-input-group">
@@ -3214,7 +3192,7 @@
                 sendMessage(chatId, chatType, { location: location.substring(0, 15) }, 'location', source);
             }
         }
-
+        
         function showHtmlContentModal(chatId, chatType, source) {
             const modalId = 'html-content-modal';
             const html = `
@@ -3563,22 +3541,12 @@
 
 四、模式适配细则
 
-1. 线上模式：允许使用颜文字(´•ω•\`)和口语化省略（"等等这展开不太对劲吧？！"）
+1. 线上模式：允许使用颜文字(´•ω•`)和口语化省略（"等等这展开不太对劲吧？！"）
 2. 线下模式：严格遵循"动作→微表情→环境反馈"的描写链条，示例：
 他把咖啡推过来时，杯柄正好转向你习惯的手握方向。这太自然了，自然得像呼吸。以至于你过了三秒才意识到，他连你左利手的习惯都记得。
 
 最终校验：所有输出需通过"活人感测试"——是否像真实人类会说的语言，是否留有呼吸感的停顿，是否避免机械的完美逻辑。
-
-【你的角色设定】
-${contact.persona}
-${userPersonaPrompt}
-【当前时间】
-2025年12月3日 16:10
-【你的语言】
-请使用 ${appData.settings.charLanguage} 进行回复。
-【世界书】
-${worldbookPreset}
-${isOfflineMode ? '当切换为线下剧情时请生成一段2000-8000字的剧情描述。' : '线上聊天模式每次回复请生成5到10条短消息，每条消息用单独的聊天气泡包裹。当user暗示或明示需要钱时，你需要结合自己的人设给出红包或转账，格式为 [transfer: amount=金额, remark=备注] 或 [redPacket: amount=金额, remark=备注]。'}`;
+${worldbookPreset}\n\n【你的角色设定】\n${contact.persona}${userPersonaPrompt}\n\n【你的语言】\n请使用 ${appData.settings.charLanguage} 进行回复。\n\n${isOfflineMode ? '当切换为线下剧情时请生成一段2000-8000字的剧情描述。' : '线上聊天模式每次回复请生成5到10条短消息，每条消息用单独的聊天气泡包裹。char转账气泡css和user的转账气泡格式和代码是一致，但方向不一致。char的红包气泡css与user的红包气泡格式和代码是一致，方向依旧与user的方向不一致。当user暗示char或明示char时，char需要给出红包或转账给user，并且要结合自己人设来给user转账或发红包。char转账或发红包，user都能点击领取，当char转账时，user可以选择“领取”顾名思义就是直接领取，而余额直接进入我的零钱余额，也可以选择“退回”顾名思义就是直接退回，余额直接真实的返回对方（char）的钱包。当char发红包时，user可以点击“领取”，并直接领取该红包，领取该红包过后，这个红包就可以直接进账到我的零钱余额，当user点击“退回”时，user这边会自动弹出一个“已退回＋{金额数量}”的格式的转账气泡，char也同理，当char点击“退回”也会单独跳出“已退回”的转账气泡。user可以领取char发的红包，也可以领取char的转账。'}`;
 
             const messages = [
                 { role: 'system', content: systemPrompt },
@@ -3692,8 +3660,6 @@ ${isOfflineMode ? '当切换为线下剧情时请生成一段2000-8000字的剧�
         function applyBeautifySettings() {
             const root = document.documentElement;
             const bubbleStyle = document.getElementById('user-bubble-style');
-            const redPacketBubbleStyle = document.getElementById('red-packet-bubble-style');
-            const transferBubbleStyle = document.getElementById('transfer-bubble-style');
             const globalThemeStyle = document.getElementById('global-theme-style');
             const beautify = appData.settings.beautify;
             
@@ -3766,9 +3732,7 @@ ${isOfflineMode ? '当切换为线下剧情时请生成一段2000-8000字的剧�
             root.style.setProperty('--user-avatar-frame', beautify.userAvatarFrame ? `url(${beautify.userAvatarFrame})` : 'none');
             root.style.setProperty('--char-avatar-frame', beautify.charAvatarFrame ? `url(${beautify.charAvatarFrame})` : 'none');
             
-            bubbleStyle.innerHTML = beautify.bubbleCss || '';
-            redPacketBubbleStyle.innerHTML = beautify.redPacketBubbleCss || '';
-            transferBubbleStyle.innerHTML = beautify.transferBubbleCss || '';
+            bubbleStyle.innerHTML = (beautify.bubbleCss || '') + (beautify.redPacketBubbleCss || '') + (beautify.transferBubbleCss || '');
             
             root.style.setProperty('--player-image', `url(${appData.music.playerImage})`);
             root.style.setProperty('--player-background', `url(${appData.music.playerBackground})`);
@@ -4283,17 +4247,17 @@ ${isOfflineMode ? '当切换为线下剧情时请生成一段2000-8000字的剧�
                     <div class="list-item" onclick="showPage('poke-settings-page', renderPokeSettingsPage, ${contactId})">
                         <div class="details"><span class="name">戳一戳设置</span></div><i class="fas fa-chevron-right chevron"></i>
                     </div>
-                    <div class="list-item" onclick="setChatBackground(${contactId})">
-                        <div class="details"><span class="name">设置聊天背景</span></div><i class="fas fa-chevron-right chevron"></i>
-                    </div>
-                    <div class="list-item" onclick="setChatAvatar(${contactId}, 'user')">
-                        <div class="details"><span class="name">更换我的头像 (仅当前聊天)</span></div><i class="fas fa-chevron-right chevron"></i>
-                    </div>
-                    <div class="list-item" onclick="setChatAvatar(${contactId}, 'char')">
-                        <div class="details"><span class="name">更换对方头像 (仅当前聊天)</span></div><i class="fas fa-chevron-right chevron"></i>
-                    </div>
                     <div class="list-item" onclick="showPage('long-term-memory-page', renderLongTermMemoryPage, ${contactId})">
                         <div class="details"><span class="name">长期记忆</span></div><i class="fas fa-chevron-right chevron"></i>
+                    </div>
+                    <div class="list-item" onclick="setForumChatBackground(${contactId}, 'wechat')">
+                        <div class="details"><span class="name">设置聊天背景</span></div><i class="fas fa-chevron-right chevron"></i>
+                    </div>
+                    <div class="list-item" onclick="setForumChatAvatar(${contactId}, 'user', 'wechat')">
+                        <div class="details"><span class="name">更换我的头像 (仅当前聊天)</span></div><i class="fas fa-chevron-right chevron"></i>
+                    </div>
+                    <div class="list-item" onclick="setForumChatAvatar(${contactId}, 'char', 'wechat')">
+                        <div class="details"><span class="name">更换对方头像 (仅当前聊天)</span></div><i class="fas fa-chevron-right chevron"></i>
                     </div>
                     <div class="list-item" onclick="clearChatHistory(${contactId}, 'wechat')">
                         <div class="details"><span class="name">清空聊天记录</span></div>
@@ -4310,44 +4274,6 @@ ${isOfflineMode ? '当切换为线下剧情时请生成一段2000-8000字的剧�
 
             document.getElementById('pin-toggle').onchange = (e) => togglePin(contactId, e.target.checked);
             document.getElementById('star-toggle').onchange = (e) => toggleStar(contactId, e.target.checked);
-        }
-
-        function setChatBackground(contactId) {
-            const input = document.createElement('input');
-            input.type = 'file';
-            input.accept = 'image/*';
-            input.onchange = e => {
-                handleImageUpload(e.target.files[0], url => {
-                    const contact = appData.contacts.find(c => c.id == contactId);
-                    if (!contact.chatSettings) contact.chatSettings = {};
-                    contact.chatSettings.background = url;
-                    saveData(true, () => {
-                        renderConversationPage(document.getElementById('conversation-page'), contactId, 'individual');
-                    });
-                });
-            };
-            input.click();
-        }
-
-        function setChatAvatar(contactId, userType) {
-            const input = document.createElement('input');
-            input.type = 'file';
-            input.accept = 'image/*';
-            input.onchange = e => {
-                handleImageUpload(e.target.files[0], url => {
-                    const contact = appData.contacts.find(c => c.id == contactId);
-                    if (!contact.chatSettings) contact.chatSettings = {};
-                    if (userType === 'user') {
-                        contact.chatSettings.userAvatar = url;
-                    } else {
-                        contact.chatSettings.charAvatar = url;
-                    }
-                    saveData(true, () => {
-                        renderMessages(contactId, 'individual', 'wechat');
-                    });
-                });
-            };
-            input.click();
         }
 
         function clearChatHistory(contactId, source) {
@@ -4556,19 +4482,23 @@ ${isOfflineMode ? '当切换为线下剧情时请生成一段2000-8000字的剧�
                 if (message.content.claimed.includes(appData.user.id)) { showToast('你已经领取过该红包了。'); return; }
                 if (message.content.claimed.length >= message.content.count) { showToast('该红包已被领完。'); return; }
 
-                const modalId = 'redpacket-receive-modal';
-                const html = `
-                    <div class="modal-content">
-                        <div class="modal-title">领取红包</div>
-                        <p style="text-align: center;">${message.content.remark}</p>
-                        <div class="modal-actions">
-                            <button class="modal-btn" onclick="returnRedPacket(${msgId}, '${chatId}', '${chatType}', '${source}')">退回</button>
-                            <button class="modal-btn primary" onclick="claimRedPacket(${msgId}, '${chatId}', '${chatType}', '${source}')">领取</button>
-                        </div>
-                    </div>
-                `;
-                showModal(modalId, html);
-
+                if (confirm('是否领取红包？')) {
+                    const amountPerPerson = message.content.amount / message.content.count;
+                    appData.user.wallet.balance += amountPerPerson;
+                    const senderName = chatType === 'group' ? (chat.members.find(m => m.id === message.sender)?.name || '群成员') : (chat.remark || chat.name);
+                    appData.user.wallet.transactions.push({ type: '红包', amount: amountPerPerson, details: `收到${senderName}的红包`, timestamp: Date.now() });
+                    
+                    message.content.claimed.push(appData.user.id);
+                    
+                    const systemMsg = {
+                        id: Date.now(), type: 'system',
+                        content: { content: `${appData.user.nickname} 领取了 ${senderName} 的红包` },
+                        timestamp: Date.now()
+                    };
+                    conversation.push(systemMsg);
+                    saveData();
+                    renderMessages(chatId, chatType, source);
+                }
             } else if (type === 'transfer' && message.sender !== appData.user.id && message.content.status === 'sent') {
                 const modalId = 'transfer-receive-modal';
                 const html = `
@@ -4609,54 +4539,6 @@ ${isOfflineMode ? '当切换为线下剧情时请生成一段2000-8000字的剧�
             } else if (type === 'music') {
                 playSong(message.content.id);
             }
-        }
-
-        function claimRedPacket(msgId, chatId, chatType, source) {
-            let chat = chatType === 'group' ? appData.groups.find(g => g.id == chatId) : appData.contacts.find(c => c.id == chatId);
-            const conversation = source === 'forum' ? chat.forumConversation : chat.conversation;
-            const message = conversation.find(m => m.id == msgId);
-            
-            const amountPerPerson = message.content.amount / message.content.count;
-            appData.user.wallet.balance += amountPerPerson;
-            const senderName = chatType === 'group' ? (chat.members.find(m => m.id === message.sender)?.name || '群成员') : (chat.remark || chat.name);
-            appData.user.wallet.transactions.push({ type: '红包', amount: amountPerPerson, details: `收到${senderName}的红包`, timestamp: Date.now() });
-            
-            message.content.claimed.push(appData.user.id);
-            
-            const systemMsg = {
-                id: Date.now(), type: 'system',
-                content: { content: `${appData.user.nickname} 领取了 ${senderName} 的红包` },
-                timestamp: Date.now()
-            };
-            conversation.push(systemMsg);
-            saveData();
-            renderMessages(chatId, chatType, source);
-            closeModal('redpacket-receive-modal');
-        }
-
-        function returnRedPacket(msgId, chatId, chatType, source) {
-            let chat = chatType === 'group' ? appData.groups.find(g => g.id == chatId) : appData.contacts.find(c => c.id == chatId);
-            const conversation = source === 'forum' ? chat.forumConversation : chat.conversation;
-            const message = conversation.find(m => m.id == msgId);
-
-            message.content.status = 'returned'; // Mark as returned
-            
-            const returnMsg = {
-                id: Date.now(),
-                sender: appData.user.id,
-                type: 'transfer',
-                content: {
-                    amount: message.content.amount,
-                    remark: '红包已退回',
-                    isReturn: true
-                },
-                timestamp: Date.now()
-            };
-            conversation.push(returnMsg);
-
-            saveData();
-            renderMessages(chatId, chatType, source);
-            closeModal('redpacket-receive-modal');
         }
 
         function showForwardedContentModal(event, messageId, chatId, chatType, source) {
@@ -4711,7 +4593,7 @@ ${isOfflineMode ? '当切换为线下剧情时请生成一段2000-8000字的剧�
                     <div class="form-group">
                         <label>群头像</label>
                         <img src="https://img.js.design/assets/img/65a881fa383e6a42242a3f33.jpg" class="avatar-upload-preview" id="group-avatar-preview" onclick="document.getElementById('group-avatar-input').click()">
-<input type="file" id="group-avatar-input" class="file-input" accept="image/jpeg, image/gif">
+                        <input type="file" id="group-avatar-input" class="file-input" accept="image/jpeg, image/gif">
                     </div>
                     <div class="list-divider"></div>
                     <div class="selected-contacts-preview" id="selected-group-members-preview">
@@ -5981,21 +5863,37 @@ ${isOfflineMode ? '当切换为线下剧情时请生成一段2000-8000字的剧�
         async function respondToCoupleInvitation(messageId, accepted, chatId, chatType, source) {
             const chat = appData.contacts.find(c => c.id == chatId);
             const conversation = source === 'forum' ? chat.forumConversation : chat.conversation;
-            const invitationMsg = conversation.find(m => m.id === messageId);
-            if (!invitationMsg) return;
+            const invitationMsgIndex = conversation.findIndex(m => m.id === messageId);
+            if (invitationMsgIndex === -1) return;
 
-            invitationMsg.type = 'system';
-            invitationMsg.content = { 
-                content: accepted ? `${appData.user.nickname} 同意了情侣邀请` : `${appData.user.nickname} 拒绝了情侣邀请`,
-                isCard: accepted
-            };
+            const inviterName = chat.remark || chat.name;
+            const systemMsgContent = accepted ? `${appData.user.nickname} 同意了情侣邀请` : `${appData.user.nickname} 拒绝了情侣邀请`;
+            
+            // Replace invitation bubble with a system message
+            conversation.splice(invitationMsgIndex, 1, {
+                id: messageId,
+                type: 'system',
+                content: { content: systemMsgContent },
+                timestamp: Date.now()
+            });
 
             if (accepted) {
+                // Ensure only one couple relationship exists
                 appData.contacts.forEach(c => c.isCouple = false);
                 chat.isCouple = true;
-                const systemMsg = { id: Date.now(), type: 'system', content: { content: `你和 ${chat.name} 已成为情侣！`, isCard: true }, timestamp: Date.now() };
+                
+                // Add a special system message card
+                const systemMsg = { 
+                    id: Date.now(), 
+                    type: 'system', 
+                    content: { 
+                        content: `你和 ${inviterName} 已成为情侣！`,
+                        type: 'couple_accepted' // Add a type for special styling
+                    }, 
+                    timestamp: Date.now() 
+                };
                 conversation.push(systemMsg);
-                showToast(`你和 ${chat.name} 已成为情侣！`, 'success');
+                showToast(`你和 ${inviterName} 已成为情侣！`, 'success');
             }
             
             await saveData();
@@ -6410,8 +6308,6 @@ ${isOfflineMode ? '当切换为线下剧情时请生成一段2000-8000字的剧�
             // Home Screen
             const homeScreenTime = document.getElementById('home-screen-time');
             if (homeScreenTime) homeScreenTime.textContent = timeString;
-            const homeScreenDate = document.getElementById('home-screen-date');
-            if (homeScreenDate) homeScreenDate.textContent = dateString;
 
             // Network & Battery
             const networkEl = document.getElementById('status-bar-network');
@@ -6510,22 +6406,22 @@ ${isOfflineMode ? '当切换为线下剧情时请生成一段2000-8000字的剧�
             const slideBar = container.querySelector('#slide-to-unlock-bar');
             const slideHandle = container.querySelector('#slide-handle');
             let isDragging = false;
-            let startX = 0;
 
             const startDrag = (e) => {
                 isDragging = true;
-                startX = e.touches ? e.touches[0].clientX : e.clientX;
+                slideBar.style.transition = 'none';
                 slideHandle.style.transition = 'none';
             };
 
             const onDrag = (e) => {
                 if (!isDragging) return;
+                const rect = slideBar.getBoundingClientRect();
                 const clientX = e.touches ? e.touches[0].clientX : e.clientX;
-                let newX = clientX - startX;
-                newX = Math.max(0, Math.min(newX, slideBar.offsetWidth - slideHandle.offsetWidth));
+                let newX = clientX - rect.left - (slideHandle.offsetWidth / 2);
+                newX = Math.max(0, Math.min(newX, slideBar.offsetWidth - slideHandle.offsetWidth - 10));
                 slideHandle.style.left = `${newX + 5}px`;
 
-                if (newX >= slideBar.offsetWidth - slideHandle.offsetWidth - 5) {
+                if (newX >= slideBar.offsetWidth - slideHandle.offsetWidth - 15) {
                     endDrag(true);
                 }
             };
@@ -6582,12 +6478,8 @@ ${isOfflineMode ? '当切换为线下剧情时请生成一段2000-8000字的剧�
                         unlockPhone();
                     } else {
                         showToast('密码错误', 'error');
-                        container.classList.add('shake');
-                        setTimeout(() => {
-                            container.classList.remove('shake');
-                            enteredPassword = '';
-                            dots.forEach(dot => dot.classList.remove('filled'));
-                        }, 500);
+                        enteredPassword = '';
+                        setTimeout(() => dots.forEach(dot => dot.classList.remove('filled')), 300);
                     }
                 }
             });
@@ -6832,7 +6724,7 @@ ${isOfflineMode ? '当切换为线下剧情时请生成一段2000-8000字的剧�
                     break;
                 case 'forum-me':
                     header.querySelector('.header-title').textContent = '我的';
-                    renderForumProfilePage(contentArea, appData.user.id, true);
+                    renderForumMePage(contentArea);
                     break;
             }
         }
@@ -6882,10 +6774,6 @@ ${isOfflineMode ? '当切换为线下剧情时请生成一段2000-8000字的剧�
                         author = appData.contacts.find(c => c.id == postData.authorId);
                     }
                     
-                    // Update author's follower count
-                    const authorProfile = author.id === appData.user.id ? appData.user.forumProfile : author;
-                    authorProfile.followers = (authorProfile.followers || 0) + Math.floor(Math.random() * 10);
-
                     return {
                         id: Date.now() + Math.random(),
                         authorId: author.id,
@@ -6919,7 +6807,7 @@ ${isOfflineMode ? '当切换为线下剧情时请生成一段2000-8000字的剧�
                 return `
                     <div class="forum-post" onclick="showPage('forum-post-detail-page', renderForumPostDetailPage, ${post.id})">
                         <div class="post-header">
-                            <img src="${author.avatar}" class="avatar">
+                            <img src="${author.avatar}" class="avatar" onclick="event.stopPropagation(); showPage('forum-profile-page', renderForumProfilePage, '${author.id}')">
                             <div class="author-info">
                                 <div class="name">${author.remark || author.name || author.nickname}</div>
                                 <div class="timestamp">${new Date(post.timestamp).toLocaleString()}</div>
@@ -6927,9 +6815,9 @@ ${isOfflineMode ? '当切换为线下剧情时请生成一段2000-8000字的剧�
                         </div>
                         <div class="post-content-preview">${post.content}</div>
                         <div class="post-footer">
-                            <div class="action"><i class="far fa-share-square"></i> <span>分享</span></div>
+                            <div class="action" onclick="event.stopPropagation(); showToast('分享功能开发中...')"><i class="far fa-share-square"></i> <span>分享</span></div>
                             <div class="action"><i class="far fa-comment"></i> <span>${post.comments.length}</span></div>
-                            <div class="action ${post.likes.includes(appData.user.id) ? 'liked' : ''}" onclick="event.stopPropagation(); toggleForumLike(${post.id}, true);"><i class="far fa-heart"></i> <span>${post.likes.length}</span></div>
+                            <div class="action ${post.likes.includes(appData.user.id) ? 'liked' : ''}" onclick="event.stopPropagation(); toggleForumLike(${post.id})"><i class="far fa-heart"></i> <span>${post.likes.length}</span></div>
                         </div>
                     </div>
                 `;
@@ -6943,9 +6831,159 @@ ${isOfflineMode ? '当切换为线下剧情时请生成一段2000-8000字的剧�
             renderForumPosts(followedPosts);
         }
 
-        function renderForumProfilePage(container, profileId, isMePage = false) {
-            const isUser = profileId == appData.user.id;
-            const profileData = isUser ? appData.user : appData.contacts.find(c => c.id == profileId);
+        function renderForumMePage(container) {
+            const profile = appData.user.forumProfile;
+            const userPosts = appData.forum.posts.filter(p => p.authorId === appData.user.id);
+            container.innerHTML = `
+                <div id="forum-profile-page" style="padding-top: 0;">
+                    <div class="profile-header">
+                        <img src="${appData.user.avatar}" class="avatar">
+                        <div class="name">${appData.user.nickname}</div>
+                        <div class="bio">${profile.bio}</div>
+                        <div class="profile-stats">
+                            <div class="stat"><div class="count">${profile.following.length}</div><div class="label">关注</div></div>
+                            <div class="stat"><div class="count">${profile.followers}</div><div class="label">粉丝</div></div>
+                        </div>
+                    </div>
+                    <div class="profile-actions">
+                        <button class="form-btn" onclick="showPage('forum-profile-editor-page', renderForumProfileEditorPage)">编辑资料</button>
+                    </div>
+                    <div class="list-divider"></div>
+                    <div id="forum-feed-container"></div>
+                </div>
+            `;
+            renderForumPosts(userPosts);
+        }
+
+        function renderForumConversationPage(container, chatId, chatType) {
+            appData.forum.activeChat.id = chatId;
+            appData.forum.activeChat.type = chatType;
+
+            const chat = appData.contacts.find(c => c.id == chatId);
+            if (!chat) { goBack(); return; }
+
+            const chatSettings = chat.forumChatSettings || {};
+            
+            container.innerHTML = `
+                <div class="wechat-header">
+                    <div class="header-left header-back-btn" onclick="goBack()"><i class="fas fa-chevron-left"></i></div>
+                    <span class="header-title">${chat.remark || chat.name}</span>
+                    <div class="header-right" onclick="showPage('forum-chat-settings-page', renderForumChatSettingsPage, '${chatId}')"><i class="fas fa-ellipsis-h"></i></div>
+                </div>
+                <div class="content-area" id="forum-message-area" style="${chatSettings.background ? `background-image: url(${chatSettings.background})` : ''}"></div>
+                <div class="chat-input-bar">
+                    <i class="fas fa-microphone" id="forum-chat-voice-btn"></i>
+                    <input type="text" id="forum-chat-input" placeholder="发送消息">
+                    <i class="fas fa-plus-circle" id="forum-chat-plus-btn"></i>
+                </div>
+                <div class="chat-plus-menu" id="forum-chat-plus-menu">
+                    <div class="plus-menu-item" id="forum-plus-image-btn"><div class="icon"><i class="fas fa-image"></i></div><span>图片</span></div>
+                    <div class="plus-menu-item" id="forum-plus-camera-btn"><div class="icon"><i class="fas fa-camera"></i></div><span>拍摄</span></div>
+                </div>
+            `;
+            
+            renderMessages(chatId, chatType, 'forum');
+
+            const input = document.getElementById('forum-chat-input');
+            input.onkeydown = (e) => {
+                if (e.key === 'Enter' && input.value.trim() !== '') {
+                    e.preventDefault();
+                    sendMessage(chatId, chatType, { content: input.value.trim() }, 'text', 'forum');
+                    input.value = '';
+                }
+            };
+
+            document.getElementById('forum-chat-plus-btn').onclick = () => {
+                const menu = document.getElementById('forum-chat-plus-menu');
+                menu.style.display = menu.style.display === 'grid' ? 'none' : 'grid';
+            };
+
+            document.getElementById('forum-chat-voice-btn').onclick = () => showVoiceInputModal(chatId, chatType, 'forum');
+            document.getElementById('forum-plus-image-btn').onclick = () => document.getElementById('image-file-input-forum').click();
+            container.insertAdjacentHTML('beforeend', '<input type="file" id="image-file-input-forum" class="file-input" accept="image/*">');
+            document.getElementById('image-file-input-forum').onchange = e => {
+                handleImageUpload(e.target.files[0], dataUrl => {
+                    sendMessage(chatId, chatType, { url: dataUrl }, 'image', 'forum');
+                });
+            };
+            document.getElementById('forum-plus-camera-btn').onclick = () => showCameraSimModal(chatId, chatType, 'forum');
+        }
+
+        function renderForumChatSettingsPage(container, contactId) {
+            const contact = appData.contacts.find(c => c.id == contactId);
+            if (!contact) { goBack(); return; }
+
+            container.innerHTML = `
+                <div class="wechat-header">
+                    <div class="header-left header-back-btn" onclick="goBack()"><i class="fas fa-chevron-left"></i><span>返回</span></div>
+                    <span class="header-title">聊天设置</span>
+                </div>
+                <div class="content-area">
+                    <div class="list-divider"></div>
+                    <div class="list-item" onclick="setForumChatBackground(${contactId}, 'forum')">
+                        <div class="details"><span class="name">设置聊天背景</span></div><i class="fas fa-chevron-right chevron"></i>
+                    </div>
+                    <div class="list-item" onclick="setForumChatAvatar(${contactId}, 'user', 'forum')">
+                        <div class="details"><span class="name">更换我的头像 (仅当前聊天)</span></div><i class="fas fa-chevron-right chevron"></i>
+                    </div>
+                    <div class="list-item" onclick="setForumChatAvatar(${contactId}, 'char', 'forum')">
+                        <div class="details"><span class="name">更换对方头像 (仅当前聊天)</span></div><i class="fas fa-chevron-right chevron"></i>
+                    </div>
+                    <div class="list-divider"></div>
+                    <div class="list-item" onclick="clearChatHistory(${contactId}, 'forum')">
+                        <div class="details"><span class="name">清空聊天记录</span></div>
+                    </div>
+                    <div class="list-divider"></div>
+                    <div class="list-item" onclick="blockContact(${contactId})">
+                        <div class="details"><span class="name" style="color: var(--wechat-red);">拉黑</span></div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function setForumChatBackground(contactId, source) {
+            const input = document.createElement('input');
+            input.type = 'file';
+            input.accept = 'image/*';
+            input.onchange = e => {
+                handleImageUpload(e.target.files[0], url => {
+                    const contact = appData.contacts.find(c => c.id == contactId);
+                    if (!contact.forumChatSettings) contact.forumChatSettings = {};
+                    contact.forumChatSettings.background = url;
+                    saveData(true, () => {
+                        const pageId = source === 'wechat' ? 'conversation-page' : 'forum-conversation-page';
+                        const renderFn = source === 'wechat' ? renderConversationPage : renderForumConversationPage;
+                        renderFn(document.getElementById(pageId), contactId, 'individual');
+                    });
+                });
+            };
+            input.click();
+        }
+
+        function setForumChatAvatar(contactId, userType, source) {
+            const input = document.createElement('input');
+            input.type = 'file';
+            input.accept = 'image/*';
+            input.onchange = e => {
+                handleImageUpload(e.target.files[0], url => {
+                    const contact = appData.contacts.find(c => c.id == contactId);
+                    if (!contact.forumChatSettings) contact.forumChatSettings = {};
+                    if (userType === 'user') {
+                        contact.forumChatSettings.userAvatar = url;
+                    } else {
+                        contact.forumChatSettings.charAvatar = url;
+                    }
+                    saveData(true, () => {
+                        renderMessages(contactId, 'individual', source);
+                    });
+                });
+            };
+            input.click();
+        }
+
+        function renderForumProfilePage(container, charId) {
+            const isUser = charId == appData.user.id;
+            const profileData = isUser ? appData.user : appData.contacts.find(c => c.id == charId);
             if (!profileData) { goBack(); return; }
 
             const profile = isUser ? appData.user.forumProfile : {
@@ -6958,29 +6996,24 @@ ${isOfflineMode ? '当切换为线下剧情时请生成一段2000-8000字的剧�
             const isCouple = !isUser && profileData.isCouple;
 
             container.innerHTML = `
-                ${isMePage ? '' : `<div class="wechat-header">
+                <div class="wechat-header">
                     <div class="header-left header-back-btn" onclick="goBack()"><i class="fas fa-chevron-left"></i></div>
                     <span class="header-title">个人主页</span>
-                </div>`}
+                </div>
                 <div class="content-area" style="padding-top: 0;">
                     <div class="profile-header">
                         <img src="${profileData.avatar}" class="avatar">
                         <div class="name">${profileData.remark || profileData.name || profileData.nickname} ${isCouple ? '<span class="couple-badge"><i class="fas fa-heart"></i> 情侣</span>' : ''}</div>
                         <div class="bio">${profile.bio}</div>
                         <div class="profile-stats">
-                            <div class="stat"><div class="count">${profile.following}</div><div class="label">关注</div></div>
+                            <div class="stat"><div class="count">${isUser ? profile.following.length : profile.following}</div><div class="label">关注</div></div>
                             <div class="stat"><div class="count">${profile.followers}</div><div class="label">粉丝</div></div>
                         </div>
                     </div>
                     ${!isUser ? `
                     <div class="profile-actions">
                         <button class="form-btn" style="background-color: ${isFollowing ? '#aaa' : 'var(--wechat-red)'};" onclick="toggleForumFollow(${profileData.id})">${isFollowing ? '已关注' : '关注'}</button>
-                        <button class="form-btn" onclick="showPage('forum-conversation-page', renderForumConversationPage, ${profileData.id}, 'individual')">私信</button>
-                    </div>` : `
-                    <div class="profile-actions">
-                        <button class="form-btn" onclick="showPage('forum-profile-editor-page', renderForumProfileEditorPage)">编辑资料</button>
-                    </div>
-                    `}
+                    </div>` : ''}
                     <div class="list-divider"></div>
                     <div id="forum-feed-container"></div>
                 </div>
@@ -7070,7 +7103,7 @@ ${isOfflineMode ? '当切换为线下剧情时请生成一段2000-8000字的剧�
                 <div class="content-area">
                     <div class="forum-post" style="border-bottom: 8px solid var(--wechat-bg);">
                         <div class="post-header">
-                            <img src="${author.avatar}" class="avatar">
+                            <img src="${author.avatar}" class="avatar" onclick="event.stopPropagation(); showPage('forum-profile-page', renderForumProfilePage, '${author.id}')">
                             <div class="author-info">
                                 <div class="name">${author.remark || author.name || author.nickname}</div>
                                 <div class="timestamp">${new Date(post.timestamp).toLocaleString()}</div>
@@ -7078,7 +7111,7 @@ ${isOfflineMode ? '当切换为线下剧情时请生成一段2000-8000字的剧�
                         </div>
                         <div class="post-content-preview" style="max-height: none;">${post.content}</div>
                         <div class="post-footer">
-                            <div class="action"><i class="far fa-share-square"></i> <span>分享</span></div>
+                            <div class="action" onclick="event.stopPropagation(); showToast('分享功能开发中...')"><i class="far fa-share-square"></i> <span>分享</span></div>
                             <div class="action"><i class="far fa-comment"></i> <span>${post.comments.length}</span></div>
                             <div class="action ${post.likes.includes(appData.user.id) ? 'liked' : ''}" onclick="toggleForumLike(${postId})"><i class="far fa-heart"></i> <span>${post.likes.length}</span></div>
                         </div>
@@ -7125,7 +7158,7 @@ ${isOfflineMode ? '当切换为线下剧情时请生成一段2000-8000字的剧�
             if (!post) return;
             const prompt = `你是一个论坛评论生成器。针对以下帖子内容，生成3-5条符合不同人设的评论。
             帖子内容: "${post.content}"
-            请严格按照以下txt格式返回一个包含评论对象的数组，不要添加任何额外解释：
+            请严格按照以下JSON格式返回一个包含评论对象的数组，不要添加任何额外解释：
             [
               {
                 "authorId": "随机选择一个角色的ID",
@@ -7135,7 +7168,7 @@ ${isOfflineMode ? '当切换为线下剧情时请生成一段2000-8000字的剧�
             ]`;
             try {
                 const reply = await callApi(post.authorId, 'forum', prompt);
-                const newCommentsData = txt.parse(reply);
+                const newCommentsData = JSON.parse(reply);
                 const newComments = newCommentsData.map(c => ({
                     authorId: c.authorId,
                     content: c.content,
@@ -7163,7 +7196,7 @@ ${isOfflineMode ? '当切换为线下剧情时请生成一段2000-8000字的剧�
             }
         }
 
-        function toggleForumLike(postId, fromFeed = false) {
+        function toggleForumLike(postId) {
             const post = appData.forum.posts.find(p => p.id == postId);
             if (post) {
                 const index = post.likes.indexOf(appData.user.id);
@@ -7173,11 +7206,7 @@ ${isOfflineMode ? '当切换为线下剧情时请生成一段2000-8000字的剧�
                     post.likes.push(appData.user.id);
                 }
                 saveData();
-                if (fromFeed) {
-                    renderForumPosts(appData.forum.posts);
-                } else {
-                    renderForumPostDetailPage(document.getElementById('forum-post-detail-page'), postId);
-                }
+                renderForumPostDetailPage(document.getElementById('forum-post-detail-page'), postId);
             }
         }
 
