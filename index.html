@@ -197,7 +197,9 @@
 
         #home-screen-page { background-image: var(--home-screen-background-image); background-size: cover; background-position: center; }
         #home-screen-page .content-area { display: flex; flex-direction: column; justify-content: space-between; align-items: center; padding-top: 50px; }
-        #home-screen-time { font-size: 50px; font-weight: 300; color: var(--home-screen-font-color); text-shadow: 0 1px 5px rgba(0,0,0,0.3); }
+        .home-screen-info { color: var(--home-screen-font-color); text-shadow: 0 1px 5px rgba(0,0,0,0.3); text-align: center; }
+        .home-screen-info .time { font-size: 50px; font-weight: 300; }
+        .home-screen-info .date { font-size: 16px; font-weight: 400; margin-top: 5px; }
         .app-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--app-icon-gap); padding: 20px; }
         .app-icon { display: flex; flex-direction: column; align-items: center; gap: 8px; cursor: pointer; text-align: center; }
         .app-icon .icon-bg { width: var(--app-icon-size); height: var(--app-icon-size); border-radius: var(--app-icon-radius); background-size: cover; background-position: center; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
@@ -592,7 +594,10 @@
             <!-- 主屏幕 -->
             <div id="home-screen-page" class="page no-transition">
                 <div class="content-area">
-                    <div id="home-screen-time">09:41</div>
+                    <div class="home-screen-info">
+                        <div class="time" id="home-screen-time">09:41</div>
+                        <div class="date" id="home-screen-date">2024年1月1日 星期一</div>
+                    </div>
                     <div class="app-grid" id="app-grid"></div>
                 </div>
             </div>
@@ -964,7 +969,7 @@
                 appData.contacts.forEach(c => {
                     if (c.isPinned === undefined) c.isPinned = false;
                     if (c.isStarred === undefined) c.isStarred = false;
-                    if (c.lastMomentPostTime === undefined) c.lastMomentPostTime = 0;
+                    if (c.lastMomentPostTime === undefined) c.lastMomentPostTime =0;
                     if (c.boundPersonaId === undefined) c.boundPersonaId = null;
                     if (c.isCouple === undefined) c.isCouple = false;
                     if (!c.pokeSettings) c.pokeSettings = { userToChar: { action: '拍了拍', suffix: '' }, charToUser: { action: '拍了拍', suffix: '' } };
@@ -5965,8 +5970,7 @@
             const languages = {
                 'zh-CN': '简体中文', 'zh-TW': '繁体中文 (台湾)', 'zh-HK': '繁体中文 (香港)', 'zh-MO': '繁体中文 (澳门)',
                 'en': 'English (英语)', 'ja': '日本語 (日语)', 'ko': '한국어 (韩语)', 'de': 'Deutsch (德语)',
-                'fr': 'Français (法语)', 'ru': 'Русский (俄语)', 'es': 'Español (西班牙语)', 'pt': 'Português (葡萄牙语)',
-                'it': 'Italiano (意大利语)', 'nl': 'Nederlands (荷兰语)', 'pl': 'Polski (波兰语)', 'sv': 'Svenska (瑞典语)',
+                'fr': 'Français (法语)', 'ru': 'Русский (俄语)', 'es': 'Español (西班牙语)', 'pt': 'Português (葡萄牙语), 'it': 'Italiano (意大利语)', 'nl': 'Nederlands (荷兰语)', 'pl': 'Polski (波兰语)', 'sv': 'Svenska (瑞典语)',
                 'th': 'ไทย (泰语)', 'vi': 'Tiếng Việt (越南语)', 'id': 'Bahasa Indonesia (印尼语)', 'ms': 'Bahasa Melayu (马来语)',
                 'ar': 'العربية (阿拉伯语)', 'hi': 'हिन्दी (印地语)', 'bn': 'বাংলা (孟加拉语)', 'tr': 'Türkçe (土耳其语)',
                 'fa': 'فارسی (波斯语)', 'ur': 'اردو (乌尔都语)', 'he': 'עברית (希伯来语)', 'el': 'Ελληνικά (希腊语)',
@@ -6368,6 +6372,8 @@
             // Home Screen
             const homeScreenTime = document.getElementById('home-screen-time');
             if (homeScreenTime) homeScreenTime.textContent = timeString;
+            const homeScreenDate = document.getElementById('home-screen-date');
+            if (homeScreenDate) homeScreenDate.textContent = dateString;
 
             // Network & Battery
             const networkEl = document.getElementById('status-bar-network');
