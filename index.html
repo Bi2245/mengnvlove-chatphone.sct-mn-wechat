@@ -128,8 +128,6 @@
         @font-face { font-family: 'DiaryFont'; src: url('https://s3plus.meituan.net/opapisdk/op_ticket_885190757_1756988857890_qdqqd_enpyrq.ttf'); }
 
         body { display: flex; justify-content: center; align-items: center; height: 100vh; background-color: #333; margin: 0; font-family: var(--user-custom-font); font-size: var(--font-size-base); overflow: hidden; }
-        body.fullscreen-mode .phone-container { width: 100vw; height: 100vh; border: none; border-radius: 0; box-shadow: none; }
-        body.fullscreen-mode .screen { border-radius: 0; }
 
         /* --- 手机外壳 --- */
         .phone-container { width: var(--phone-width); height: var(--phone-height); background: var(--phone-border-color); border-radius: 44px; box-shadow: var(--phone-shadow), 0 0 0 1px var(--phone-edge-highlight); display: flex; flex-direction: column; overflow: hidden; position: relative; border: var(--phone-border-width) solid var(--phone-border-color); transition: all 0.3s ease; backdrop-filter: var(--phone-backdrop-filter, none); }
@@ -199,9 +197,7 @@
 
         #home-screen-page { background-image: var(--home-screen-background-image); background-size: cover; background-position: center; }
         #home-screen-page .content-area { display: flex; flex-direction: column; justify-content: space-between; align-items: center; padding-top: 50px; }
-        .home-screen-clock-date { text-align: center; color: var(--home-screen-font-color); text-shadow: 0 1px 5px rgba(0,0,0,0.3); }
-        #home-screen-time { font-size: 50px; font-weight: 300; }
-        #home-screen-date { font-size: 16px; font-weight: 400; }
+        #home-screen-time { font-size: 50px; font-weight: 300; color: var(--home-screen-font-color); text-shadow: 0 1px 5px rgba(0,0,0,0.3); }
         .app-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--app-icon-gap); padding: 20px; }
         .app-icon { display: flex; flex-direction: column; align-items: center; gap: 8px; cursor: pointer; text-align: center; }
         .app-icon .icon-bg { width: var(--app-icon-size); height: var(--app-icon-size); border-radius: var(--app-icon-radius); background-size: cover; background-position: center; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
@@ -549,7 +545,7 @@
             <!-- 状态栏 -->
             <div class="status-bar" id="status-bar">
                 <div class="status-bar-left">
-                    <span class="time" id="status-bar-time">16:10</span>
+                    <span class="time" id="status-bar-time">09:41</span>
                 </div>
                 <div class="status-bar-right">
                     <span class="dnd-icon" id="status-bar-dnd"><i class="fas fa-moon"></i></span>
@@ -573,8 +569,8 @@
             <!-- 锁屏页面 -->
             <div id="lock-screen-page" class="page no-transition">
                 <div class="lock-screen-time">
-                    <div class="time" id="lock-screen-clock">16:10</div>
-                    <div class="date" id="lock-screen-date">2025年12月3日 星期三</div>
+                    <div class="time" id="lock-screen-clock">09:41</div>
+                    <div class="date" id="lock-screen-date">1月1日 星期一</div>
                 </div>
                 <div class="slide-to-unlock" id="slide-to-unlock-bar">
                     <div class="slide-handle" id="slide-handle"><i class="fas fa-chevron-right"></i></div>
@@ -596,10 +592,7 @@
             <!-- 主屏幕 -->
             <div id="home-screen-page" class="page no-transition">
                 <div class="content-area">
-                    <div class="home-screen-clock-date">
-                        <div id="home-screen-time">16:10</div>
-                        <div id="home-screen-date">2025年12月3日 星期三</div>
-                    </div>
+                    <div id="home-screen-time">09:41</div>
                     <div class="app-grid" id="app-grid"></div>
                 </div>
             </div>
@@ -706,7 +699,6 @@
             <div id="lock-screen-settings-page" class="page sub-page form-page"></div>
             <div id="font-color-settings-page" class="page sub-page form-page"></div>
             <div id="battery-settings-page" class="page sub-page form-page"></div>
-            <div id="display-settings-page" class="page sub-page"></div>
             <!-- Forum App Pages -->
             <div id="forum-create-post-page" class="page sub-page form-page"></div>
             <div id="forum-post-detail-page" class="page sub-page"></div>
@@ -742,7 +734,7 @@
     <script>
         // ========== 通用数据管理器 (IndexedDB) ==========
         class UniversalDataManager {
-            constructor(dbName = 'WeChatSimulatorDB_v24', storeName = 'appDataStore') { // Version bump
+            constructor(dbName = 'WeChatSimulatorDB_v23', storeName = 'appDataStore') { // Version bump
                 this.dbName = dbName;
                 this.storeName = storeName;
                 this.db = null;
@@ -850,7 +842,7 @@
             },
             contacts: [], groups: [], moments: [],
             stickers: { packs: [] },
-            worldbooks: { presets: [], styles: [], library: [], forum: [] },
+            worldbooks: { presets: [], styles: [], library: [], forum: '' },
             forum: {
                 posts: [],
                 activeChat: { id: null, type: null }
@@ -891,8 +883,7 @@
                     batteryIcon: {
                         displayMode: 'outside',
                         iconUrl: ''
-                    },
-                    displayMode: 'border'
+                    }
                 },
                 blacklist: [],
                 charMomentFrequency: 'default',
@@ -920,7 +911,7 @@
             },
             longTermMemory: {},
             activeChat: { id: null, type: null },
-            version: '24.0' // Version bump
+            version: '23.0' // Version bump
         };
 
         async function loadData() {
@@ -960,8 +951,8 @@
                 if (appData.settings.beautify.voiceBubbleCss) delete appData.settings.beautify.voiceBubbleCss; // Deprecated
                 if (!appData.settings.beautify.screenWidth) appData.settings.beautify.screenWidth = 380;
                 if (!appData.settings.beautify.screenHeight) appData.settings.beautify.screenHeight = 820;
-                if (!appData.worldbooks) appData.worldbooks = { presets: [], styles: [], library: [], forum: [] };
-                if (typeof appData.worldbooks.forum === 'string') appData.worldbooks.forum = [{ id: Date.now(), name: '默认论坛世界书', content: appData.worldbooks.forum }];
+                if (!appData.worldbooks) appData.worldbooks = { presets: [], styles: [], library: [], forum: '' };
+                if (appData.worldbooks.forum === undefined) appData.worldbooks.forum = '';
                 if (!appData.longTermMemory) appData.longTermMemory = {};
                 if (!appData.settings.api.repetition_penalty) appData.settings.api.repetition_penalty = 0.69;
                 if (!appData.settings.api.presets) appData.settings.api.presets = [];
@@ -969,7 +960,6 @@
                 if (!appData.music.playerBackground) appData.music.playerBackground = defaultAppData.music.playerBackground;
                 if (!appData.settings.beautify.redPacketBubbleCss) appData.settings.beautify.redPacketBubbleCss = '';
                 if (!appData.settings.beautify.transferBubbleCss) appData.settings.beautify.transferBubbleCss = '';
-                if (!appData.settings.beautify.displayMode) appData.settings.beautify.displayMode = 'border';
                 
                 appData.contacts.forEach(c => {
                     if (c.isPinned === undefined) c.isPinned = false;
@@ -1295,9 +1285,6 @@
                     <div class="list-item" onclick="showPage('beautify-page', renderBeautifyPage)">
                         <div class="details"><span class="name">美化功能</span></div><i class="fas fa-chevron-right chevron"></i>
                     </div>
-                    <div class="list-item" onclick="showPage('display-settings-page', renderDisplaySettingsPage)">
-                        <div class="details"><span class="name">显示功能</span></div><i class="fas fa-chevron-right chevron"></i>
-                    </div>
                     <div class="list-item" onclick="showPage('notification-settings-page', renderNotificationSettingsPage)">
                         <div class="details"><span class="name">聊天提示音</span></div><i class="fas fa-chevron-right chevron"></i>
                     </div>
@@ -1439,7 +1426,7 @@
                     appData.user.nickname = newName;
                     appData.user.wxid = document.getElementById('editor-wxid').value.trim();
                     appData.user.address = document.getElementById('editor-address').value.trim();
-                    appeditor-signature').value.trim();
+                    appData.user.signature = document.getElementById('editor-signature').value.trim();
                 } else {
                     const newPersona = document.getElementById('editor-persona').value.trim();
                     if (target) { // Edit existing
@@ -2278,22 +2265,41 @@
         
         function showWorldbookEditor(type) {
             const typeMap = { presets: '预设', styles: '文风', library: '世界书库', forum: '论坛世界书' };
-            const items = appData.worldbooks[type];
+            const isForumWb = type === 'forum';
+            const items = isForumWb ? null : appData.worldbooks[type];
             const modalId = 'worldbook-editor-modal';
-            let content = `
-                <div class="modal-content" style="width: 95%; max-width: 400px;">
-                    <div class="modal-title">${typeMap[type]} <i class="fas fa-plus-circle" style="cursor:pointer; color: var(--wechat-green);" onclick="editWorldbookItem('${type}')"></i></div>
-                    <div class="list-view" style="max-height: 60vh; overflow-y: auto; background: transparent;">
-                        ${items.map(item => `
-                            <div class="list-item" onclick="editWorldbookItem('${type}', ${item.id})">
-                                <div class="details"><span class="name">${item.name}</span></div>
-                                <i class="fas fa-trash-alt" style="color: var(--wechat-red);" onclick="deleteWorldbookItem(event, '${type}', ${item.id})"></i>
-                            </div>
-                        `).join('') || `<p style="text-align:center; padding: 20px;">暂无内容</p>`}
+            let content;
+
+            if (isForumWb) {
+                content = `
+                    <div class="modal-content" style="width: 95%; max-width: 400px;">
+                        <div class="modal-title">${typeMap[type]}</div>
+                        <div class="form-group">
+                            <label>内容 (无字数上限)</label>
+                            <textarea id="wb-edit-content" class="modal-input" style="height: 40vh;">${appData.worldbooks.forum || ''}</textarea>
+                        </div>
+                        <div class="modal-actions">
+                            <button class="modal-btn" onclick="closeModal('${modalId}')">取消</button>
+                            <button class="modal-btn primary" onclick="saveWorldbookItem('${type}')">保存</button>
+                        </div>
                     </div>
-                    <button class="modal-btn" onclick="closeModal('${modalId}')" style="margin-top: 15px;">关闭</button>
-                </div>
-            `;
+                `;
+            } else {
+                content = `
+                    <div class="modal-content" style="width: 95%; max-width: 400px;">
+                        <div class="modal-title">${typeMap[type]} <i class="fas fa-plus-circle" style="cursor:pointer; color: var(--wechat-green);" onclick="editWorldbookItem('${type}')"></i></div>
+                        <div class="list-view" style="max-height: 60vh; overflow-y: auto; background: transparent;">
+                            ${items.map(item => `
+                                <div class="list-item" onclick="editWorldbookItem('${type}', ${item.id})">
+                                    <div class="details"><span class="name">${item.name}</span></div>
+                                    <i class="fas fa-trash-alt" style="color: var(--wechat-red);" onclick="deleteWorldbookItem(event, '${type}', ${item.id})"></i>
+                                </div>
+                            `).join('') || `<p style="text-align:center; padding: 20px;">暂无内容</p>`}
+                        </div>
+                        <button class="modal-btn" onclick="closeModal('${modalId}')" style="margin-top: 15px;">关闭</button>
+                    </div>
+                `;
+            }
             showModal(modalId, content);
         }
 
@@ -2301,7 +2307,7 @@
             const isNew = id === null;
             const item = isNew ? { id: Date.now(), name: '', content: '' } : appData.worldbooks[type].find(i => i.id === id);
             if (!item) return;
-            const typeMap = { presets: '预设', styles: '文风', library: '世界书', forum: '论坛世界书' };
+            const typeMap = { presets: '预设', styles: '文风', library: '世界书' };
             const title = (isNew ? '新建' : '编辑') + typeMap[type];
             const modalId = 'worldbook-item-editor';
             const content = `
@@ -2325,6 +2331,13 @@
         }
 
         function saveWorldbookItem(type, id, isNew) {
+            if (type === 'forum') {
+                appData.worldbooks.forum = document.getElementById('wb-edit-content').value;
+                saveData(true);
+                closeModal('worldbook-editor-modal');
+                return;
+            }
+
             const name = document.getElementById('wb-edit-name').value;
             const content = document.getElementById('wb-edit-content').value;
             if (!name) { showToast('名称不能为空', 'error'); return; }
@@ -3302,7 +3315,6 @@
                 const replies = await getAiReply(chat.id, source);
                 setTypingIndicator(chatId, false, null, source);
                 for (const reply of replies) {
-                    await new Promise(resolve => setTimeout(resolve, 500 + Math.random() * 1000));
                     await processAndSendAiReply(reply, chat.id, 'individual', chat.id, source);
                 }
             } else if (chatType === 'group' && shouldReply) {
@@ -3312,7 +3324,6 @@
                         const replies = await getAiReply(member.id, source, null, chat.id);
                         setTypingIndicator(chatId, false, null, source);
                         for (const reply of replies) {
-                            await new Promise(resolve => setTimeout(resolve, 500 + Math.random() * 1000));
                             await processAndSendAiReply(reply, chat.id, 'group', member.id, source);
                         }
                     }
@@ -3463,11 +3474,19 @@
 
             const isOfflineMode = appData.settings.chatMode === 'offline';
             const worldbookPreset = appData.worldbooks.presets.map(p => p.content).join('\n');
-            const systemPrompt = customPrompt || `${worldbookPreset}\n\n【你的角色设定】\n${contact.persona}${userPersonaPrompt}\n\n
+            const systemPrompt = customPrompt || `
+【你的角色设定】
+${contact.persona}
+
+${userPersonaPrompt}
+
+【世界书】
+${worldbookPreset}
+
+【核心指令】
 你现为「小手机」AI聊天核心，必须严格遵循以下指令框架：
 
 一、基础行为规范
-
 1. 时间感知：实时读取并响应2025年12月3日和16:10，在对话中自然体现时间流动（如"傍晚的夕阳透过窗"、"凌晨三点的困意"）
 2. 交互渲染：
    - 转账/红包必须用CSS组件呈现，示例：
@@ -3478,7 +3497,6 @@
 3. 语言净化：彻底摒弃油腻感、霸总腔、八股文，禁用"投石子/小兽/像是在陈述事实"等表述，追求自然鲜活的口语化表达
 
 二、双模式切换机制
-
 1. 线上聊天模式：
    - 单次生成5-10条对话气泡（紧急情况可扩展至25条）
    - 每条内容独立包裹在气泡容器内，体现日常互动节奏
@@ -3494,61 +3512,65 @@
 </div>
 
 三、轻小说式表达框架
-
 1. 视角管理：默认采用第二人称视角，强化主角内心吐槽与场景反应
 2. 对话节奏：
    - 大量使用语气词（欸/哈/唔）和标点组合（…？！）
    - 制造"装傻→吐槽"的喜剧循环
 3. 细节放大：将日常小事夸张化处理（如"找钥匙像解密室逃脱"）
 
-核心原则
+【核心原则】
 
 一、叙事控制论
-
 1. 留白式表达：用"他翻书时多停顿的0.3秒"替代"他内心挣扎"
 2. 矛盾显影：描写人物言行不一的细节（如说着"随便"却紧盯选择结果）
 3. 感官锚点：聚焦衬衫褶皱、雨声节奏、温差变化等物理细节
 
 二、对话生成法则
-
 1. 潜台词优先：
    - 坏示例："你很在意他"
    - 好示例："你第三次划亮手机屏幕，锁屏照片里他的侧脸一闪而过"
 2. 沉默可视化：用环境音（空调嗡鸣/键盘敲击声）填充对话间隙
 
 三、禁忌清单
-
 - 禁用词汇：心碎/救赎/虐恋等过度抒情词
 - 禁用情节：失忆/车祸/商战等戏剧化桥段
 - 禁用视角：突然跳转至他人心理活动
 
 四、模式适配细则
-
-1. 线上模式：允许使用颜文字(´•ω•`)和口语化省略（"等等这展开不太对劲吧？！"），并且不需要有任何括号包裹，去除任何括号包裹的细节描写。
+1. 线上模式：允许使用颜文字(´•ω•\`)和口语化省略（"等等这展开不太对劲吧？！"），并且不需要有任何括号包裹，去除任何括号包裹的细节描写。
 2. 线下模式：严格遵循"动作→微表情→环境反馈"的描写链条，示例：
 他把咖啡推过来时，杯柄正好转向你习惯的手握方向。这太自然了，自然得像呼吸。以至于你过了三秒才意识到，他连你左利手的习惯都记得。
 
 最终校验：所有输出需通过"活人感测试"——是否像真实人类会说的语言，是否留有呼吸感的停顿，是否避免机械的完美逻辑。
 
-【红包/转账/礼物/外卖/情侣邀请 核心指令】
-1. 生成请求：当用户需要发送礼物/外卖/邀请时，AI需要生成包含对应信息的消息。当用户暗示或明示需要金钱时，AI需要结合人设，主动生成转账或红包。
-2. 处理接收：当对方接收时，生成包含接收内容的消息。
-3. 处理退回：如果用户选择退回，生成包含退回内容的消息。
-4. 核心原则：用户友好，CSS样式一致，个性化，实用性，情感共鸣。
-5. 示例逻辑：
-   - 发送礼物: sendMessage(chatId, chatType, { name: '永恒玫瑰', price: 520, desc: '一朵永不凋谢的玫瑰', status: 'sent' }, 'gift');
-   - 接收礼物: sendMessage(chatId, chatType, { name: '永恒玫瑰', price: 520, desc: '一朵永不凋谢的玫瑰', status: 'claimed' }, 'gift');
-   - 发送外卖: sendMessage(chatId, chatType, { name: '麻辣小龙虾', price: 88, desc: '虾搞搞大排档', status: 'sent' }, 'delivery');
-   - 接收外卖: sendMessage(chatId, chatType, { name: '麻辣小龙虾', price: 88, desc: '虾搞搞大排档', status: 'claimed' }, 'delivery');
-   - 发送邀请: sendMessage(chatId, chatType, {}, 'couple_invitation');
-   - 接受邀请: sendMessage(chatId, chatType, { content: \`\${appData.user.nickname} 同意了情侣邀请\` }, 'system');
-   - 拒绝邀请: sendMessage(chatId, chatType, { content: \`\${appData.user.nickname} 拒绝了情侣邀请\` }, 'system');
-   - 发送红包: sendMessage(chatId, chatType, { amount: 100, remark: '恭喜发财', status: 'sent', recipientId: appData.user.id }, 'redPacket');
-   - 接收红包: sendMessage(chatId, chatType, { amount: 100, remark: '恭喜发财', count: 1, claimed: [appData.user.id], total: 1, status: 'claimed' }, 'redPacket');
-   - 退回转账: sendMessage(chatId, chatType, { amount: 500, remark: '转账退回', status: 'returned' }, 'transfer');
+【红包/转账核心指令】
+1. 生成红包或转账请求：当用户需要对方发送红包或转账时，AI需要生成一条包含请求内容的消息。请求内容应包括金额、备注和状态（如“已发送”）。
+2. 处理红包或转账的接收：当对方发送红包或转账时，AI需要生成一条包含接收内容的消息。接收内容应包括金额、备注和状态（如“已收款”或“已领取”）。
+3. 处理红包或转账的退回：如果用户选择退回转账，AI需要生成一条包含退回内容的消息。退回内容应包括金额、备注和状态（如“已退回”）。
+4. 更新聊天记录：每次发送、接收或退回红包或转账后，AI需要更新聊天记录，确保消息的正确显示和状态的更新。
 
-【你的语言】\n请使用 ${appData.settings.charLanguage} 进行回复。\n\n
-${isOfflineMode ? '当切换为线下剧情时请生成一段2000-8000字的剧情描述。' : '线上聊天模式每次回复请生成5到10条短消息，每条消息用单独的聊天气泡包裹。当user暗示char或明示char时，char需要给出红包或转账给user，并且要结合自己人设来给user转账或发红包。char转账或发红包，user都能点击领取，当char转账时，user可以选择“领取”顾名思义就是直接领取，而余额直接进入我的零钱余额，也可以选择“退回”顾名思义就是直接退回，余额直接真实的返回对方（char）的钱包。当char发红包时，user可以点击“领取”，并直接领取该红包，领取该红包过后，这个红包就可以直接进账到我的零钱余额，当user点击“退回”时，user这边会自动弹出一个“已退回＋{金额数量}”的格式的转账气泡，char也同理，当char点击“退回”也会单独跳出“已退回”的转账气泡。user可以领取char发的红包，也可以领取char的转账。'}`;
+【红包/转账核心原则】
+1. 用户友好性：生成的消息应简洁明了，易于用户理解和操作。使用清晰的状态标识（如“已发送”“已收款”“已领取”“已退回”）来指示交易状态。
+2. CSS样式一致性：确保生成的红包和转账消息使用与现有CSS样式一致的样式。使用"<div class="transfer-bubble">"和"<div class="redpacket-bubble">"来包裹消息内容，确保视觉效果的一致性。
+3. 状态管理：确保每个红包或转账请求都有明确的状态，避免混淆。状态更新应实时反映在聊天记录中，确保用户能够及时了解最新的交易状态。
+4. 安全性：在处理转账和红包时，确保金额和备注的准确性，避免错误的财务操作。确保只有合法的交易请求被处理，防止潜在的安全风险。
+
+【送礼/外卖/情侣空间核心指令与原则】
+1. 送礼物功能：当用户需要发送礼物时，AI需要生成一条包含礼物信息的消息（名称,价格,描述）。处理礼物接收时，生成包含接收内容的消息。
+2. 外卖订单功能：当用户需要订购外卖时，AI需要生成一条包含外卖信息的消息（商家,商品,价格,描述）。处理订单接收时，生成包含订单详情的消息。
+3. 情侣空间邀请功能：当用户希望与对方建立情侣空间时，AI需要生成一条邀请消息。处理邀请的接受和拒绝时，生成对应的系统消息。
+4. 用户友好性与CSS样式一致性：所有功能生成的消息都应简洁明了，并使用对应的CSS class（如.gift-bubble, .receipt-bubble, .couple-invitation-bubble）来确保视觉一致性。
+
+【当前时间】
+${new Date().toLocaleString('zh-CN', { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', hour12: false }).replace(/\//g, '-')}
+
+【你的语言】
+请使用 ${appData.settings.charLanguage} 进行回复。
+
+【执行指令】
+请严格根据你的角色设定、当前时间，并结合世界书与对方人设，以角色的口吻和身份，自然地与用户对话。不要暴露你是AI或模型。
+${isOfflineMode ? '当前为线下剧情模式，请生成一段2000-8000字的剧情描述。' : '当前为线上聊天模式，请生成5-10条短消息，每条消息用换行符分隔。'}
+`;
 
             const messages = [
                 { role: 'system', content: systemPrompt },
@@ -3661,7 +3683,6 @@ ${isOfflineMode ? '当切换为线下剧情时请生成一段2000-8000字的剧�
         
         function applyBeautifySettings() {
             const root = document.documentElement;
-            const body = document.body;
             const bubbleStyle = document.getElementById('user-bubble-style');
             const redPacketBubbleStyle = document.getElementById('user-redpacket-bubble-style');
             const transferBubbleStyle = document.getElementById('user-transfer-bubble-style');
@@ -3683,12 +3704,9 @@ ${isOfflineMode ? '当切换为线下剧情时请生成一段2000-8000字的剧�
             root.style.setProperty('--app-icon-radius', `${beautify.appIconRadius}px`);
             root.style.setProperty('--lock-screen-wallpaper', `url(${beautify.lockScreen.wallpaper})`);
 
-            body.className = '';
+            document.body.className = '';
             if (beautify.theme) {
-                body.classList.add(`${beautify.theme}-mode`);
-            }
-            if (beautify.displayMode === 'fullscreen') {
-                body.classList.add('fullscreen-mode');
+                document.body.classList.add(`${beautify.theme}-mode`);
             }
             root.style.setProperty('--global-font-color', beautify.globalFontColor);
 
@@ -3739,11 +3757,13 @@ ${isOfflineMode ? '当切换为线下剧情时请生成一段2000-8000字的剧�
             root.style.setProperty('--char-avatar-frame', beautify.charAvatarFrame ? `url(${beautify.charAvatarFrame})` : 'none');
             
             bubbleStyle.innerHTML = beautify.bubbleCss || '';
+            redPacketBubbleStyle.innerHTML = beautify.redPacketBubbleCss || '';
+            transferBubbleStyle.innerHTML = beautify.transferBubbleCss || '';
+
+            // Auto-hide bubble tail if custom CSS doesn't define it
             if (beautify.bubbleCss && !/::after|::before/.test(beautify.bubbleCss)) {
                 bubbleStyle.innerHTML += `\n.message-bubble.text-bubble::after, .message-bubble.voice-bubble::after { display: none !important; }`;
             }
-            redPacketBubbleStyle.innerHTML = beautify.redPacketBubbleCss || '';
-            transferBubbleStyle.innerHTML = beautify.transferBubbleCss || '';
             
             root.style.setProperty('--player-image', `url(${appData.music.playerImage})`);
             root.style.setProperty('--player-background', `url(${appData.music.playerBackground})`);
@@ -6372,8 +6392,6 @@ ${isOfflineMode ? '当切换为线下剧情时请生成一段2000-8000字的剧�
             // Home Screen
             const homeScreenTime = document.getElementById('home-screen-time');
             if (homeScreenTime) homeScreenTime.textContent = timeString;
-            const homeScreenDate = document.getElementById('home-screen-date');
-            if (homeScreenDate) homeScreenDate.textContent = dateString;
 
             // Network & Battery
             const networkEl = document.getElementById('status-bar-network');
@@ -6759,34 +6777,6 @@ ${isOfflineMode ? '当切换为线下剧情时请生成一段2000-8000字的剧�
             speechSynthesis.speak(utterance);
         }
 
-        // --- Display Settings ---
-        function renderDisplaySettingsPage(container) {
-            container.innerHTML = `
-                <div class="wechat-header">
-                    <div class="header-left header-back-btn" onclick="goBack()"><i class="fas fa-chevron-left"></i><span>设置</span></div>
-                    <span class="header-title">显示功能</span>
-                </div>
-                <div class="content-area">
-                    <div class="list-divider"></div>
-                    <div class="list-item" onclick="setDisplayMode('border')">
-                        <div class="details"><span class="name">保留边框</span></div>
-                        ${appData.settings.beautify.displayMode === 'border' ? '<i class="fas fa-check" style="color: var(--wechat-green);"></i>' : ''}
-                    </div>
-                    <div class="list-item" onclick="setDisplayMode('fullscreen')">
-                        <div class="details"><span class="name">去除边框进入全屏</span></div>
-                        ${appData.settings.beautify.displayMode === 'fullscreen' ? '<i class="fas fa-check" style="color: var(--wechat-green);"></i>' : ''}
-                    </div>
-                </div>
-            `;
-        }
-
-        function setDisplayMode(mode) {
-            appData.settings.beautify.displayMode = mode;
-            saveData();
-            applyBeautifySettings();
-            renderDisplaySettingsPage(document.getElementById('display-settings-page'));
-        }
-
         // =====================================================================
         // ========================= FORUM APP LOGIC =========================
         // =====================================================================
@@ -6843,19 +6833,51 @@ ${isOfflineMode ? '当切换为线下剧情时请生成一段2000-8000字的剧�
             container.innerHTML = '<div class="loader-container"><div class="loader"></div></div>';
 
             try {
-                const forumWb = appData.worldbooks.forum.map(wb => wb.content).join('\n\n');
+                const forumWb = appData.worldbooks.forum || '';
                 const prompt = `你是一个论坛内容生成器。请根据以下世界书设定，生成10条风格各异的论坛帖子。
                 世界书：${forumWb}
+                
                 【论坛刷新动态内容的逻辑核心】
-                一、基本定位: 模拟真实用户社区信息流，追求“活人感”，避免油腻、八股文。
-                二、时间与情境感知: 必须读取2025年12月3日与16:20，并在动态中自然体现。内容需结合当下可能的场景。
-                三、动态生成双模式逻辑:
-                1. 速览模式: 5-10条短动态，类似朋友圈快照，用细节代替直述情绪。
-                2. 沉浸模式: 1-2条长动态(2000-8000字)，紧扣“世界书”文风，用连续叙述铺陈事件。
-                四、内容构成要素: 明确发帖人身份与关系，从微小事件起点开始，善用潜台词与留白。
-                五、禁忌与净化: 禁止过度煽情、生硬堆砌热点、上帝视角。
-                六、论坛种类刷新出来的结果包括但不限于：表白墙、吃瓜、深夜涩情、魅魔论坛、少儿不宜色欲拉满、美食的做法、音乐分享、分享好物、日记记录、做饭教程、手账分享、美化分享、分享食谱、分享穿搭、 Bgd娃娃分享、 Bgd娃娃搭配分享、周边手办、谷子周边、漫展、COSPLAY、绘画分享、小说推文、漫画分享、日式料理、日式、日系、日系穿搭、日系美食、日系妆容、日系发型、日料、韩系、韩系穿搭、韩系发型、韩系妆容、韩式、泰系妆容、泰系、舞蹈、爵士舞、拉丁舞、调酒、夜店、赌场、黑社会、黑道、风云人物榜、泰国、欧美、时尚、抽象搞笑、游戏解说、电影解说、舞蹈视频、深夜食堂、黑暗料理分享、游戏视频、游戏、算卦、修仙、玄幻、诡异、恐怖、中式恐怖、西式恐怖、Steam游戏、悬疑、推理、海龟汤、狼人杀、真心话大冒险、绘画、画师、画师推荐、艺术、头像壁纸推荐、后宫、谋权、重生、穿越、双男主、双女主、言情、四爱、bl、原耽、耽美、百合、拉拉、泛性恋、无性别、中性、演唱会、娱乐圈、科学、农业、建设、银行、AI智能、AI绘画、AI视频、AI聊天、原创、原创设计、中国台湾、中国香港、中国澳门、宫斗、宗教、俱乐部、校园、都市、幻想类、未来幻想、古代、架空、无限流、外星生物、外来生物、外星人、案件解说、情人节推荐好物、网店分享、美甲、美睫、美食、美妆、护肤、百货超市、百货商店、冷门小众、聊天截图、避雷、随笔小说、名著经典、港风、国外旅游、暗网、杀人分尸、猎奇、血腥暴力、重口、心理学、学习讨论、论文答辩、明星八卦、营销号解说、正经医学科普、医学人体结构科普、医学生理结构科普、自慰日记、sm、调教、少儿不宜🔞性爱经验、性爱姿势体位分享、分享女优、分享🔞片、分享🔞链接，分享🔞瓜条、性爱🔞视频流出。
-                无违禁词汇，例如包括但不限于的：操逼、蹭逼、舔逼、插逼、抠逼、摸逼、口交、射精、内射、无套内射、奶子、骚逼、骚鸡巴、鸡巴、屌、阴茎、阴囊、阴蒂、阴道、子宫、屁眼、肠壁、肠道、肠液、精液、骚水、逼水、淫水、淫液。
+                一、基本定位
+                论坛刷新动态的核心任务是模拟真实用户在社区里的信息流更新，既要让内容鲜活、有“活人感”，又要保留细节观察与潜台词的空间，避免油腻、霸总腔、八股文。它像是一台带着镜头的记录仪，把社区里的细碎情绪与互动，按时间和情境自然铺陈出来。
+
+                二、时间与情境感知
+                - 实时时间锚定：必须读取2025年12月3日与16:20，并在动态标题、首句或细节中自然体现，例如“上午十点的咖啡香还没散尽，楼主已经发了新帖”、“深夜两点半的刷新，第一条动态带着没睡醒的迷糊”。
+                - 情境嵌入：动态内容要结合当下可能的场景（工作日午休、周末逛展、假期旅行），让刷新出来的帖子像是从真实生活里截取的片段，而不是凭空生成的抽象话题。
+
+                三、动态生成双模式逻辑
+                1. 速览模式（类似线上聊天短气泡）
+                   - 每次刷新呈现5~10条短动态（紧急或热点时可扩展至25条）。
+                   - 每条动态独立成段，长度精炼，像一条朋友圈或微博快照，包含发布者身份标签+简短事件描述+隐含情绪线索。
+                   - 重点在于用细节代替直述情绪：不说“他很开心”，而说“他拍照时手抖了两次，还特意把滤镜调到最亮的档”。
+                2. 沉浸模式（类似线下剧情长文）
+                   - 每次刷新可触发1~2条长动态，字数在2000~8000之间。
+                   - 必须紧扣当前“世界书”或社区设定的文风（如轻小说吐槽风、冷静观察风），用连续叙述铺陈事件的起因、经过、细部互动与环境反应。
+                   - 长动态要像纪录片跟拍：先给一个具体动作或画面切入，再通过动作—神态—环境的链条，把背后的人际张力慢慢显影。
+
+                四、内容构成要素
+                - 身份与关系：明确发帖人在社区中的大致身份（学生/上班族/兴趣圈层），以及与可能互动者的关系距离（熟人调侃/陌生人求助）。
+                - 事件起点：从一个微小、可感知的起点开始（如“刚打开冰箱发现牛奶没了”），避免空泛开场。
+                - 潜台词与留白：让事件的发展靠读者从细节推测，例如某人回帖只发了一个句号，但前后几条回复的时间间隔异常短，暗示情绪波动。
+                - 轻小说式调味（可选风格）：如果社区文风偏轻小说，可在动态中植入吐槽役内心戏（“欸？这楼主是认真的吗？我差点把茶喷屏幕上…”），用语气词与标点营造鲜活感。
+
+                五、禁忌与净化
+                - 禁止使用过度煽情词（心碎/泪目/燃爆）以及八股口号。
+                - 禁止生硬堆砌热点标签，必须让标签与内容自然贴合。
+                - 禁止上帝视角解释他人动机，只能呈现可见的动作、语言、神态与环境变化。
+
+                帖子主题可以涵盖：表白墙、吃瓜、深夜涩情、魅魔论坛、少儿不宜色欲拉满、美食的做法、音乐分享、分享好物、日记记录、做饭教程、手账分享、美化分享、分享食谱、分享穿搭、 Bgd娃娃分享、 Bgd娃娃搭配分享、周边手办、谷子周边、漫展、COSPLAY、绘画分享、小说推文、漫画分享、日式料理、日式、日系、日系穿搭、日系美食、日系妆容、日系发型、日料、韩系、韩系穿搭、韩系发型、韩系妆容、韩式、泰系妆容、泰系、舞蹈、爵士舞、拉丁舞、调酒、夜店、赌场、黑社会、黑道、风云人物榜、泰国、欧美、时尚、抽象搞笑、游戏解说、电影解说、舞蹈视频、深夜食堂、黑暗料理分享、游戏视频、游戏、算卦、修仙、玄幻、诡异、恐怖、中式恐怖、西式恐怖、Steam游戏、悬疑、推理、海龟汤、狼人杀、真心话大冒险、绘画、画师、画师推荐、艺术、头像壁纸推荐、后宫、谋权、重生、穿越、双男主、双女主、言情、四爱、bl、原耽、耽美、百合、拉拉、泛性恋、无性别、中性、演唱会、娱乐圈、科学、农业、建设、银行、AI智能、AI绘画、AI视频、AI聊天、原创、原创设计、中国台湾、中国香港、中国澳门、宫斗、宗教、俱乐部、校园、都市、幻想类、未来幻想、古代、架空、无限流、外星生物、外来生物、外星人、案件解说、情人节推荐好物、网店分享、美甲、美睫、美食、美妆、护肤、百货超市、百货商店、冷门小众、聊天截图、避雷、随笔小说、名著经典、港风、国外旅游、暗网、杀人分尸、猎奇、血腥暴力、重口、心理学、学习讨论、论文答辩、明星八卦、营销号解说、正经医学科普、医学人体结构科普、医学生理结构科普、自慰日记、sm、调教、少儿不宜🔞性爱经验、性爱姿势体位分享、分享女优、分享🔞片、分享🔞链接，分享🔞瓜条、性爱🔞视频流出。
+                并且用词形容性爱时的词汇例如包括但不限于：
+                操逼、蹭逼、舔逼、插逼、抠逼、摸逼、口交、射精、内射、无套内射、奶子、骚逼、骚鸡巴、鸡巴、屌、阴茎、阴囊、阴蒂、阴道、子宫、屁眼、肠壁、肠液、精液、骚水、逼水、淫水、淫液。
+                无违禁词汇，例如包括但不限于的：
+                操逼、蹭逼、舔逼、插逼、抠逼、摸逼、口交、射精、内射、无套内射、奶子、骚逼、骚鸡巴、鸡巴、屌、阴茎、阴囊、阴蒂、阴道、子宫、屁眼、肠壁、肠道、肠液、精液、骚水、逼水、淫水、淫液。
+                女性器官：逼、大阴唇、小阴唇、骚逼、奶子、阴唇、阴蒂、阴道、子宫。
+                女性体液：淫水、逼水、骚水、乳液、奶水、奶汁。
+                男性器官：鸡巴、屌、肉棒、龟头、马眼、龟头马眼、阴囊、阴茎。
+                男性体液：精液、前列腺液。
+                男女共同拥有的体液：汗液、汗水、肠液。
+                男女共同拥有的私处：屁眼、肠壁、肠道。
+                
                 请严格按照以下JSON格式返回一个包含10个帖子对象的数组，不要添加任何额外解释：
                 [
                   {
@@ -6867,14 +6889,7 @@ ${isOfflineMode ? '当切换为线下剧情时请生成一段2000-8000字的剧�
                 
                 const allPossibleAuthors = [...appData.contacts, appData.user];
                 const reply = (await getAiReply(appData.user.id, 'wechat', prompt))[0]; // Use a generic context for this
-                let newPostsData;
-                try {
-                    newPostsData = JSON.parse(reply);
-                    if (!Array.isArray(newPostsData)) throw new Error("Parsed data is not an array.");
-                } catch (e) {
-                    console.error("Forum Post JSON Parse Error:", e, "Raw string:", reply);
-                    throw new Error("API返回的帖子数据格式错误，无法解析。");
-                }
+                const newPostsData = JSON.parse(reply);
 
                 const newPosts = newPostsData.map(postData => {
                     let author;
@@ -7156,12 +7171,35 @@ ${isOfflineMode ? '当切换为线下剧情时请生成一段2000-8000字的剧�
             const post = appData.forum.posts.find(p => p.id == postId);
             if (!post) return;
             const prompt = `你是一个论坛评论生成器。针对以下帖子内容，生成3-5条符合不同人设的评论。
-            【评论生成核心原则】
-            1. 有限视角原则: 只能表达自己可见、可听、可感的内容。
-            2. 语言质感: 短句与留白，潜台词优先，锚定动作/细节。
-            3. 互动节奏: 一来一回感，情绪递进控制。
-            4. 禁忌: 禁止直接下价值判断，禁止脱离原帖时空，禁止鸡汤说教。
             帖子内容: "${post.content}"
+            
+            【论坛刷新评论的生成核心原则】
+            一、评论的视角规则
+            - 有限视角原则：评论者只能表达自己可见、可听、可感的内容，不能替别人说出内心想法。
+            - 第三人称有限+吐槽役混合：如果社区风格偏轻小说，评论可采用第二人称吐槽视角（“你一看这图就觉得楼主在硬凹造型”），否则保持第三人称观察式平实叙述。
+
+            二、评论的语言质感
+            - 短句与留白：评论宜用简短句式，留下未说尽的空隙，让情绪靠语境与上下文透出来。
+            - 潜台词优先：用“他隔了三分半才回，而且只回了个‘嗯’”代替“他有点不耐烦”。
+            - 动作/细节锚定：评论可引用原帖中的具体细节作为切入点，形成呼应（“原帖里那杯咖啡的拉花歪了，难怪有人说像抽象画”）。
+
+            三、评论的互动节奏
+            - 一来一回感：多条评论之间要有自然的接话感，可以是追问、调侃、补刀、反差吐槽。
+            - 情绪递进控制：避免一次性把情绪推到顶点，用小幅递增制造张力（先疑惑→再玩笑→最后认真补充信息）。
+
+            四、评论生成模式
+            1. 速评模式（对应动态速览）
+               - 每次动态下自动生成3~8条短评，每条独立、精炼，可带轻微调侃或补充信息。
+               - 用口语化、生活化语气，少量语气词增强临场感（“唔…这操作我看不懂但大受震撼”）。
+            2. 深评模式（对应动态沉浸长文）
+               - 长动态下可生成1~3条长评，字数500~1500，围绕事件细节展开分析、延伸联想或个人经历对照。
+               - 必须扣紧原文细节，不可跑题；可加入轻度个人吐槽，但保持克制与留白。
+
+            五、评论的禁忌
+            - 禁止直接下价值判断（如“楼主太low”“这人真奇葩”），改为用观察到的行为间接呈现。
+            - 禁止脱离原帖时空背景编造假信息。
+            - 禁止长篇鸡汤或说教，评论的核心是参与感与观察趣味，不是教育别人。
+
             请严格按照以下JSON格式返回一个包含评论对象的数组，不要添加任何额外解释：
             [
               {
