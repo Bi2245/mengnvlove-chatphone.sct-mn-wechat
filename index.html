@@ -270,6 +270,23 @@
         body.dark-mode .receipt-bubble { background-color: #2c2c2e; border-color: #3a3a3c; }
         body.dark-mode .receipt-bubble .header { background: #111; }
         body.dark-mode .receipt-bubble .footer { background: #222; }
+        
+        /* --- 戳一戳样式 (闪耀舞台) --- */
+        @keyframes poke-fade-in-scale { from { opacity: 0; transform: scale(0.8); } to { opacity: 1; transform: scale(1); } }
+        @keyframes sparkle-anim { 0% { transform: scale(0); opacity: 0.5; } 50% { opacity: 1; } 100% { transform: scale(1.5); opacity: 0; } }
+        .poke-spotlight-card { align-self: center; width: 80%; max-width: 300px; background: linear-gradient(135deg, #f5f7fa, #c3cfe2); border-radius: 16px; padding: 15px; margin: 15px 0; box-shadow: 0 8px 20px rgba(0,0,0,0.1); position: relative; overflow: hidden; animation: poke-fade-in-scale 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        body.dark-mode .poke-spotlight-card { background: linear-gradient(135deg, #2c3e50, #465563); }
+        .poke-spotlight-content { display: flex; flex-direction: column; align-items: center; gap: 12px; position: relative; z-index: 2; }
+        .poke-avatars { display: flex; position: relative; width: 80px; height: 50px; align-items: center; justify-content: center; }
+        .poke-avatar { width: 48px; height: 48px; border-radius: 50%; border: 2px solid white; position: absolute; object-fit: cover; }
+        .poke-avatar.poker { transform: translateX(-15px) rotate(-15deg); z-index: 1; }
+        .poke-avatar.poked { transform: translateX(15px) rotate(15deg); }
+        .poke-text { font-size: 14px; color: var(--global-font-color); text-align: center; }
+        .poke-text .poker-name, .poke-text .poked-name { font-weight: bold; color: var(--wechat-blue); }
+        .poke-spotlight-sparkles::before, .poke-spotlight-sparkles::after { content: '✨'; position: absolute; font-size: 20px; animation: sparkle-anim 1.5s ease-out infinite; }
+        .poke-spotlight-sparkles::before { top: 10%; left: 15%; animation-delay: 0s; }
+        .poke-spotlight-sparkles::after { bottom: 15%; right: 20%; animation-delay: 0.5s; }
+
         /* 其他通用样式 */
         .list-item { display: flex; align-items: center; padding: 10px 15px; gap: 12px; border-bottom: 0.5px solid var(--wechat-border-color); cursor: pointer; position: relative; background-color: var(--wechat-nav-bg); }
         .list-item:active { background-color: var(--wechat-bg); }
@@ -846,7 +863,8 @@
                     bio: '这个人很懒，什么都没留下。',
                     followers: 0,
                     following: []
-                }
+                },
+                pokeSettings: { action: '拍了拍', suffix: '' } // 新增用户戳自己的设置
             },
             contacts: [], groups: [], moments: [],
             stickers: { packs: [] },
@@ -972,6 +990,7 @@
                     if (!appData.settings.beautify.redPacketBubbleCss) appData.settings.beautify.redPacketBubbleCss = '';
                     if (!appData.settings.beautify.transferBubbleCss) appData.settings.beautify.transferBubbleCss = '';
                     if (appData.settings.displayMode === undefined) appData.settings.displayMode = 'default';
+                    if (!appData.user.pokeSettings) appData.user.pokeSettings = { action: '拍了拍', suffix: '' };
                     
                     appData.contacts.forEach(c => {
                         if (c.isPinned === undefined) c.isPinned = false;
@@ -979,7 +998,13 @@
                         if (c.lastMomentPostTime === undefined) c.lastMomentPostTime = 0;
                         if (c.boundPersonaId === undefined) c.boundPersonaId = null;
                         if (c.isCouple === undefined) c.isCouple = false;
-                        if (!c.pokeSettings) c.pokeSettings = { userToChar: { action: '拍了拍', suffix: '' }, charToUser: { action: '拍了拍', suffix: '' } };
+                        // ** Poke Settings Migration **
+                        if (!c.pokeSettings || typeof c.pokeSettings.userToChar === 'string') {
+                            c.pokeSettings = {
+                                userToChar: { action: '拍了拍', suffix: '' },
+                                charToUser: { action: '拍了拍', suffix: '' }
+                            };
+                        }
                         if (c.forumFollowers === undefined) c.forumFollowers = Math.floor(Math.random() * 10000);
                         if (c.forumFollowing === undefined) c.forumFollowing = Math.floor(Math.random() * 500);
                         if (c.chatSettings === undefined) c.chatSettings = { background: '', userAvatar: '', charAvatar: '' };
@@ -1206,6 +1231,7 @@
                             case 'delivery_receipt': subtext = '[外卖订单]'; break;
                             case 'gift_receipt': subtext = '[礼物清单]'; break;
                             case 'voice_call': subtext = '[语音通话]'; break;
+                            case 'poke': subtext = `[戳一戳]`; break;
                             case 'system': subtext = lastMessage.content.content; break;
                             default: subtext = lastMessage.content.content;
                         }
@@ -1499,7 +1525,10 @@
                             id: Date.now(), name: newName, avatar: newAvatar, persona: newPersona,
                             conversation: [], remark: '', isPinned: false, isStarred: false, lastMomentPostTime: 0,
                             boundPersonaId: null, isCouple: false,
-                            pokeSettings: { userToChar: { action: '拍了拍', suffix: '' }, charToUser: { action: '拍了拍', suffix: '' } },
+                            pokeSettings: { 
+                                userToChar: { action: '拍了拍', suffix: '' }, 
+                                charToUser: { action: '拍了拍', suffix: '' } 
+                            },
                             forumFollowers: Math.floor(Math.random() * 10000), forumFollowing: Math.floor(Math.random() * 500),
                             chatSettings: { background: '', userAvatar: '', charAvatar: '' },
                             wallet: { balance: Math.floor(Math.random() * 500000) }
@@ -1556,7 +1585,7 @@
                     <div class="plus-menu-item" id="plus-camera-btn"><div class="icon"><i class="fas fa-camera"></i></div><span>拍摄</span></div>
                     <div class="plus-menu-item" id="plus-voice-call-btn"><div class="icon"><i class="fas fa-phone-alt"></i></div><span>语音通话</span></div>
                     <div class="plus-menu-item" id="plus-location-btn"><div class="icon"><i class="fas fa-map-marker-alt"></i></div><span>位置</span></div>
-                    <div class="plus-menu-item" id="plus-redpacket-btn"><div class="icon" style="color: #E64340;"><i class="fas fa-envelope"></i></div><span>红包</span></div>
+                    <div class="plus-menu-item" id="plus-redpacket-btn"><div class="icon" style="color:#E64340;"><i class="fas fa-envelope"></i></div><span>红包</span></div>
                     <div class="plus-menu-item" id="plus-transfer-btn"><div class="icon"><i class="fas fa-exchange-alt"></i></div><span>转账</span></div>
                     <div class="plus-menu-item" id="plus-music-btn"><div class="icon"><i class="fas fa-music"></i></div><span>一起听</span></div>
                     <div class="plus-menu-item" id="plus-diary-btn"><div class="icon"><i class="fas fa-book-open"></i></div><span>对方日记</span></div>
@@ -1739,6 +1768,10 @@
                     } else {
                         html += `<div class="message-system">${msg.content.content}</div>`;
                     }
+                    return;
+                }
+                if (msg.type === 'poke') {
+                    html += msg.content; // Directly insert the pre-formatted HTML for poke
                     return;
                 }
 
@@ -3371,7 +3404,7 @@
             await saveData();
             renderMessages(chatId, chatType, source);
             
-            const shouldReply = ['text', 'image', 'camera-sim', 'location', 'voice', 'sticker', 'transfer', 'redPacket', 'music', 'html-content', 'gift', 'couple_invitation', 'delivery_receipt', 'gift_receipt'].includes(type);
+            const shouldReply = ['text', 'image', 'camera-sim', 'location', 'voice', 'sticker', 'transfer', 'redPacket', 'music', 'html-content', 'gift', 'couple_invitation', 'delivery_receipt', 'gift_receipt', 'poke'].includes(type);
             if (chatType === 'individual' && shouldReply) {
                 setTypingIndicator(chatId, true, null, source);
                 const replies = await getAiReply(chat.id, source);
@@ -3527,6 +3560,7 @@
                         case 'delivery_receipt': contentText = `[${m.sender === appData.user.id ? '我' : '你'}点了一份外卖]`; break;
                         case 'gift_receipt': contentText = `[${m.sender === appData.user.id ? '我' : '你'}赠送了一份礼物]`; break;
                         case 'voice_call': contentText = `[语音通话，时长: ${m.content.duration}]`; break;
+                        case 'poke': contentText = `[${m.content.pokerName} ${m.content.action}了 ${m.content.pokedName}${m.content.suffix}]`; break;
                         default: contentText = `[${m.sender === appData.user.id ? '我' : '你'}发送了一个${m.type}]`; break;
                     }
                     if (contentArray.length > 0) {
@@ -3556,6 +3590,7 @@ ${worldbookPreset}
    - 转账/红包必须用CSS组件呈现，示例：
    [transfer: amount=100, remark=给你的零花钱]
    [redPacket: amount=88, remark=恭喜发财]
+   - 戳一戳互动指令：[poke]
 3. 语言净化：彻底摒弃油腻感、霸总腔、八股文，禁用"投石子/小兽/像是在陈述事实"等表述，追求自然鲜活的口语化表达
 
 二、双模式切换机制
@@ -4001,7 +4036,7 @@ ${isOfflineMode ? '当前为线下剧情模式，请生成一段2000-8000字的�
         function renderMomentsPage(container) {
             if (!container) return;
             container.innerHTML = `
-                <div class="wechat-header" style="background: transparent; border: none; position: absolute; top: 30px; left: 0; right: 0; z-index: 5;">
+                <div class="weeader" style="background: transparent; border: none; position: absolute; top: 30px; left: 0; right: 0; z-index: 5;">
                     <div class="header-left header-back-btn" onclick="goBack()" style="color: white;"><i class="fas fa-chevron-left"></i></div>
                     <div class="header-right" onclick="showPage('create-moment-page', renderCreateMomentPage)" style="color: white;"><i class="fas fa-camera"></i></div>
                 </div>
@@ -5449,40 +5484,57 @@ ${isOfflineMode ? '当前为线下剧情模式，请生成一段2000-8000字的�
         }
 
         function triggerPoke(chatId, chatType, targetId, source, pokerId = appData.user.id) {
-            let chat = chatType === 'group' ? appData.groups.find(g => g.id == chatId) : appData.contacts.find(c => c.id == chatId);
-            if (!chat) return;
-            const conversation = source === 'wechat' ? chat.conversation : chat.conversation;
+            let poker, poked, pokeSetting;
+            const isUserPoker = pokerId === appData.user.id;
 
-            const isUserPoking = pokerId === appData.user.id;
-            const contact = appData.contacts.find(c => c.id == (isUserPoking ? targetId : chatId));
-            if (!contact) return;
-            
-            let pokeSetting, pokerName, targetName;
-
-            if (pokerId === targetId) { // Poking self
-                pokerName = appData.user.nickname;
-                targetName = '自己';
-                pokeSetting = contact.pokeSettings.userToChar;
-            } else if (isUserPoking) { // User pokes char
-                pokerName = appData.user.nickname;
-                targetName = contact.remark || contact.name;
-                pokeSetting = contact.pokeSettings.userToChar;
-            } else { // Char pokes user
-                pokerName = contact.remark || contact.name;
-                targetName = appData.user.nickname;
-                pokeSetting = contact.pokeSettings.charToUser;
+            if (chatType === 'group') {
+                const group = appData.groups.find(g => g.id == chatId);
+                poker = group.members.find(m => m.id == pokerId);
+                poked = group.members.find(m => m.id == targetId);
+            } else { // individual
+                poker = isUserPoker ? appData.user : appData.contacts.find(c => c.id == pokerId);
+                poked = isUserPoker ? appData.contacts.find(c => c.id == targetId) : appData.user;
             }
 
-            const pokeText = `${pokerName} ${pokeSetting.action}了 ${targetName} ${pokeSetting.suffix}`;
+            if (!poker || !poked) return;
+
+            const pokerName = poker.remark || poker.name || poker.nickname;
+            const pokedName = poked.id === appData.user.id ? '你' : (poked.remark || poked.name || poked.nickname);
             
-            const systemMsg = {
-                id: Date.now(), type: 'system',
-                content: { content: pokeText },
-                timestamp: Date.now()
+            if (isUserPoker) {
+                const contact = appData.contacts.find(c => c.id == targetId);
+                pokeSetting = contact ? contact.pokeSettings.userToChar : appData.user.pokeSettings;
+            } else { // Char pokes user
+                const contact = appData.contacts.find(c => c.id == pokerId);
+                pokeSetting = contact.pokeSettings.charToUser;
+            }
+            
+            const pokeHtml = `
+                <div class="poke-spotlight-card">
+                    <div class="poke-spotlight-content">
+                        <div class="poke-avatars">
+                            <img src="${poker.avatar}" class="poke-avatar poker">
+                            <img src="${poked.avatar}" class="poke-avatar poked">
+                        </div>
+                        <div class="poke-text">
+                            <span class="poker-name">${pokerName}</span>
+                            <span class="poke-action">${pokeSetting.action}</span>
+                            <span class="poked-name">${pokedName}</span>
+                            <span class="poke-suffix">${pokeSetting.suffix}</span>
+                        </div>
+                    </div>
+                    <div class="poke-spotlight-sparkles"></div>
+                </div>
+            `;
+
+            const pokeMessage = {
+                pokerName: pokerName,
+                pokedName: pokedName,
+                action: pokeSetting.action,
+                suffix: pokeSetting.suffix
             };
-            conversation.push(systemMsg);
-            saveData();
-            renderMessages(chatId, chatType, source);
+
+            sendMessage(chatId, chatType, pokeHtml, 'poke', source);
         }
 
         // --- Helper Functions ---
